@@ -1,0 +1,148 @@
+---
+title: 'Tận dụng `ForgeTypeId` để phát triển Add-in thông minh hơn'
+date: '2025-06-06'
+lastmod: '2025-06-06'
+tags: ['next-js', 'tailwind', 'guide', 'feature']
+draft: false
+summary: 'Trong các phiên bản Revit API gần đây (đặc biệt là từ Revit 2021 trở đi), Autodesk đã giới thiệu một thay đổi quan trọng và mang tính chiến lược: sự ra đời của ForgeTypeId'
+images: ['/static/images/twitter-card.png']
+---
+
+## Revit API: Tận dụng `ForgeTypeId` để phát triển Add-in thông minh hơn
+
+Trong các phiên bản **Revit API** gần đây (đặc biệt là từ Revit 2021 trở đi), Autodesk đã giới thiệu một thay đổi quan trọng và mang tính chiến lược: sự ra đời của **`ForgeTypeId`**. Đây không chỉ là một thay đổi về tên gọi hay kiểu dữ liệu, mà là một bước tiến lớn nhằm chuẩn hóa và hiện đại hóa cách chúng ta tương tác với dữ liệu trong Revit và cả hệ sinh thái Autodesk Forge. Nếu bạn vẫn đang sử dụng các `BuiltInParameter` hay `BuiltInCategory` cũ, đã đến lúc tìm hiểu về `ForgeTypeId` để tối ưu hóa Add-in của mình.
+
+---
+
+### 1\. Vấn đề với `BuiltInParameter` và `BuiltInCategory` truyền thống
+
+Trong nhiều năm, các lập trình viên **Revit API** đã quen thuộc với việc sử dụng `BuiltInParameter` và `BuiltInCategory` (các `enum` trong Revit API) để xác định các tham số và hạng mục dựng sẵn của Revit. Mặc dù tiện lợi, chúng có một số hạn chế đáng kể:
+
+- **Phụ thuộc phiên bản (Version-dependent):** Các giá trị `enum` này có thể thay đổi hoặc có thêm thành phần mới qua các phiên bản Revit, đôi khi gây ra lỗi tương thích ngược.
+- **Không linh hoạt:** Chúng chỉ bao gồm các tham số và hạng mục dựng sẵn, không thể đại diện cho các tham số chia sẻ (Shared Parameters) hoặc các hạng mục tùy chỉnh.
+- **Hạn chế trong môi trường đa nền tảng:** Khi Autodesk hướng tới một nền tảng dữ liệu chung (Forge), việc sử dụng các ID nội bộ của Revit không phải lúc nào cũng tối ưu cho việc trao đổi dữ liệu xuyên ứng dụng.
+
+---
+
+### 2\. `ForgeTypeId`: Tiêu chuẩn mới cho định danh dữ liệu
+
+`ForgeTypeId` là một kiểu dữ liệu mới được thiết kế để khắc phục những hạn chế trên. Nó cung cấp một cơ chế định danh độc lập với phiên bản và linh hoạt hơn cho các loại dữ liệu, đơn vị, tham số, và các đối tượng khác trong Revit và hệ sinh thái Forge rộng lớn hơn.
+
+**Các đặc điểm chính của `ForgeTypeId`:**
+
+- **Chuỗi định danh độc nhất (Unique String Identifier):** `ForgeTypeId` sử dụng một chuỗi định danh duy nhất (ví dụ: `autodesk.revit.parameter:WALL_HEIGHT`) thay vì các giá trị số nguyên như `ElementId` hoặc `enum`. Chuỗi này được thiết kế để ổn định và không thay đổi giữa các phiên bản Revit.
+- **Độc lập với phiên bản:** Điều này là lợi ích lớn nhất. Một `ForgeTypeId` cho "chiều cao tường" sẽ giống nhau trên Revit 2021, 2022, 2023 và các phiên bản sau này.
+- **Hỗ trợ đa dạng:** `ForgeTypeId` được sử dụng để định danh:
+  - **Đơn vị (Units):** `UnitTypeId` (ví dụ: `UnitTypeId.Meters`, `UnitTypeId.Feet`).
+  - **Loại tham số (Parameter Types):** `SpecTypeId` (ví dụ: `SpecTypeId.Length`, `SpecTypeId.Area`).
+  - **Tham số (Parameters):** `BuiltInParameter` (như `BuiltInParameter.WALL_HEIGHT_PARAM` được ánh xạ sang `autodesk.revit.parameter:WALL_HEIGHT`).
+  - **Hạng mục (Categories):** `BuiltInCategory` (như `BuiltInCategory.OST_Walls` được ánh xạ sang `autodesk.revit.category:walls`).
+  - Và nhiều loại định danh khác.
+- **Tương thích với Forge:** Tên gọi `ForgeTypeId` ngụ ý sự tích hợp chặt chẽ với Autodesk Forge, một nền tảng cho phép truy cập và làm việc với dữ liệu thiết kế trên đám mây. Điều này mở ra cánh cửa cho việc trao đổi dữ liệu BIM xuyên suốt các ứng dụng của Autodesk và bên thứ ba.
+
+---
+
+### 3\. Cách sử dụng `ForgeTypeId` trong Revit API
+
+Từ Revit 2021 trở đi, nhiều phương thức API đã được quá tải (overload) để chấp nhận `ForgeTypeId` thay vì các `ElementId` hoặc `enum` truyền thống.
+
+#### 3.1. Chuyển đổi từ/sang `ForgeTypeId`
+
+Bạn có thể chuyển đổi giữa `BuiltInParameter`/`BuiltInCategory` và `ForgeTypeId` bằng các phương thức của lớp `ParameterUtils` và `Category`.
+
+```csharp
+// Đối với BuiltInParameter:
+// Chuyển từ BuiltInParameter sang ForgeTypeId
+ForgeTypeId wallHeightParamTypeId = ParameterUtils.Get
+BuiltInParameterId(BuiltInParameter.WALL_HEIGHT_PARAM);
+
+// Chuyển từ ForgeTypeId sang BuiltInParameter (cẩn thận: có thể ném ngoại lệ nếu không có ánh xạ)
+BuiltInParameter biParam = ParameterUtils.GetBuiltInParameter(wallHeightParamTypeId);
+
+// Đối với BuiltInCategory:
+// Chuyển từ BuiltInCategory sang ForgeTypeId
+ForgeTypeId wallCategoryTypeId = Category.Get
+BuiltInCategoryTypeId(BuiltInCategory.OST_Walls);
+
+// Chuyển từ ForgeTypeId sang BuiltInCategory
+BuiltInCategory biCategory = Category.GetBuiltInCategory(wallCategoryTypeId);
+```
+
+#### 3.2. Truy xuất giá trị tham số bằng `ForgeTypeId`
+
+Bạn có thể sử dụng `ForgeTypeId` để truy xuất giá trị của tham số một cách rõ ràng hơn và độc lập với phiên bản.
+
+```csharp
+// Giả sử có một đối tượng tường (wallElement)
+Element wallElement = ...; // Lấy từ FilteredElementCollector hoặc cách khác
+
+// Truy xuất tham số chiều cao tường bằng ForgeTypeId
+Parameter wallHeightParameter = wallElement.get_Parameter(
+    ParameterUtils.GetBuiltInParameterId(BuiltInParameter.WALL_HEIGHT_PARAM));
+
+if (wallHeightParameter != null)
+{
+    // Lấy giá trị theo đơn vị hiển thị mặc định của dự án
+    double heightValue = wallHeightParameter.AsDouble();
+    TaskDialog.Show("Wall Height", $"Chiều cao tường: {heightValue} feet (nếu đơn vị dự án là feet).");
+
+    // Hoặc lấy giá trị theo một đơn vị cụ thể bằng ForgeTypeId cho đơn vị
+    // Trong Revit 2022+, có các phương thức GetAs... và Set... có thể nhận UnitTypeId
+    // double heightInMeters = wallHeightParameter.AsDouble(UnitTypeId.Meters); // Ví dụ (phụ thuộc phiên bản API)
+}
+```
+
+#### 3.3. Lọc phần tử bằng `ForgeTypeId`
+
+Các phương thức của `FilteredElementCollector` cũng được quá tải để chấp nhận `ForgeTypeId`.
+
+```csharp
+// Lấy tất cả các tường sử dụng ForgeTypeId
+FilteredElementCollector collector = new FilteredElementCollector(doc);
+ICollection<Element> walls = collector.OfCategory(Category.GetBuiltInCategoryTypeId(BuiltInCategory.OST_Walls))
+                                      .ToElements();
+
+// Lọc theo SpecTypeId cho các tham số (nếu có API hỗ trợ trực tiếp)
+// Ví dụ: Tìm tất cả các tham số có SpecTypeId là Length
+// Đây là ví dụ khái quát, việc lọc Parameter theo SpecTypeId thường yêu cầu cấu hình FilterRule phức tạp hơn.
+ForgeTypeId lengthSpec = SpecTypeId.Length;
+// Một ví dụ phức tạp hơn khi dùng ParameterFilter với SpecTypeId
+// ParameterFilterElement.CreateParameterFilterElement(doc, "MyLengthFilter", new List<ElementId>(), new ParameterFilterRuleFactory.CreateHasValueRule(lengthSpec));
+```
+
+#### 3.4. Định danh các đơn vị với `UnitTypeId` và `SpecTypeId`
+
+`UnitTypeId` và `SpecTypeId` là một phần của hệ thống `ForgeTypeId` giúp bạn làm việc với các đơn vị và loại tham số một cách nhất quán.
+
+```csharp
+// Lấy UnitTypeId cho mét
+ForgeTypeId metersTypeId = UnitTypeId.Meters;
+
+// Lấy SpecTypeId cho chiều dài
+ForgeTypeId lengthSpecTypeId = SpecTypeId.Length;
+
+// Chuyển đổi giữa các đơn vị (sử dụng UnitUtils)
+double lengthInFeet = 10.0; // Giả sử 10 feet
+double lengthInMm = UnitUtils.Convert(lengthInFeet, UnitTypeId.Feet, UnitTypeId.Millimeters);
+
+TaskDialog.Show("Unit Conversion", $"10 feet = {lengthInMm} mm");
+```
+
+---
+
+### 4\. Lợi ích khi chuyển sang sử dụng `ForgeTypeId`
+
+- **Tính tương thích tương lai:** Add-in của bạn sẽ ít bị ảnh hưởng bởi những thay đổi nội bộ của Revit API trong các phiên bản sau. Một `ForgeTypeId` đã được định nghĩa sẽ ổn định hơn nhiều so với các giá trị `enum` cũ.
+- **Tích hợp tốt hơn với Forge:** Nếu bạn có kế hoạch phát triển các giải pháp tích hợp với Autodesk Forge (ví dụ: hiển thị dữ liệu Revit trên web, phân tích dữ liệu trên đám mây), `ForgeTypeId` sẽ tạo ra sự nhất quán về định danh dữ liệu.
+- **Code rõ ràng hơn (trong một số trường hợp):** Mặc dù chuỗi định danh có thể dài hơn, nhưng chúng thường mang tính mô tả cao hơn so với các giá trị số nguyên khó hiểu.
+- **Mở rộng khả năng:** `ForgeTypeId` là nền tảng cho các tính năng API mới liên quan đến quản lý dữ liệu và tương tác xuyên ứng dụng.
+
+---
+
+### Kết luận
+
+Việc chuyển đổi sang sử dụng `ForgeTypeId` có thể đòi hỏi một chút thay đổi trong thói quen lập trình, nhưng lợi ích về tính ổn định, tương thích và khả năng mở rộng là rất lớn. Với sự ra đời của `ForgeTypeId`, Autodesk đang xây dựng một nền tảng API vững chắc hơn cho tương lai của BIM và hệ sinh thái Forge. Hãy bắt đầu tích hợp `ForgeTypeId` vào các dự án **Revit API** mới của bạn và dần dần cập nhật các Add-in hiện có để tận dụng tối đa những ưu điểm này.
+
+Bạn đã bắt đầu chuyển đổi sang `ForgeTypeId` trong các dự án của mình chưa? Bạn thấy những lợi ích hay thách thức nào khi sử dụng nó? Hãy chia sẻ kinh nghiệm của bạn ở phần bình luận nhé\!
+
+---

@@ -1,0 +1,190 @@
+---
+title: 'Revit API: Xử lý các loại tham số (Parameters)'
+date: 2025-05-08T15:32:14Z
+lastmod: '2025-05-08'
+tags: ['next-js', 'tailwind', 'guide']
+draft: false
+summary: 'Trong Revit,Parameters (tham số) là linh hồn của dữ liệu BIM, chứa đựng mọi thông tin từ kích thước hình học đến các thuộc tính vật liệu hay dữ liệu quản lý dự án. Với Revit API, việc đọc, ghi và thao tác với các Parameters là một trong những tác vụ cơ bản và thường xuyên nhất.'
+layout: PostSimple
+---
+
+## Những thách thức và giải pháp hiệu quả
+
+Trong Revit, **Parameters (tham số)** là linh hồn của dữ liệu BIM, chứa đựng mọi thông tin từ kích thước hình học đến các thuộc tính vật liệu hay dữ liệu quản lý dự án. Với **Revit API**, việc đọc, ghi và thao tác với các **Parameters** là một trong những tác vụ cơ bản và thường xuyên nhất. Tuy nhiên, sự đa dạng về loại **Parameters** và cách chúng được lưu trữ có thể gây ra nhiều thách thức cho các nhà phát triển. Bài viết này sẽ đi sâu vào các vấn đề thường gặp và cách tiếp cận hiệu quả để làm việc với **Parameters** trong **Revit API**.
+
+---
+
+### 1\. Hiểu các loại Parameters và tầm quan trọng của chúng
+
+Trước khi đi vào các vấn đề, hãy nhắc lại các loại **Parameters** chính trong Revit:
+
+- **Instance Parameters (Tham số đối tượng):** Duy nhất cho từng thể hiện (instance) của một phần tử (ví dụ: Chiều dài cụ thể của một bức tường riêng lẻ, tên phòng của một không gian).
+- **Type Parameters (Tham số loại):** Chung cho tất cả các thể hiện của một loại phần tử (ví dụ: Độ dày của một loại tường nhất định, mã hiệu của một loại cửa).
+- **Built-in Parameters (Tham số dựng sẵn):** Các tham số mặc định của Revit, không thể xóa hoặc thêm mới. Chúng được xác định bằng `BuiltInParameter` `enum`.
+- **Shared Parameters (Tham số chia sẻ):** Các tham số tùy chỉnh được định nghĩa trong một file `.txt` bên ngoài (`.txt` Shared Parameters file), cho phép chia sẻ dữ liệu giữa các dự án và Family, và đảm bảo tính nhất quán.
+- **Project Parameters (Tham số dự án):** Các tham số tùy chỉnh được thêm trực tiếp vào một dự án Revit, áp dụng cho các hạng mục hoặc toàn bộ dự án.
+- **Family Parameters (Tham số Family):** Các tham số tùy chỉnh được định nghĩa trong môi trường Family, chỉ tồn tại trong Family đó.
+
+Mỗi loại **Parameter** có cách truy cập và thao tác hơi khác nhau, và việc không phân biệt được chúng thường dẫn đến lỗi.
+
+---
+
+### 2\. Các thách thức thường gặp khi làm việc với Parameters
+
+#### 2.1. Phân biệt Instance và Type Parameters
+
+Đây là một trong những lỗi phổ biến nhất. Một **Parameter** có thể là **Instance** hoặc **Type**, và cách bạn truy cập nó sẽ khác nhau.
+
+- `element.LookupParameter("Tên Tham Số")`: Phương thức này ưu tiên tìm kiếm **Instance Parameter** trước, sau đó mới đến **Type Parameter** của thể hiện đó.
+- `element.get_Parameter(BuiltInParameter.XYZ)`: Tương tự, sẽ trả về **Instance Parameter** nếu có.
+- Để chắc chắn truy cập **Type Parameter**, bạn cần lấy `ElementType` của `Element` đó trước:
+
+  ```csharp
+  Element wallInstance = ...; // Một thể hiện tường
+  ElementType wallType = doc.GetElement(wallInstance.GetTypeId()) as ElementType;
+
+  // Truy cập Type Parameter (ví dụ: Độ dày mặc định của loại tường)
+  Parameter typeThicknessParam = wallType.LookupParameter("Structural Thickness");
+  if (typeThicknessParam != null)
+  {
+      double thickness = typeThicknessParam.AsDouble();
+      // ...
+  }
+  ```
+
+#### 2.2. Xử lý các loại giá trị của Parameter (StorageType)
+
+Mỗi **Parameter** có một `StorageType` riêng (Integer, Double, String, ElementId, None). Bạn phải sử dụng phương thức `As...()` phù hợp để truy xuất giá trị. Nếu sử dụng sai, bạn sẽ gặp lỗi `InvalidCastException` hoặc nhận giá trị không chính xác.
+
+```csharp
+Parameter param = wall.LookupParameter("Unconnected Height");
+
+if (param != null)
+{
+    switch (param.StorageType)
+    {
+        case StorageType.Double:
+            double height = param.AsDouble(); // Đối với tham số số thực (ví dụ: chiều cao, chiều dài)
+            TaskDialog.Show("Height", $"Chiều cao: {height} feet (đơn vị nội bộ).");
+            break;
+        case StorageType.Integer:
+            int integerValue = param.AsInteger(); // Đối với tham số số nguyên (ví dụ: số tầng)
+            TaskDialog.Show("Integer Value", $"Giá trị nguyên: {integerValue}");
+            break;
+        case StorageType.String:
+            string textValue = param.AsString(); // Đối với tham số chuỗi (ví dụ: comments, tên)
+            TaskDialog.Show("String Value", $"Giá trị chuỗi: {textValue}");
+            break;
+        case StorageType.ElementId:
+            ElementId idValue = param.AsElementId(); // Đối với tham số là ID của Element khác (ví dụ: Level Id)
+            if (idValue != ElementId.InvalidElementId)
+            {
+                Element linkedElement = doc.GetElement(idValue);
+                TaskDialog.Show("Element ID Value", $"Liên kết đến: {linkedElement?.Name}");
+            }
+            break;
+        case StorageType.None:
+            // Tham số không có giá trị hoặc giá trị không xác định
+            TaskDialog.Show("No Value", "Tham số không có giá trị được lưu trữ.");
+            break;
+    }
+}
+```
+
+#### 2.3. Khác biệt giữa Internal Units và Display Units
+
+Revit lưu trữ hầu hết các giá trị số (chiều dài, diện tích, khối lượng...) dưới dạng **Internal Units** (đơn vị nội bộ), thường là Feet cho chiều dài và Foot² cho diện tích. Khi đọc hoặc ghi các giá trị này, bạn cần chuyển đổi giữa **Internal Units** và **Display Units** (đơn vị hiển thị mà người dùng thấy).
+
+- **Từ Revit 2021 trở lên (khuyên dùng):** Sử dụng `UnitUtils` và `ForgeTypeId` để chuyển đổi.
+
+  ```csharp
+  // Giả sử bạn muốn đặt chiều cao tường là 3 mét
+  double desiredHeightInMeters = 3.0;
+  // Chuyển từ mét sang đơn vị nội bộ (Feet)
+  double heightInInternalUnits = UnitUtils.Convert(desiredHeightInMeters, UnitTypeId.Meters, UnitTypeId.Feet);
+
+  // Ghi giá trị vào tham số
+  Parameter heightParam = wall.LookupParameter("Unconnected Height");
+  if (heightParam != null && heightParam.IsReadWrite)
+  {
+      heightParam.Set(heightInInternalUnits);
+  }
+
+  // Đọc giá trị và hiển thị theo milimet
+  double currentHeightInInternalUnits = heightParam.AsDouble();
+  double currentHeightInMillimeters = UnitUtils.Convert(currentHeightInInternalUnits, UnitTypeId.Feet, UnitTypeId.Millimeters);
+  TaskDialog.Show("Wall Height", $"Chiều cao tường hiện tại: {currentHeightInMillimeters} mm.");
+  ```
+
+- **Trước Revit 2021:** Sử dụng các phương thức `CovertFromInternalUnits` và `ConvertToInternalUnits` của `UnitUtils` với `DisplayUnitType` `enum` cũ.
+
+#### 2.4. Xác định Built-in Parameters theo tên (string name)
+
+Bạn không thể dùng `LookupParameter("WALL_HEIGHT_PARAM")` để tìm một `BuiltInParameter`. Thay vào đó, bạn phải sử dụng `BuiltInParameter` `enum`.
+
+```csharp
+// ĐÚNG:
+Parameter heightParam = wall.get_Parameter(BuiltInParameter.WALL_HEIGHT_PARAM);
+
+// SAI (sẽ không tìm thấy hoặc tìm sai nếu có một Shared Parameter trùng tên)
+// Parameter heightParam = wall.LookupParameter("WALL_HEIGHT_PARAM");
+```
+
+#### 2.5. Xử lý Shared Parameters
+
+Để truy cập **Shared Parameters**, bạn cần có định nghĩa của nó (một đối tượng `Definition`) từ `BindingMap` hoặc bằng cách duyệt qua `Parameters` của `Element` và kiểm tra `GUID` của chúng.
+
+```csharp
+// Giả sử bạn biết GUID của Shared Parameter "Project_Number"
+Guid sharedParamGuid = new Guid("YOUR_SHARED_PARAMETER_GUID_HERE"); // Thay thế GUID thực tế của bạn
+
+ParameterSet parameters = wall.Parameters; // Lấy tất cả các tham số của Element
+foreach (Parameter param in parameters)
+{
+    if (param.IsShared && param.GUID == sharedParamGuid)
+    {
+        TaskDialog.Show("Shared Param", $"Giá trị Project Number: {param.AsString()}");
+        break;
+    }
+}
+```
+
+Đây là một cách phổ biến và đáng tin cậy hơn để truy cập Shared Parameters so với việc dựa vào tên (string name), vì tên có thể bị người dùng thay đổi.
+
+#### 2.6. Kiểm tra khả năng đọc/ghi của Parameter (`IsReadOnly` / `IsReadWrite`)
+
+Không phải mọi **Parameter** đều có thể được sửa đổi bằng API. Luôn kiểm tra thuộc tính `IsReadOnly` hoặc `IsReadWrite` trước khi cố gắng đặt giá trị.
+
+```csharp
+Parameter param = wall.LookupParameter("Unconnected Height");
+if (param != null && param.IsReadWrite) // Đảm bảo có thể ghi
+{
+    param.Set(desiredValue);
+}
+else
+{
+    TaskDialog.Show("Lỗi", "Tham số không tồn tại hoặc không thể ghi.");
+}
+```
+
+---
+
+### 3\. Giải pháp và thực tiễn tốt nhất
+
+- **Sử dụng `BuiltInParameter` cho các tham số dựng sẵn:** Luôn ưu tiên dùng `BuiltInParameter` `enum` để truy cập các tham số dựng sẵn.
+- **Dùng `ForgeTypeId` cho đơn vị và loại tham số (Revit 2021+):** Đây là cách tiếp cận tương lai và ổn định nhất.
+- **Thận trọng khi dùng `LookupParameter()`:** Chỉ dùng khi bạn biết chắc đó là **Instance Parameter** hoặc **Type Parameter** đã được gán tên duy nhất, hoặc khi bạn không có `BuiltInParameter` tương ứng. Đối với Shared Parameters, dùng `GUID` là tốt nhất.
+- **Luôn bao bọc các thao tác thay đổi trong `Transaction`:** Như đã thảo luận trong bài viết trước, mọi thay đổi đối với **Parameters** phải nằm trong một `Transaction`.
+- **Xử lý `StorageType` cẩn thận:** Viết code linh hoạt để kiểm tra `StorageType` trước khi truy xuất giá trị.
+- **Debug thường xuyên với RevitLookup:** **RevitLookup** là công cụ không thể thiếu để khám phá các **Parameters** của bất kỳ `Element` nào, giúp bạn hiểu `StorageType`, `BuiltInParameter`, `GUID` và trạng thái `IsReadOnly` của chúng.
+- **Xây dựng các hàm hỗ trợ (Helper methods):** Tạo các hàm tiện ích riêng trong Add-in của bạn để đơn giản hóa việc đọc và ghi **Parameters** (ví dụ: `GetParameterValue<T>(Element element, BuiltInParameter bip)`, `SetParameterValue(Element element, BuiltInParameter bip, object value)`).
+
+---
+
+### Kết luận
+
+Làm việc với **Parameters** là cốt lõi của mọi Add-in Revit. Mặc dù có những thách thức do sự đa dạng và cách lưu trữ khác nhau, việc hiểu rõ các loại **Parameters**, cách chúng hoạt động, và áp dụng các thực tiễn tốt nhất sẽ giúp bạn viết code mạnh mẽ, đáng tin cậy và hiệu quả hơn. Hãy nhớ rằng, **Parameters** là cầu nối giữa code của bạn và dữ liệu BIM giá trị.
+
+Bạn đã từng gặp phải những "cơn ác mộng" nào khi xử lý **Parameters** trong **Revit API**? Hãy chia sẻ câu chuyện và cách bạn đã vượt qua chúng ở phần bình luận bên dưới nhé\!
+
+---

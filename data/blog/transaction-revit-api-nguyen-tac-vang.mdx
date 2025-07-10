@@ -1,0 +1,202 @@
+---
+title: 'Làm việc với các giao dịch (Transactions)'
+date: 2025-05-07T15:32:14Z
+lastmod: '2025-05-07'
+tags: ['next-js', 'tailwind', 'guide']
+draft: false
+summary: 'Khi bạn phát triển các ứng dụng Revit API, việc tương tác và thay đổi dữ liệu trong mô hình Revit là một tác vụ cốt lõi. Tuy nhiên, không phải mọi thay đổi đều có thể thực hiện trực tiếp.'
+layout: PostSimple
+bibliography: references-data.bib
+---
+
+## Transaction trong Revit API: Nguyên tắc vàng để thay đổi mô hình BIM
+
+Khi bạn phát triển các ứng dụng **Revit API**, việc tương tác và thay đổi dữ liệu trong mô hình Revit là một tác vụ cốt lõi. Tuy nhiên, không phải mọi thay đổi đều có thể thực hiện trực tiếp. Revit thực thi một nguyên tắc nghiêm ngặt về tính toàn vẹn dữ liệu: **mọi thay đổi đối với mô hình phải được bao bọc trong một Transaction (giao dịch)**. Hiểu và sử dụng `Transaction` đúng cách là điều bắt buộc để tạo ra các Add-in ổn định và đáng tin cậy.
+
+---
+
+### 1\. `Transaction` là gì và tại sao nó lại quan trọng?
+
+Trong ngữ cảnh của **Revit API**, một `Transaction` có thể được hình dung như một "khối" các hoạt động thay đổi dữ liệu trong mô hình. Tất cả các thay đổi bên trong một `Transaction` đều được xem là một đơn vị logic duy nhất.
+
+**Tại sao `Transaction` lại quan trọng?**
+
+- **Đảm bảo tính toàn vẹn dữ liệu (Data Integrity):** Revit là một cơ sở dữ liệu mạnh mẽ. Nếu một phần mềm bên ngoài (Add-in của bạn) thay đổi dữ liệu một cách lộn xộn, nó có thể làm hỏng mô hình hoặc tạo ra trạng thái không nhất quán. `Transaction` giúp Revit kiểm soát chặt chẽ các thay đổi này.
+- **Hỗ trợ Undo/Redo:** Mọi `Transaction` thành công đều được ghi lại trong lịch sử `Undo` của Revit. Điều này cho phép người dùng hoàn tác (Undo) toàn bộ các thay đổi được thực hiện trong `Transaction` đó chỉ với một thao tác, đảm bảo trải nghiệm người dùng liền mạch.
+- **Tính nguyên tử (Atomicity):** Một `Transaction` hoặc là hoàn thành tất cả các thay đổi của nó thành công (commit), hoặc là không có thay đổi nào được áp dụng (rollback) nếu có lỗi xảy ra. Điều này ngăn chặn mô hình ở trạng thái nửa chừng, lỗi thời.
+- **Quản lý bộ nhớ và hiệu suất:** `Transaction` giúp Revit quản lý các thay đổi một cách hiệu quả hơn, đặc biệt khi có nhiều thao tác sửa đổi diễn ra.
+
+---
+
+### 2\. Cách sử dụng `Transaction` cơ bản
+
+Đối tượng `Transaction` thuộc namespace `Autodesk.Revit.DB`. Cách phổ biến và được khuyến nghị để sử dụng `Transaction` là dùng khối `using` trong C\#, đảm bảo rằng `Transaction` được xử lý đúng cách ngay cả khi có lỗi xảy ra.
+
+```csharp
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
+
+public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+{
+    UIDocument uidoc = commandData.Application.ActiveUIDocument;
+    Document doc = uidoc.Document;
+
+    // BẮT ĐẦU MỘT TRANSACTION
+    // Tham số đầu tiên là Document mà Transaction sẽ hoạt động trên đó.
+    // Tham số thứ hai là tên của Transaction, sẽ hiển thị trong lịch sử Undo của Revit.
+    using (Transaction tr = new Transaction(doc, "Thay đổi chiều cao tường mẫu"))
+    {
+        // 1. Bắt đầu Transaction
+        tr.Start();
+
+        try
+        {
+            // 2. Thực hiện các thay đổi đối với mô hình tại đây
+            // Ví dụ: Tìm một bức tường và thay đổi chiều cao của nó
+            FilteredElementCollector collector = new FilteredElementCollector(doc);
+            Wall wall = collector.OfClass(typeof(Wall)).Cast<Wall>().FirstOrDefault();
+
+            if (wall != null)
+            {
+                Parameter heightParam = wall.LookupParameter("Unconnected Height");
+                if (heightParam != null && heightParam.IsReadWrite)
+                {
+                    // Đặt chiều cao mới (ví dụ: 5 mét)
+                    // Lưu ý: Các tham số thường yêu cầu giá trị nội bộ của Revit (Internal Units)
+                    // Ở đây, tôi giả định đơn vị mặc định là feet, 5 mét ~ 16.404 feet
+                    heightParam.Set(5.0 * 3.28084); // 5 mét đổi ra feet
+
+                    TaskDialog.Show("Thành công", $"Chiều cao của tường '{wall.Name}' đã được thay đổi.");
+                }
+            }
+            else
+            {
+                TaskDialog.Show("Cảnh báo", "Không tìm thấy tường nào trong mô hình.");
+            }
+
+            // 3. Commit Transaction nếu mọi thứ thành công
+            tr.Commit();
+        }
+        catch (Exception ex)
+        {
+            // 4. Rollback Transaction nếu có lỗi xảy ra
+            tr.RollBack();
+            message = "Có lỗi xảy ra khi thực hiện giao dịch: " + ex.Message;
+            return Result.Failed;
+        }
+    } // Khối 'using' sẽ tự động gọi Dispose() và đảm bảo Transaction được kết thúc.
+
+    return Result.Succeeded;
+}
+```
+
+**Giải thích các phương thức chính:**
+
+- **`Transaction(Document doc, string name)`:** Hàm khởi tạo một `Transaction` mới. `doc` là tài liệu mà bạn muốn thực hiện các thay đổi. `name` là tên của giao dịch, xuất hiện trong danh sách `Undo` của Revit.
+- **`tr.Start()`:** Bắt đầu ghi lại các thay đổi. Tất cả các thao tác thay đổi mô hình sau lệnh này và trước `Commit()` hoặc `RollBack()` sẽ được nhóm lại trong `Transaction` này.
+- **`tr.Commit()`:** Hoàn tất `Transaction` và áp dụng vĩnh viễn tất cả các thay đổi vào mô hình. Nếu không có lỗi nào xảy ra trong khối `try`, bạn nên gọi `Commit()`.
+- **`tr.RollBack()`:** Hủy bỏ `Transaction` và hoàn tác tất cả các thay đổi đã thực hiện trong khối `Transaction` đó. Điều này rất hữu ích khi có lỗi hoặc một điều kiện nào đó không được đáp ứng.
+
+---
+
+### 3\. Các loại `Transaction` khác
+
+Ngoài `Transaction` cơ bản, Revit API còn cung cấp các loại giao dịch chuyên biệt khác:
+
+#### 3.1. `SubTransaction`
+
+`SubTransaction` cho phép bạn thực hiện các giao dịch nhỏ hơn bên trong một `Transaction` lớn hơn. Các `SubTransaction` có thể được `RollBack` độc lập mà không ảnh hưởng đến toàn bộ `Transaction` chính. Điều này hữu ích khi bạn có nhiều bước thay đổi và muốn khả năng hoàn tác một phần.
+
+Tuy nhiên, cần lưu ý:
+
+- Bạn **không thể** `Commit` một `SubTransaction` độc lập. Nó chỉ có thể được `RollBack` hoặc được `Commit` (theo nghĩa là được chấp nhận) khi `Transaction` chính được `Commit`.
+- Nếu `Transaction` chính bị `RollBack`, tất cả các `SubTransaction` bên trong nó cũng sẽ bị `RollBack`.
+
+```csharp
+using (Transaction mainTr = new Transaction(doc, "Giao dịch chính phức tạp"))
+{
+    mainTr.Start();
+
+    // Thay đổi 1: Tạo Level mới
+    using (SubTransaction subTr1 = new SubTransaction(doc))
+    {
+        subTr1.Start();
+        Level newLevel = Level.Create(doc, 10.0); // Tạo level ở độ cao 10 feet
+        subTr1.Commit(); // SubTransaction được chấp nhận (chưa thực sự lưu)
+    }
+
+    // Thay đổi 2: Tạo một bức tường và sau đó Rollback nó nếu không tìm thấy cửa
+    using (SubTransaction subTr2 = new SubTransaction(doc))
+    {
+        subTr2.Start();
+        // ... Code tạo tường ...
+        TaskDialog.Show("Info", "Đã tạo tường tạm thời.");
+
+        // Giả sử có một điều kiện kiểm tra
+        bool foundDoor = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Doors).Any();
+        if (!foundDoor)
+        {
+            subTr2.RollBack(); // Hoàn tác riêng SubTransaction này
+            TaskDialog.Show("Cảnh báo", "Không tìm thấy cửa, tường tạm thời đã bị hủy.");
+        }
+        else
+        {
+            subTr2.Commit(); // Chấp nhận SubTransaction này
+            TaskDialog.Show("Info", "Đã tìm thấy cửa, tường tạm thời được giữ lại.");
+        }
+    }
+
+    // Cuối cùng, Commit giao dịch chính
+    mainTr.Commit();
+}
+```
+
+#### 3.2. `TransactionGroup`
+
+`TransactionGroup` cho phép bạn nhóm nhiều `Transaction` độc lập thành một đơn vị `Undo` duy nhất. Điều này cực kỳ hữu ích khi Add-in của bạn thực hiện nhiều bước mà mỗi bước cần một `Transaction` riêng (ví dụ: do yêu cầu của một số API) nhưng bạn muốn người dùng chỉ cần `Undo` một lần để hoàn tác tất cả.
+
+```csharp
+using (TransactionGroup tg = new TransactionGroup(doc, "Nhóm các giao dịch thay đổi"))
+{
+    tg.Start(); // Bắt đầu nhóm giao dịch
+
+    // Giao dịch 1: Tạo tường
+    using (Transaction tr1 = new Transaction(doc, "Tạo tường"))
+    {
+        tr1.Start();
+        // Code tạo tường
+        tr1.Commit();
+    }
+
+    // Giao dịch 2: Tạo cửa
+    using (Transaction tr2 = new Transaction(doc, "Tạo cửa"))
+    {
+        tr2.Start();
+        // Code tạo cửa
+        tr2.Commit();
+    }
+
+    // Hoàn tất nhóm giao dịch. Bây giờ, nếu người dùng Undo, cả tạo tường và tạo cửa sẽ bị hoàn tác.
+    tg.Assimilate(); // "Hấp thụ" tất cả các Transaction con thành một Undo duy nhất
+    // Hoặc tg.RollBack(); để hủy bỏ toàn bộ nhóm Transaction nếu có lỗi xảy ra.
+}
+```
+
+---
+
+### 4\. Các lưu ý quan trọng khi sử dụng `Transaction`
+
+- **Không bao giờ thay đổi mô hình ngoài `Transaction`:** Đây là quy tắc quan trọng nhất. Nếu bạn cố gắng thay đổi một `Element` bên ngoài một `Transaction` đang hoạt động, Revit sẽ ném ra lỗi.
+- **Chỉ một `Transaction` có thể hoạt động tại một thời điểm:** Bạn không thể có hai `Transaction` cùng `Start()` trên cùng một `Document` đồng thời.
+- **Luôn sử dụng khối `using`:** Điều này đảm bảo `Transaction` được `Dispose` đúng cách và tránh rò rỉ tài nguyên, cũng như tự động xử lý các trường hợp `Commit()` hoặc `RollBack()`.
+- **Đặt tên `Transaction` rõ ràng:** Tên này xuất hiện trong danh sách `Undo` của người dùng, vì vậy hãy đặt tên có ý nghĩa (ví dụ: "Tạo hàng loạt cột", "Thay đổi vật liệu tường").
+- **Xử lý lỗi:** Luôn bao bọc các thao tác thay đổi mô hình trong khối `try-catch` và gọi `RollBack()` trong khối `catch` để đảm bảo mô hình không bị hỏng nếu có lỗi.
+- **Khi nào thì không cần `Transaction`?** Khi bạn chỉ đọc dữ liệu từ mô hình mà không thay đổi gì, bạn không cần `Transaction`.
+
+---
+
+### Kết luận
+
+`Transaction` là một khái niệm cơ bản nhưng cực kỳ quan trọng trong lập trình **Revit API**. Việc nắm vững cách sử dụng `Transaction` không chỉ giúp code của bạn hoạt động đúng cách mà còn đảm bảo tính ổn định và tin cậy cho mô hình Revit của người dùng. Hãy luôn xem `Transaction` như "nguyên tắc vàng" mỗi khi bạn có ý định thay đổi bất kỳ thứ gì trong mô hình BIM của mình.
+
+Bạn đã từng gặp phải những lỗi liên quan đến `Transaction` trong quá trình phát triển Add-in Revit chưa? Hãy chia sẻ kinh nghiệm của bạn ở phần bình luận nhé\!
