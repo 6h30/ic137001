@@ -1,0 +1,298 @@
+---
+title: 'GUID trong Revit API'
+date: '2025-06-10'
+lastmod: '2025-06-10'
+tags: ['next-js', 'tailwind', 'guide', 'feature']
+draft: false
+summary: 'Trong Revit API, việc định danh các đối tượng một cách duy nhất và bền vững là vô cùng quan trọng'
+images: ['/static/images/twitter-card.png']
+---
+
+## Chìa khóa vàng cho định danh duy nhất và bền vững
+
+Trong **Revit API**, việc định danh các đối tượng một cách duy nhất và bền vững là vô cùng quan trọng. Mặc dù `ElementId` rất hữu ích cho các thao tác nội bộ trong một phiên làm việc hoặc một dự án, nó lại không ổn định khi mô hình thay đổi, sao chép hoặc chuyển đổi giữa các dự án. Đây chính là lúc **GUID (Globally Unique Identifier)** trở thành một công cụ không thể thiếu. Bài viết này sẽ đi sâu vào vai trò của **GUID** trong Revit API, cách sử dụng nó để định danh các đối tượng và dữ liệu một cách bền vững, cũng như các trường hợp ứng dụng thực tế.
+
+---
+
+### 1\. GUID là gì và tại sao nó quan trọng trong Revit API?
+
+**GUID** là một số 128-bit được tạo ra theo một thuật toán đảm bảo rằng nó gần như là duy nhất trên toàn cầu. Một **GUID** có dạng chuỗi hexadecimal như `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx` (ví dụ: `8a45e8a0-2f16-4c4f-9e7b-1a5c6d8e9f01`).
+
+Trong Revit API, **GUID** đóng vai trò quan trọng trong việc định danh:
+
+- **Shared Parameters (Tham số chia sẻ):** Đây là ứng dụng phổ biến nhất của **GUID**. Mỗi Shared Parameter được định danh bằng một **GUID** duy nhất, cho phép nó được sử dụng và chia sẻ nhất quán giữa các Family, dự án và thậm chí các ứng dụng khác nhau.
+- **UniqueId của Element:** Mọi `Element` trong một tài liệu Revit đều có một `UniqueId` là một chuỗi. Mặc dù `UniqueId` không phải là một **GUID** tiêu chuẩn, nó hoạt động tương tự như một định danh duy nhất và bền vững cho một `Element` trong suốt vòng đời của nó trong tài liệu Revit. Điều này rất khác với `ElementId` có thể thay đổi khi một phần tử được sao chép, dán hoặc được tạo lại.
+- **Add-in Id:** Khi bạn tạo một `IExternalApplication` hoặc `IExternalCommand`, bạn thường gán cho nó một **GUID** duy nhất.
+- **Lưu trữ dữ liệu mở rộng (Extensible Storage):** Để lưu trữ dữ liệu tùy chỉnh vào các phần tử Revit một cách bền vững và có thể truy cập bằng các Add-in khác, bạn sẽ sử dụng **GUID** để định danh các `Schema` và `Field` của dữ liệu đó.
+
+**Ưu điểm chính của GUID:**
+
+- **Tính duy nhất toàn cầu:** Đảm bảo không có hai **GUID** nào trùng nhau, ngay cả khi được tạo trên các máy tính khác nhau vào các thời điểm khác nhau.
+- **Tính bền vững (Persistence):** **GUID** của một Shared Parameter hoặc `UniqueId` của một `Element` sẽ không thay đổi khi bạn mở lại dự án, lưu sang phiên bản Revit khác, hoặc thậm chí sao chép phần tử sang dự án mới (với `UniqueId` của `Element`). Điều này làm cho chúng trở thành lựa chọn lý tưởng cho việc lưu trữ dữ liệu liên tục hoặc liên kết giữa các hệ thống.
+- **Độc lập với phiên bản:** Không giống như `ElementId` hay `BuiltInParameter` (trước `ForgeTypeId`), **GUID** không phụ thuộc vào ID nội bộ của một phiên bản Revit cụ thể.
+
+---
+
+### 2\. Các ứng dụng thực tế của GUID trong Revit API
+
+#### 2.1. Truy cập Shared Parameters bằng GUID
+
+Đây là ứng dụng phổ biến nhất và mạnh mẽ nhất của **GUID**. Thay vì tìm Shared Parameter bằng tên (có thể trùng hoặc bị đổi), việc sử dụng **GUID** là cách đáng tin cậy nhất.
+
+```csharp
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
+using System;
+using System.Linq;
+
+[Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
+public class GetSharedParameterByGuid : IExternalCommand
+{
+    public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+    {
+        UIDocument uidoc = commandData.Application.ActiveUIDocument;
+        Document doc = uidoc.Document;
+
+        // GUID của Shared Parameter bạn muốn truy cập.
+        // Bạn phải lấy GUID này từ file Shared Parameters của mình hoặc từ RevitLookup.
+        Guid mySharedParamGuid = new Guid("8a45e8a0-2f16-4c4f-9e7b-1a5c6d8e9f01"); // THAY THẾ BẰNG GUID CỦA BẠN!
+
+        using (Transaction tr = new Transaction(doc, "Đọc Shared Parameter bằng GUID"))
+        {
+            tr.Start();
+            try
+            {
+                // Lấy một đối tượng bất kỳ (ví dụ: một bức tường)
+                Element element = new FilteredElementCollector(doc)
+                    .OfCategory(BuiltInCategory.OST_Walls) // Giả sử Shared Parameter này được gán cho tường
+                    .WhereElementIsNotElementType()
+                    .FirstOrDefault();
+
+                if (element != null)
+                {
+                    // Duyệt qua tất cả các tham số của Element
+                    foreach (Parameter param in element.Parameters)
+                    {
+                        // Kiểm tra xem đây có phải là Shared Parameter không và GUID có khớp không
+                        if (param.IsShared && param.GUID == mySharedParamGuid)
+                        {
+                            TaskDialog.Show("Shared Parameter Found",
+                                $"Tên Parameter: {param.Definition.Name}\n" +
+                                $"Giá trị: {param.AsString()}");
+                            break; // Đã tìm thấy, thoát vòng lặp
+                        }
+                    }
+                }
+                else
+                {
+                    TaskDialog.Show("Thông báo", "Không tìm thấy Element nào để kiểm tra Shared Parameter.");
+                }
+
+                tr.Commit();
+            }
+            catch (Exception ex)
+            {
+                tr.RollBack();
+                message = "Lỗi: " + ex.Message;
+                return Result.Failed;
+            }
+        }
+        return Result.Succeeded;
+    }
+}
+```
+
+**Lưu ý:** Bạn có thể dễ dàng tìm thấy **GUID** của một Shared Parameter bằng cách sử dụng **RevitLookup** trên một phần tử có Parameter đó.
+
+#### 2.2. Sử dụng `UniqueId` để định danh Element bền vững
+
+Mỗi `Element` trong một tài liệu Revit đều có một thuộc tính `UniqueId` (kiểu `string`), đây là một định danh duy nhất và bền vững. Điều này rất hữu ích khi bạn cần lưu trữ tham chiếu đến một `Element` bên ngoài Revit, sau đó tìm lại nó.
+
+```csharp
+// Lưu UniqueId của một Element
+Element wall = ...; // Giả sử bạn có một đối tượng tường
+string wallUniqueId = wall.UniqueId;
+
+// Sau này, trong một phiên làm việc khác hoặc sau khi lưu/mở lại mô hình:
+// Để tìm lại Element bằng UniqueId
+Document doc = ...; // Tài liệu Revit hiện tại
+Element foundElement = doc.GetElement(wallUniqueId);
+
+if (foundElement != null)
+{
+    TaskDialog.Show("Tìm lại Element", $"Đã tìm thấy Element có UniqueId '{wallUniqueId}': {foundElement.Name}");
+}
+else
+{
+    TaskDialog.Show("Lỗi", $"Không tìm thấy Element với UniqueId '{wallUniqueId}'.");
+}
+```
+
+**Lưu ý:** `UniqueId` chỉ duy nhất trong một tài liệu Revit. Nếu bạn copy một `Element` sang một tài liệu mới, nó sẽ có một `UniqueId` mới. Tuy nhiên, nếu bạn sao lưu và phục hồi tài liệu, `UniqueId` vẫn được giữ nguyên.
+
+#### 2.3. Định danh Add-in và Command
+
+Khi bạn tạo một `IExternalCommand` hoặc `IExternalApplication`, bạn cần gán cho nó một `GUID` duy nhất trong file `.addin`. Điều này giúp Revit phân biệt các Add-in khác nhau và ngăn ngừa xung đột.
+
+**Trong file `.addin` (ví dụ: `MyAddin.addin`):**
+
+```xml
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<RevitAddIns>
+  <AddIn Type="Command">
+    <Assembly>C:\Path\To\Your\Addin.dll</Assembly>
+    <ClientId>YOUR_COMMAND_GUID_HERE</ClientId> <FullClassName>MyNamespace.MyRevitCommand</FullClassName>
+    <Text>Lệnh Của Tôi</Text>
+    <Description>Mô tả ngắn gọn về lệnh.</Description>
+    <VisibilityMode>AlwaysVisible</VisibilityMode>
+    <VendorId>ABC</VendorId>
+    <VendorDescription>Công ty ABC, www.companyabc.com</VendorDescription>
+  </AddIn>
+  <AddIn Type="Application">
+    <Assembly>C:\Path\To\Your\Application.dll</Assembly>
+    <ClientId>YOUR_APPLICATION_GUID_HERE</ClientId> <FullClassName>MyNamespace.MyRevitApplication</FullClassName>
+    <VendorId>ABC</VendorId>
+    <VendorDescription>Công ty ABC, www.companyabc.com</VendorDescription>
+  </AddIn>
+</RevitAddIns>
+```
+
+Bạn có thể tạo **GUID** mới bằng cách sử dụng tính năng "Create GUID" trong Visual Studio (Tools -\> Create GUID) hoặc các công cụ tạo **GUID** trực tuyến.
+
+#### 2.4. Lưu trữ dữ liệu mở rộng (Extensible Storage)
+
+**Extensible Storage** là một tính năng mạnh mẽ cho phép bạn đính kèm dữ liệu tùy chỉnh vào bất kỳ `Element` nào trong mô hình Revit, một cách bền vững. Các `Schema` và `Field` của dữ liệu này được định danh bằng **GUID**.
+
+```csharp
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.ExtensibleStorage;
+using System;
+using System.Linq;
+
+// Tạo một Schema GUID duy nhất cho dữ liệu của bạn
+// Bạn nên tạo một GUID MỚI cho mỗi Schema
+public static Guid MySchemaGuid = new Guid("c6b3e9a4-1f2d-4e5a-8b0c-7d6f5e4a3b2c");
+
+// ... trong phương thức Execute của IExternalCommand ...
+public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+{
+    UIDocument uidoc = commandData.Application.ActiveUIDocument;
+    Document doc = uidoc.Document;
+
+    using (Transaction tr = new Transaction(doc, "Ghi dữ liệu Extensible Storage"))
+    {
+        tr.Start();
+        try
+        {
+            Element wall = new FilteredElementCollector(doc)
+                .OfClass(typeof(Wall))
+                .WhereElementIsNotElementType()
+                .FirstOrDefault();
+
+            if (wall != null)
+            {
+                // 1. Lấy hoặc tạo Schema
+                Schema schema = Schema.Lookup(MySchemaGuid);
+                if (schema == null)
+                {
+                    SchemaBuilder schemaBuilder = new SchemaBuilder(MySchemaGuid);
+                    schemaBuilder.SetReadAccessLevel(AccessLevel.Public); // Ai có thể đọc
+                    schemaBuilder.SetWriteAccessLevel(AccessLevel.Public); // Ai có thể ghi
+                    schemaBuilder.SetVendorId("ACME"); // ID nhà cung cấp
+                    schemaBuilder.SetApplicationGUID(commandData.Application.ActiveAddInId.Get)// Sử dụng GUID của Add-in
+                    schemaBuilder.SetSchemaName("MyCustomWallData");
+
+                    // Định nghĩa Field (trường) trong Schema
+                    FieldBuilder fieldBuilder = schemaBuilder.AddSimpleField("Notes", typeof(string));
+                    fieldBuilder.SetUnitType(UnitType.UT_Undefined); // Không có đơn vị cho chuỗi
+                    fieldBuilder.SetSpecType(SpecTypeId.String.Text); // Từ Revit 2021+
+
+                    schema = schemaBuilder.Build();
+                }
+
+                // 2. Ghi dữ liệu vào Element
+                Entity entity = new Entity(schema);
+                Field notesField = schema.Get  Field("Notes");
+                entity.Set(notesField, "Đây là ghi chú tùy chỉnh từ Extensible Storage.");
+
+                wall.SetEntity(entity);
+                TaskDialog.Show("Thành công", "Đã ghi dữ liệu Extensible Storage vào tường.");
+            }
+            else
+            {
+                TaskDialog.Show("Thông báo", "Không tìm thấy tường nào.");
+            }
+
+            tr.Commit();
+        }
+        catch (Exception ex)
+        {
+            tr.RollBack();
+            message = "Lỗi khi ghi Extensible Storage: " + ex.Message;
+            return Result.Failed;
+        }
+    }
+    return Result.Succeeded;
+}
+
+// Code để đọc dữ liệu từ Extensible Storage
+public Result ReadExtensibleStorage(ExternalCommandData commandData, ref string message, ElementSet elements)
+{
+    UIDocument uidoc = commandData.Application.ActiveUIDocument;
+    Document doc = uidoc.Document;
+
+    Element wall = new FilteredElementCollector(doc)
+        .OfClass(typeof(Wall))
+        .WhereElementIsNotElementType()
+        .FirstOrDefault();
+
+    if (wall != null)
+    {
+        Schema schema = Schema.Lookup(MySchemaGuid);
+        if (schema != null)
+        {
+            Entity entity = wall.GetEntity(schema);
+            if (entity != null && entity.IsValid())
+            {
+                Field notesField = schema.Get  Field("Notes");
+                string notes = entity.Get<string>(notesField);
+                TaskDialog.Show("Đọc dữ liệu", $"Ghi chú từ Extensible Storage: {notes}");
+            }
+            else
+            {
+                TaskDialog.Show("Thông báo", "Không tìm thấy dữ liệu Extensible Storage trên tường này.");
+            }
+        }
+        else
+        {
+            TaskDialog.Show("Thông báo", "Không tìm thấy Schema cho dữ liệu Extensible Storage của bạn.");
+        }
+    }
+    return Result.Succeeded;
+}
+```
+
+**Lưu ý:** `SchemaBuilder.SetApplicationGUID` phải được gọi với **GUID** của Add-in đã đăng ký (từ file `.addin`).
+
+---
+
+### 3\. Những lưu ý quan trọng khi sử dụng GUID
+
+- **Tạo GUID duy nhất:** Luôn sử dụng các công cụ tạo **GUID** chuyên dụng để đảm bảo tính duy nhất. Đừng cố gắng tự nghĩ ra **GUID**.
+- **Lưu trữ GUID cẩn thận:** Đối với Shared Parameters và Extensible Storage, **GUID** của chúng là không thể thay đổi. Hãy lưu trữ chúng trong code của bạn (ví dụ: trong một lớp tĩnh `public static readonly Guid`) để dễ dàng truy cập và tái sử dụng.
+- **Phân biệt `ElementId` và `UniqueId`:** Nhớ rằng `ElementId` thay đổi, `UniqueId` không thay đổi trong cùng một tài liệu Revit.
+- **Khi nào dùng GUID?**
+  - Bạn cần định danh một đối tượng hoặc dữ liệu mà phải duy nhất trên toàn cầu và bền vững qua nhiều phiên làm việc, nhiều dự án hoặc các hệ thống khác nhau.
+  - Làm việc với Shared Parameters.
+  - Tạo dữ liệu tùy chỉnh bền vững với Extensible Storage.
+  - Đăng ký Add-in của bạn.
+- **Khi nào không dùng GUID?**
+  - Khi bạn chỉ cần tham chiếu một đối tượng trong phiên làm việc hiện tại hoặc một tập tin `.rvt` cụ thể mà không cần duy trì liên kết qua các bản sao hoặc dự án khác (thường dùng `ElementId`).
+
+---
+
+### Kết luận
+
+**GUID** là một khái niệm mạnh mẽ và không thể thiếu trong phát triển **Revit API**, đặc biệt khi bạn cần giải quyết các bài toán về tính bền vững và khả năng tương tác dữ liệu. Nắm vững cách sử dụng **GUID** trong việc định danh Shared Parameters, `UniqueId` của `Element` và Extensible Storage sẽ mở ra những cánh cửa mới cho việc xây dựng các Add-in Revit mạnh mẽ, linh hoạt và có khả năng tích hợp cao với các hệ thống BIM khác.
+
+Bạn đã từng sử dụng **GUID** trong những trường hợp đặc biệt nào trong các dự án Revit API của mình? Hãy chia sẻ kinh nghiệm của bạn ở phần bình luận bên dưới nhé\!

@@ -1,0 +1,275 @@
+---
+title: 'GUID và Shared Parameters'
+date: '2025-06-10'
+lastmod: '2025-06-10'
+tags: ['next-js', 'tailwind', 'guide', 'feature']
+draft: false
+summary: 'Trong BIM, việc đảm bảo tính nhất quán của dữ liệu trên nhiều dự án và Family là một thách thức không nhỏ.'
+images: ['/static/images/twitter-card.png']
+---
+
+## Giải mã chìa khóa định danh bền vững trong Revit API
+
+Trong BIM, việc đảm bảo tính nhất quán của dữ liệu trên nhiều dự án và Family là một thách thức không nhỏ. **Shared Parameters (Tham số chia sẻ)** chính là câu trả lời của Revit cho vấn đề này, và cốt lõi của chúng nằm ở **GUID (Globally Unique Identifier)**. Bài viết này sẽ đi sâu hơn vào mối quan hệ không thể tách rời giữa **GUID** và Shared Parameters, cách chúng hoạt động để mang lại sự bền vững cho dữ liệu BIM, và những cân nhắc quan trọng khi bạn làm việc với chúng trong **Revit API**.
+
+---
+
+### 1\. Bản chất của Shared Parameters: GUID là trái tim
+
+Shared Parameters là các tham số tùy chỉnh mà bạn định nghĩa và lưu trữ trong một tệp `.txt` riêng biệt (tệp Shared Parameters). Không giống như Project Parameters hay Family Parameters thông thường, Shared Parameters có thể được tải vào bất kỳ dự án hoặc Family nào, và điều kỳ diệu là chúng sẽ luôn được coi là **cùng một tham số** trên các môi trường khác nhau.
+
+Lý do cho sự "nhất quán" này chính là **GUID**. Mỗi khi bạn tạo một Shared Parameter mới trong tệp `.txt`, Revit sẽ gán cho nó một **GUID** duy nhất. **GUID** này là định danh thực sự của tham số đó, không phải tên hiển thị của nó.
+
+- **Tên có thể thay đổi, GUID thì không:** Người dùng có thể đổi tên hiển thị của một Shared Parameter trong một dự án hoặc Family mà không ảnh hưởng đến bản chất của nó. Nhưng **GUID** của nó thì bất biến. Điều này cực kỳ quan trọng cho các công cụ tự động hóa, vì bạn không thể dựa vào tên để tìm một tham số, mà phải dựa vào **GUID**.
+- **Chia sẻ và tái sử dụng:** Khi bạn tải một Shared Parameter từ tệp `.txt` vào một dự án hoặc Family, Revit sẽ nhận diện nó thông qua **GUID**. Nếu một tham số với cùng **GUID** đã tồn tại (dù tên hiển thị có thể khác), Revit sẽ biết đó là cùng một tham số và không tạo bản sao.
+
+---
+
+### 2\. Cấu trúc tệp Shared Parameters: Nơi GUID cư trú
+
+Tệp Shared Parameters (`.txt`) thực chất là một tệp văn bản thuần túy với cấu trúc đặc biệt. Bạn có thể mở nó bằng Notepad để xem cách **GUID** được lưu trữ.
+
+Một đoạn trích ví dụ từ tệp Shared Parameters:
+
+```
+# This is a Revit shared parameter file.
+# Do not edit manually.
+*META	VERSION	MINVERSION
+META	2	1
+*GROUP	ID	NAME
+GROUP	1	General Data
+GROUP	2	Structural
+*PARAM	GUID	NAME	DATATYPE	DATACATEGORY	GROUP	VISIBLE	DESCRIPTION	USERMODIFIABLE
+PARAM	c7d2e8b1-4f5a-4c6b-9d8e-1a2b3c4d5e6f	Project_Phase	TEXT	-1	1	1	Giai đoạn của dự án	1
+PARAM	d9a0f1g2-3h4i-5j6k-7l8m-9n0o1p2q3r4s	Area_Calculated	AREA	-1	1	0	Diện tích tính toán tự động	0
+```
+
+Trong mỗi dòng `PARAM`, cột thứ hai chính là **GUID** của tham số đó. Đây là bằng chứng rõ ràng nhất cho thấy **GUID** là định danh cốt lõi.
+
+---
+
+### 3\. Làm việc với Shared Parameters và GUID trong Revit API
+
+Khi phát triển Add-in, việc tương tác với Shared Parameters đòi hỏi bạn phải sử dụng **GUID** một cách chính xác.
+
+#### 3.1. Truy xuất Shared Parameters từ Element
+
+Cách đáng tin cậy nhất để tìm một Shared Parameter trên một `Element` là duyệt qua tất cả các `Parameter` của nó và so sánh **GUID**.
+
+```csharp
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
+using System;
+using System.Linq;
+
+[Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
+public class AccessSharedParamByGuid : IExternalCommand
+{
+    // GUID của Shared Parameter "Project_Phase" mà bạn đã định nghĩa trong tệp của mình
+    // LƯU Ý: THAY THẾ GUID NÀY BẰNG GUID THỰC TẾ TỪ TỆP SHARED PARAMETERS CỦA BẠN!
+    private static readonly Guid ProjectPhaseParamGuid = new Guid("c7d2e8b1-4f5a-4c6b-9d8e-1a2b3c4d5e6f");
+
+    public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+    {
+        UIDocument uidoc = commandData.Application.ActiveUIDocument;
+        Document doc = uidoc.Document;
+
+        using (Transaction tr = new Transaction(doc, "Đọc Shared Parameter Project_Phase"))
+        {
+            tr.Start();
+            try
+            {
+                // Lấy một đối tượng (ví dụ: tầng đầu tiên) để kiểm tra Shared Parameter
+                Element level = new FilteredElementCollector(doc)
+                    .OfClass(typeof(Level))
+                    .WhereElementIsNotElementType()
+                    .FirstOrDefault();
+
+                if (level != null)
+                {
+                    Parameter projectPhaseParam = null;
+
+                    // Duyệt qua tất cả các tham số của Element để tìm Shared Parameter bằng GUID
+                    foreach (Parameter param in level.Parameters)
+                    {
+                        if (param.IsShared && param.GUID == ProjectPhaseParamGuid)
+                        {
+                            projectPhaseParam = param;
+                            break;
+                        }
+                    }
+
+                    if (projectPhaseParam != null)
+                    {
+                        TaskDialog.Show("Shared Parameter Found",
+                            $"Tên: {projectPhaseParam.Definition.Name}\n" +
+                            $"Giá trị hiện tại: {projectPhaseParam.AsString()}");
+
+                        // Ghi giá trị mới vào Shared Parameter
+                        if (projectPhaseParam.IsReadWrite)
+                        {
+                            projectPhaseParam.Set("Giai đoạn Thiết kế");
+                            TaskDialog.Show("Cập nhật", "Đã cập nhật Project_Phase thành 'Giai đoạn Thiết kế'");
+                        }
+                        else
+                        {
+                        TaskDialog.Show("Cảnh báo", "Tham số Project_Phase là chỉ đọc.");
+                        }
+                    }
+                    else
+                    {
+                        TaskDialog.Show("Thông báo", "Không tìm thấy Shared Parameter 'Project_Phase' trên Element này. Bạn đã gán nó cho Category này trong dự án chưa?");
+                    }
+                }
+                else
+                {
+                    TaskDialog.Show("Thông báo", "Không tìm thấy Level nào trong mô hình.");
+                }
+
+                tr.Commit();
+            }
+            catch (Exception ex)
+            {
+                tr.RollBack();
+                message = "Lỗi khi thực thi lệnh: " + ex.Message;
+                return Result.Failed;
+            }
+        }
+        return Result.Succeeded;
+    }
+}
+```
+
+#### 3.2. Tạo và gán Shared Parameters trong dự án
+
+Để một Shared Parameter có thể được sử dụng trên các `Element` trong dự án, nó phải được thêm vào dự án dưới dạng một `Binding`. Quá trình này cũng sử dụng **GUID**.
+
+```csharp
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+[Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
+public class CreateAndBindSharedParameter : IExternalCommand
+{
+    // GUID cho Shared Parameter mới
+    private static readonly Guid NewSharedParamGuid = new Guid("a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d");
+    private const string NewSharedParamName = "MyCustomProperty";
+
+    public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+    {
+        UIDocument uidoc = commandData.Application.ActiveUIDocument;
+        Document doc = uidoc.Document;
+
+        using (Transaction tr = new Transaction(doc, "Tạo và gán Shared Parameter"))
+        {
+            tr.Start();
+            try
+            {
+                // Bước 1: Mở tệp Shared Parameters hoặc tạo mới
+                // Đảm bảo đường dẫn đến tệp Shared Parameters là hợp lệ
+                string sharedParamsFilePath = @"C:\Users\Public\Documents\Revit Shared Parameters.txt";
+                if (!System.IO.File.Exists(sharedParamsFilePath))
+                {
+                    // Nếu tệp không tồn tại, tạo mới
+                    using (System.IO.StreamWriter sw = System.IO.File.CreateText(sharedParamsFilePath))
+                    {
+                        sw.WriteLine("# This is a Revit shared parameter file.");
+                        sw.WriteLine("*META\tVERSION\tMINVERSION");
+                        sw.WriteLine("META\t2\t1");
+                    }
+                }
+
+                doc.Application.SharedParametersFilename = sharedParamsFilePath;
+                DefinitionFile sharedDefFile = doc.Application.OpenSharedParameterFile();
+
+                if (sharedDefFile == null)
+                {
+                    message = "Không thể mở hoặc tạo tệp Shared Parameters.";
+                    tr.RollBack();
+                    return Result.Failed;
+                }
+
+                // Bước 2: Tìm hoặc tạo Definition cho Shared Parameter
+                DefinitionGroup myGroup = sharedDefFile.Groups.get_Item("General Data");
+                if (myGroup == null)
+                {
+                    myGroup = sharedDefFile.Groups.Create("General Data");
+                }
+
+                Definition newDefinition = myGroup.Definitions.get_Item(NewSharedParamName);
+                if (newDefinition == null)
+                {
+                    // Từ Revit 2021 trở đi, nên dùng ForgeTypeId cho SpecType
+                    ForgeTypeId specType = SpecTypeId.String.Text; // Ví dụ: Kiểu Text
+                    bool isVisible = true;
+                    // Không cần định nghĩa FieldType cho API mới
+
+                    ExternalDefinitionCreationOptions options = new ExternalDefinitionCreationOptions(NewSharedParamName, specType);
+                    options.GUID = NewSharedParamGuid; // Gán GUID cho Shared Parameter
+                    newDefinition = myGroup.Definitions.Create(options);
+
+                    TaskDialog.Show("Shared Param Info", $"Đã tạo Shared Parameter mới: {NewSharedParamName}");
+                }
+
+                // Bước 3: Gán Shared Parameter vào Categories trong dự án (Binding)
+                CategorySet categories = doc.Application.Create.NewCategorySet();
+                Category wallsCategory = doc.Settings.Categories.get_Item(BuiltInCategory.OST_Walls);
+                if (wallsCategory != null)
+                {
+                    categories.Insert(wallsCategory);
+                }
+
+                // Tạo Instance Binding (tham số riêng cho từng đối tượng)
+                InstanceBinding instanceBinding = doc.Application.Create.NewInstanceBinding(categories);
+
+                // Gán Shared Parameter vào BindingMap của dự án
+                BindingMap bindingMap = doc.ParameterBindings;
+                if (!bindingMap.Contains(newDefinition))
+                {
+                    bindingMap.Insert(newDefinition, instanceBinding);
+                    TaskDialog.Show("Thành công", $"Đã gán Shared Parameter '{NewSharedParamName}' vào hạng mục Tường.");
+                }
+                else
+                {
+                    TaskDialog.Show("Thông báo", $"Shared Parameter '{NewSharedParamName}' đã tồn tại trong dự án.");
+                }
+
+                tr.Commit();
+            }
+            catch (Exception ex)
+            {
+                tr.RollBack();
+                message = "Lỗi khi tạo và gán Shared Parameter: " + ex.Message;
+                return Result.Failed;
+            }
+        }
+        return Result.Succeeded;
+    }
+}
+```
+
+**Lưu ý quan trọng:** Để code trên chạy được, bạn cần đảm bảo tệp Shared Parameters có thể truy cập được và bạn có quyền ghi vào đó. Bạn cũng nên xử lý tốt hơn các lỗi liên quan đến đường dẫn tệp.
+
+---
+
+### 4\. Những cân nhắc và thực tiễn tốt nhất
+
+- **Tạo GUID cho Shared Parameters:** Khi tạo Shared Parameter trong giao diện người dùng Revit hoặc thông qua API, hãy luôn đảm bảo bạn sử dụng một **GUID** mới cho mỗi tham số thực sự mới.
+- **Quản lý tệp Shared Parameters:** Tệp Shared Parameters là tài sản quan trọng. Hãy lưu trữ nó ở vị trí dễ truy cập và quản lý phiên bản cẩn thận.
+- **Chia sẻ tệp Shared Parameters giữa các nhóm:** Để đảm bảo tính nhất quán dữ liệu trong một công ty hoặc dự án lớn, tất cả các thành viên trong nhóm cần sử dụng cùng một tệp Shared Parameters.
+- **Sử dụng RevitLookup:** Đây là công cụ không thể thiếu để xác định **GUID** của Shared Parameters đã tồn tại trên các `Element` trong mô hình của bạn. Chỉ cần chọn một `Element`, chạy RevitLookup, tìm tham số đó, và bạn sẽ thấy `GUID` của nó.
+- **Tránh phụ thuộc vào tên tham số:** Như đã nhấn mạnh, tên hiển thị của Shared Parameter có thể thay đổi. Luôn dựa vào **GUID** khi lập trình để truy vấn hoặc thao tác với chúng.
+- **Chỉ tạo Shared Parameter nếu thực sự cần:** Nếu một tham số chỉ cần tồn tại trong một dự án và không cần được chia sẻ, hãy cân nhắc sử dụng Project Parameter để đơn giản hóa.
+
+---
+
+### Kết luận
+
+**GUID** là yếu tố then chốt đằng sau sức mạnh và tính bền vững của **Shared Parameters** trong Revit. Nắm vững cách **GUID** định danh các tham số này và cách tương tác với chúng trong **Revit API** sẽ giúp bạn tạo ra các Add-in mạnh mẽ, đáng tin cậy, có khả năng quản lý dữ liệu BIM một cách nhất quán trên nhiều dự án và Family. Đây là một kỹ năng thiết yếu cho bất kỳ nhà phát triển Revit API nào muốn xây dựng các giải pháp tự động hóa và quản lý thông tin hiệu quả.
+
+Bạn đã từng sử dụng **GUID** và Shared Parameters để giải quyết vấn đề cụ thể nào trong dự án BIM của mình chưa? Hãy chia sẻ những thành công hoặc thách thức của bạn ở phần bình luận dưới đây nhé\!
+
+---
