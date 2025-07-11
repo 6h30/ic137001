@@ -36,7 +36,7 @@ async function syncGoogleSheets() {
       lastMod: row[7] || row[6] || new Date().toISOString().split('T')[0], // Cột H: Last Mod, dùng Date nếu trống
       draft: false, // Giả định không có cột Draft, mặc định là false (đã xuất bản)
     }))
-
+    console.log('Dữ liệu bài viết từ Google Sheets:', posts) // In dữ liệu để kiểm tra
     return posts
   } catch (error) {
     console.error('Lỗi khi lấy dữ liệu từ Google Sheets:', error.message)
