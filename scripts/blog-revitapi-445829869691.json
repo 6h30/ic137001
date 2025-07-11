@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "blog-revitapi",
+  "private_key_id": "445829869691cb1c292b4221b942218da1d11927",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCoHOisMvs6KbYL\nRybb8r2CUQw+vzsQPz6cmF9zBmUON6XcIFg1XsoJbD4XrSM1f2PbQ1E17d8cn0M9\nTQccgsvSSkum9BqUVhjXBDjOihfu2BTwFRNpesCJB3GlkLHnx6UAvaPaPvI4BYkk\nz39+x+fFQp0spYIWX0Jk2T/awBED0LWo6rARBFdJnsMxl8WByC7o/VrYF++kdHqc\nlAop6FAk11Mg9cRMWu+nxMl3VtJtfphjhsWWctD2GgKysWOwTkE3ssmc6PnNreNk\nXC1Qi53Hsw654i9Joyg684bTmNTFHfhfrpTYmLEag3eMVJaLuMEEoUsUSl6WRHBK\nTR5c20u7AgMBAAECggEAF0e1ks8WijXnf0VRpMjHJIo7s17A+51+eqoBIckjamYb\nYlHaVT20pbxnFtlDlG95MQ5v6xNvP6PwaEdH8lNMjWj7c/m+yobntrLfeP6XlNw4\nfgy1HPjCO9ebjc1tTYcQmvsn+xuXaFmf5ciUQ8bEGkWAxYN/8cAsThHlrVHGqWve\nW51di4xDsX+xAlk1Q21N5DvtgiDZ47oO0C8uJc5DI/xZn4BtfyxhdQDQvToRLSBf\nNptlexeJ7KtXVsQnKyjYnlmJEiuItzUvT+dhzNuouH+51TqxHaPThwqWKTNi2W6p\nlyEY5APdjVveOwjdYVFMZHf9q4Bov3OtxITCG6A12QKBgQDkU0ExnlvESP+11OrW\ncYJw9e8uSf2Ta/SP6FlGHAFbglgudakLk+qG+JpgmiryW8i00P+3eFbUfYQJvLFS\nauXanBBRAZcTHms0nXdd0MZtev3wLLpEtgmKz7nTiP4GacdVNZRF/vrFf/bDfu4s\n26qHDieltlTg7SQkf9ALKKBMgwKBgQC8fVDjgTuzCgDu3kUrEmZ0Pchv/5ZDNlff\n6/uDug6Wzv6nUVuPFTfSA/b63cwkBC75uu6huruOrixVgftUlIte4zjDu4CIJ0X/\nH9d2ZeBrzLAWyAn+AJxcRtHrCTtV2BKyvbV+IyW9Mg5YCoxiCcsvQ7YiOqeWhAG6\nCR+QA0ROaQKBgQDSjcQNEc/mTrsg31xArSRxLxqGQU1Kab96BfZtpN3LmYPgNDjT\nqHAaT59tfj4kiWeo9yMZ+it4gNcGc6/CJToaQtj5GtJKmz6Zoqy1IxYZV9ZdaaHM\nQ2LBU5Y18JrxJxLfDS3S7rQq9TqGRcM2MswrB26gbmgPlCBEWGluIOTSKQKBgQCD\nPQHYFgA6Lcnuh2ZDkiEx6F6p1JyMGcdfitBprF9CE8ftOdF1M4HVQZtymoHrxdnr\nWYOTqg+zTYRi2QjkoDTWEYFRjzj0E9xBwarkrhRvGmq0wf1rFIPKIClC6/+bSsHi\nIALBW7mIHNUt6dJK5KTLOOsUtCBBxZHqNTX7sLqbmQKBgCYf6U/GNZe43dOn1naM\nLQHoNSinwXlzZFh4SqtvAzx/6ZUIXqN0jJZed0R8Ht8nDoVP3a+9rSV2PQqpwG0t\nwLWB3PrabHZNebmsOX8OOY5UDloL08BI8d0C2U+mwPeqGENe672AHYejZJQPWGwz\n4eXC2zdHPYyK4BK2uWoL+Pdy\n-----END PRIVATE KEY-----\n",
+  "client_email": "blog-dcviet@blog-revitapi.iam.gserviceaccount.com",
+  "client_id": "117342037535004244006",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/blog-dcviet%40blog-revitapi.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
