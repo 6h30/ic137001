@@ -45,7 +45,7 @@ function prepareBlogData(posts) {
       'Reading Time': post.readingTime?.text || '',
       Authors: post.authors ? post.authors.join(', ') : '',
       'Canonical URL': post.canonicalUrl || '',
-    }));
+    }))
 }
 
 // Cập nhật Google Sheet
