@@ -1,0 +1,655 @@
+---
+title: 'Lưu trữ `UniqueId` của một element'
+date: '2025-06-26'
+tags: ['revit-api', 'code']
+draft: false
+summary: Ba phương pháp chính, cấu hình ứng dụng (file JSON), cơ sở dữ liệu (SQLite), và Extensible Storage (trong chính file Revit) để lưu trữ UniqueId của một element.
+---
+
+### **Thực Tiễn Lưu Trữ `UniqueId` Trong Ứng Dụng Revit API C\#**
+
+Khi phát triển các ứng dụng BIM bằng Revit API C#, một trong những thử thách then chốt là làm sao để duy trì mối liên kết bền vững với các element trong mô hình Revit qua nhiều phiên làm việc. Như chúng ta đã biết, `ElementId` của Revit không ổn định, thay đổi sau mỗi lần mở lại dự án. Giải pháp đáng tin cậy nhất chính là sử dụng **`UniqueId`** – một định danh toàn cục và bền vững cho mỗi element. Nhưng làm cách nào để lưu trữ và truy xuất `UniqueId` này một cách hiệu quả trong ứng dụng của bạn?
+
+Bài viết này sẽ đi sâu vào ba phương pháp thực tiễn nhất để lưu trữ `UniqueId` của các element được chọn hoặc cần theo dõi: **lưu vào file cấu hình ứng dụng (JSON)**, **lưu vào cơ sở dữ liệu (SQLite)**, và **lưu trực tiếp vào file Revit bằng Extensible Storage**. Mỗi phương pháp không chỉ được trình bày với ví dụ mã nguồn chi tiết mà còn đi kèm với phân tích về ưu nhược điểm, giúp bạn lựa chọn giải pháp phù hợp nhất cho nhu cầu của mình.
+
+---
+
+### **1. Phương Pháp 1: Lưu Trữ `UniqueId` vào File Cấu Hình (JSON)**
+
+Việc lưu trữ dữ liệu vào một file cấu hình, điển hình là JSON, là một cách đơn giản và nhanh chóng để duy trì thông tin qua các phiên làm việc. Phương pháp này đặc biệt phù hợp với các ứng dụng nhỏ, độc lập, hoặc khi bạn cần lưu trữ một lượng dữ liệu tương đối ít mà không yêu cầu phức tạp về truy vấn hay quản lý.
+
+**Thực tiễn triển khai:**
+
+Để thực hiện, chúng ta sẽ định nghĩa một lớp đơn giản để ánh xạ `UniqueId` với một định danh hoặc mô tả mà bạn muốn lưu trữ. Ví dụ, chúng ta muốn lưu `UniqueId` của một bức tường cụ thể mà người dùng đã chọn, cùng với một "Tên Định Danh" do ứng dụng gán.
+
+```csharp
+// Bước 1: Định nghĩa cấu trúc dữ liệu để lưu trữ
+public class ElementData
+{
+    public string UniqueId { get; set; }
+    public string CustomName { get; set; } // Tên định danh tùy chỉnh cho element
+    public string ElementType { get; set; } // Loại element (ví dụ: Wall, Door)
+}
+
+// Bước 2: Lớp quản lý việc lưu và đọc từ JSON
+public class ConfigManager
+{
+    private static string configFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MyRevitApp", "config.json");
+
+    public static List<ElementData> LoadElementData()
+    {
+        if (!File.Exists(configFilePath))
+        {
+            return new List<ElementData>();
+        }
+        string jsonString = File.ReadAllText(configFilePath);
+        return JsonConvert.DeserializeObject<List<ElementData>>(jsonString) ?? new List<ElementData>();
+    }
+
+    public static void SaveElementData(List<ElementData> data)
+    {
+        Directory.CreateDirectory(Path.GetDirectoryName(configFilePath));
+        string jsonString = JsonConvert.SerializeObject(data, Formatting.Indented);
+        File.WriteAllText(configFilePath, jsonString);
+    }
+}
+
+// Bước 3: Cách sử dụng trong Revit Command
+[Transaction(TransactionMode.Manual)]
+public class SaveElementUniqueIdCommand : IExternalCommand
+{
+    public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+    {
+        UIDocument uidoc = commandData.Application.ActiveUIDocument;
+        Document doc = uidoc.Document;
+
+        try
+        {
+            // Cho phép người dùng chọn một element
+            Reference selectedRef = uidoc.Selection.PickObject(ObjectType.Element, "Chọn một element để lưu UniqueId");
+            Element selectedElement = doc.GetElement(selectedRef);
+
+            // Tạo đối tượng ElementData
+            ElementData newElementData = new ElementData
+            {
+                UniqueId = selectedElement.UniqueId,
+                CustomName = $"My_Custom_{selectedElement.Category.Name}_{selectedElement.Id}", // Gán tên định danh tùy chỉnh
+                ElementType = selectedElement.GetType().Name // Lưu loại element
+            };
+
+            // Tải dữ liệu hiện có, thêm dữ liệu mới và lưu lại
+            List<ElementData> allElements = ConfigManager.LoadElementData();
+            // Đảm bảo không lưu trùng UniqueId (nếu cần)
+            if (!allElements.Any(e => e.UniqueId == newElementData.UniqueId))
+            {
+                allElements.Add(newElementData);
+                ConfigManager.SaveElementData(allElements);
+                TaskDialog.Show("Thành công", $"Đã lưu UniqueId của '{selectedElement.Name}' vào file cấu hình.");
+            }
+            else
+            {
+                TaskDialog.Show("Thông báo", "Element này đã được lưu trước đó.");
+            }
+
+            return Result.Succeeded;
+        }
+        catch (OperationCanceledException)
+        {
+            return Result.Cancelled;
+        }
+        catch (Exception ex)
+        {
+            message = ex.Message;
+            return Result.Failed;
+        }
+    }
+}
+
+[Transaction(TransactionMode.Manual)]
+public class LoadElementUniqueIdCommand : IExternalCommand
+{
+    public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+    {
+        Document doc = commandData.Application.ActiveUIDocument.Document;
+
+        try
+        {
+            List<ElementData> storedData = ConfigManager.LoadElementData();
+            if (storedData.Any())
+            {
+                string info = "Các UniqueId đã lưu:\n";
+                foreach (var data in storedData)
+                {
+                    Element foundElement = doc.GetElement(data.UniqueId);
+                    info += $"- Tên tùy chỉnh: {data.CustomName}, Loại: {data.ElementType}, UniqueId: {data.UniqueId}\n";
+                    if (foundElement != null)
+                    {
+                        info += $"  -> Tìm thấy trong dự án hiện tại: {foundElement.Name} (ID: {foundElement.Id})\n";
+                    }
+                    else
+                    {
+                        info += "  -> KHÔNG tìm thấy trong dự án hiện tại.\n";
+                    }
+                }
+                TaskDialog.Show("Dữ liệu Element đã lưu", info);
+            }
+            else
+            {
+                TaskDialog.Show("Thông báo", "Không có dữ liệu UniqueId nào được lưu.");
+            }
+            return Result.Succeeded;
+        }
+        catch (Exception ex)
+        {
+            message = ex.Message;
+            return Result.Failed;
+        }
+    }
+}
+```
+
+_Lưu ý: Để sử dụng các ví dụ trên, bạn cần cài đặt thư viện Newtonsoft.Json (Json.NET) qua NuGet._
+
+**Phân tích:**
+
+- **Ưu điểm:**
+  - **Đơn giản và dễ triển khai:** Không yêu cầu thiết lập cơ sở dữ liệu hay các cấu trúc phức tạp.
+  - **Dễ đọc và chỉnh sửa:** File JSON có thể được mở và xem bằng trình soạn thảo văn bản.
+  - **Di động:** Dễ dàng di chuyển file cấu hình giữa các máy (nếu cần).
+- **Nhược điểm:**
+  - **Hiệu suất kém với dữ liệu lớn:** Không phù hợp để lưu trữ hàng ngàn `UniqueId` vì mỗi lần đọc/ghi sẽ tải toàn bộ dữ liệu vào bộ nhớ.
+  - **Thiếu khả năng truy vấn phức tạp:** Không có các tính năng tìm kiếm, lọc, hoặc sắp xếp mạnh mẽ như cơ sở dữ liệu.
+  - **Khó quản lý đồng thời:** Có thể phát sinh vấn đề nếu nhiều ứng dụng hoặc luồng cố gắng ghi vào cùng một file cùng lúc.
+  - **Không an toàn:** Dữ liệu không được mã hóa hoặc bảo vệ.
+
+---
+
+### **2. Phương Pháp 2: Lưu Trữ `UniqueId` vào Cơ Sở Dữ Liệu (SQLite)**
+
+Khi ứng dụng của bạn cần quản lý một lượng lớn `UniqueId`, thực hiện các truy vấn phức tạp, hoặc yêu cầu hiệu suất cao hơn, việc sử dụng một cơ sở dữ liệu là lựa chọn tối ưu. **SQLite** là một cơ sở dữ liệu nhẹ, không yêu cầu máy chủ, rất phù hợp cho các ứng dụng desktop như plugin Revit. Nó lưu trữ dữ liệu trong một file đơn giản trên đĩa.
+
+**Thực tiễn triển khai:**
+
+Để sử dụng SQLite, bạn cần cài đặt gói NuGet `System.Data.SQLite.Core`.
+
+```csharp
+// Bước 1: Định nghĩa lớp ánh xạ (tương tự JSON)
+public class ElementData
+{
+    public string UniqueId { get; set; }
+    public string CustomName { get; set; }
+    public string ElementType { get; set; }
+}
+
+// Bước 2: Lớp quản lý cơ sở dữ liệu SQLite
+public class DbManager
+{
+    private static string dbFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MyRevitApp", "elements.db");
+    private static string connectionString = $"Data Source={dbFilePath};Version=3;";
+
+    public static void InitializeDatabase()
+    {
+        Directory.CreateDirectory(Path.GetDirectoryName(dbFilePath));
+        if (!File.Exists(dbFilePath))
+        {
+            SQLiteConnection.CreateFile(dbFilePath);
+            using (var connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                string createTableSql = @"
+                    CREATE TABLE IF NOT EXISTS Elements (
+                        UniqueId TEXT PRIMARY KEY,
+                        CustomName TEXT,
+                        ElementType TEXT
+                    );";
+                using (var command = new SQLiteCommand(createTableSql, connection))
+                {
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+    }
+
+    public static void InsertElementData(ElementData data)
+    {
+        InitializeDatabase(); // Đảm bảo DB được khởi tạo
+        using (var connection = new SQLiteConnection(connectionString))
+        {
+            connection.Open();
+            string insertSql = "INSERT OR REPLACE INTO Elements (UniqueId, CustomName, ElementType) VALUES (@UniqueId, @CustomName, @ElementType)";
+            using (var command = new SQLiteCommand(insertSql, connection))
+            {
+                command.Parameters.AddWithValue("@UniqueId", data.UniqueId);
+                command.Parameters.AddWithValue("@CustomName", data.CustomName);
+                command.Parameters.AddWithValue("@ElementType", data.ElementType);
+                command.ExecuteNonQuery();
+            }
+        }
+    }
+
+    public static List<ElementData> GetAllElementData()
+    {
+        InitializeDatabase();
+        List<ElementData> dataList = new List<ElementData>();
+        using (var connection = new SQLiteConnection(connectionString))
+        {
+            connection.Open();
+            string selectSql = "SELECT UniqueId, CustomName, ElementType FROM Elements";
+            using (var command = new SQLiteCommand(selectSql, connection))
+            {
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        dataList.Add(new ElementData
+                        {
+                            UniqueId = reader.GetString(0),
+                            CustomName = reader.GetString(1),
+                            ElementType = reader.GetString(2)
+                        });
+                    }
+                }
+            }
+        }
+        return dataList;
+    }
+
+    public static ElementData GetElementDataByUniqueId(string uniqueId)
+    {
+        InitializeDatabase();
+        using (var connection = new SQLiteConnection(connectionString))
+        {
+            connection.Open();
+            string selectSql = "SELECT UniqueId, CustomName, ElementType FROM Elements WHERE UniqueId = @UniqueId";
+            using (var command = new SQLiteCommand(selectSql, connection))
+            {
+                command.Parameters.AddWithValue("@UniqueId", uniqueId);
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        return new ElementData
+                        {
+                            UniqueId = reader.GetString(0),
+                            CustomName = reader.GetString(1),
+                            ElementType = reader.GetString(2)
+                        };
+                    }
+                }
+            }
+        }
+        return null;
+    }
+}
+
+// Bước 3: Cách sử dụng trong Revit Command (tương tự JSON nhưng gọi DbManager)
+[Transaction(TransactionMode.Manual)]
+public class SaveElementUniqueIdToDbCommand : IExternalCommand
+{
+    public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+    {
+        UIDocument uidoc = commandData.Application.ActiveUIDocument;
+        Document doc = uidoc.Document;
+
+        try
+        {
+            Reference selectedRef = uidoc.Selection.PickObject(ObjectType.Element, "Chọn một element để lưu UniqueId vào DB");
+            Element selectedElement = doc.GetElement(selectedRef);
+
+            ElementData newElementData = new ElementData
+            {
+                UniqueId = selectedElement.UniqueId,
+                CustomName = $"DB_Custom_{selectedElement.Category.Name}_{selectedElement.Id}",
+                ElementType = selectedElement.GetType().Name
+            };
+
+            DbManager.InsertElementData(newElementData);
+            TaskDialog.Show("Thành công", $"Đã lưu UniqueId của '{selectedElement.Name}' vào cơ sở dữ liệu.");
+
+            return Result.Succeeded;
+        }
+        catch (OperationCanceledException)
+        {
+            return Result.Cancelled;
+        }
+        catch (Exception ex)
+        {
+            message = ex.Message;
+            return Result.Failed;
+        }
+    }
+}
+
+[Transaction(TransactionMode.Manual)]
+public class LoadElementUniqueIdFromDbCommand : IExternalCommand
+{
+    public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+    {
+        Document doc = commandData.Application.ActiveUIDocument.Document;
+
+        try
+        {
+            List<ElementData> storedData = DbManager.GetAllElementData();
+            if (storedData.Any())
+            {
+                string info = "Các UniqueId đã lưu trong DB:\n";
+                foreach (var data in storedData)
+                {
+                    Element foundElement = doc.GetElement(data.UniqueId);
+                    info += $"- Tên tùy chỉnh: {data.CustomName}, Loại: {data.ElementType}, UniqueId: {data.UniqueId}\n";
+                    if (foundElement != null)
+                    {
+                        info += $"  -> Tìm thấy trong dự án hiện tại: {foundElement.Name} (ID: {foundElement.Id})\n";
+                    }
+                    else
+                    {
+                        info += "  -> KHÔNG tìm thấy trong dự án hiện tại.\n";
+                    }
+                }
+                TaskDialog.Show("Dữ liệu Element từ DB", info);
+            }
+            else
+            {
+                TaskDialog.Show("Thông báo", "Không có dữ liệu UniqueId nào được lưu trong DB.");
+            }
+            return Result.Succeeded;
+        }
+        catch (Exception ex)
+        {
+            message = ex.Message;
+            return Result.Failed;
+        }
+    }
+}
+```
+
+_Lưu ý: Để sử dụng ví dụ trên, bạn cần cài đặt thư viện `System.Data.SQLite.Core` qua NuGet._
+
+**Phân tích:**
+
+- **Ưu điểm:**
+  - **Hiệu suất cao với dữ liệu lớn:** Tối ưu cho việc lưu trữ và truy vấn hàng ngàn hoặc hàng triệu bản ghi.
+  - **Khả năng truy vấn mạnh mẽ:** Hỗ trợ SQL cho các thao tác tìm kiếm, lọc, sắp xếp dữ liệu phức tạp.
+  - **Quản lý dữ liệu tốt hơn:** Cấu trúc dữ liệu có tổ chức, dễ dàng thêm/sửa/xóa bản ghi cụ thể.
+  - **Đáng tin cậy:** Cơ chế giao dịch (transaction) đảm bảo tính toàn vẹn của dữ liệu.
+- **Nhược điểm:**
+  - **Thiết lập phức tạp hơn:** Yêu cầu một số kiến thức về SQL và quản lý cơ sở dữ liệu.
+  - **Phụ thuộc vào thư viện:** Cần gói NuGet `System.Data.SQLite.Core`.
+  - **File cơ sở dữ liệu riêng biệt:** Mặc dù tự chứa, nhưng vẫn là một file riêng nằm ngoài file Revit, cần được quản lý độc lập.
+
+---
+
+### **3. Phương Pháp 3: Lưu Trữ `UniqueId` vào Extensible Storage (Gắn trực tiếp vào file Revit)**
+
+Extensible Storage là một tính năng mạnh mẽ của Revit API, cho phép bạn lưu trữ dữ liệu tùy chỉnh trực tiếp vào tài liệu Revit hoặc gắn dữ liệu đó vào một element cụ thể. Dữ liệu này "đi kèm" với tệp RVT, có nghĩa là khi bạn chia sẻ hoặc di chuyển file Revit, dữ liệu của bạn cũng sẽ đi theo, đảm bảo tính nhất quán cao nhất. Đây là phương pháp lý tưởng khi dữ liệu bạn muốn lưu trữ có mối liên hệ chặt chẽ với bản thân tài liệu Revit hoặc các element bên trong nó.
+
+**Thực tiễn triển khai:**
+
+Để sử dụng Extensible Storage, bạn cần định nghĩa một Schema (lược đồ) để mô tả cấu trúc dữ liệu bạn muốn lưu. Mỗi Schema cần một GUID duy nhất.
+
+```csharp
+// Bước 1: Định nghĩa GUID cho Schema của bạn
+// Bạn nên tạo một GUID mới cho ứng dụng của mình để tránh xung đột
+public static class MyExtensibleStorageSchema
+{
+    // GUID duy nhất cho Schema này. Sử dụng công cụ tạo GUID (ví dụ: Guid.NewGuid())
+    // và giữ cố định cho ứng dụng của bạn.
+    public static readonly Guid SchemaGuid = new Guid("YOUR_UNIQUE_GUID_HERE_1234567890ABCDEF"); // <-- Thay thế bằng GUID thực của bạn
+
+    // Tên Schema hiển thị
+    public static string SchemaName = "MyRevitElementTrackerSchema";
+
+    // Các tên trường (field names) trong Schema
+    public static string UniqueIdFieldName = "ElementUniqueId";
+    public static string CustomNameFieldName = "ElementCustomName";
+    public static string ElementTypeFieldName = "ElementType";
+
+    public static Schema GetSchema()
+    {
+        Schema schema = Schema.Lookup(SchemaGuid);
+        if (schema == null)
+        {
+            SchemaBuilder schemaBuilder = new SchemaBuilder(SchemaGuid);
+            schemaBuilder.SetReadAccessLevel(AccessLevel.Public); // Ai cũng có thể đọc
+            schemaBuilder.SetWriteAccessLevel(AccessLevel.Public); // Ai cũng có thể ghi
+            schemaBuilder.SetVendorId("MyCompany"); // ID nhà cung cấp của bạn
+            schemaBuilder.SetSchemaName(SchemaName);
+
+            // Định nghĩa các trường dữ liệu
+            schemaBuilder.AddDataField(UniqueIdFieldName, typeof(string));
+            schemaBuilder.AddDataField(CustomNameFieldName, typeof(string));
+            schemaBuilder.AddDataField(ElementTypeFieldName, typeof(string));
+
+            schema = schemaBuilder.Finish();
+        }
+        return schema;
+    }
+}
+
+// Bước 2: Lớp quản lý việc đọc/ghi Extensible Storage
+public class ExtensibleStorageManager
+{
+    public static void SaveElementData(Document doc, Element element, string customName)
+    {
+        Schema schema = MyExtensibleStorageSchema.GetSchema();
+
+        // Xóa DataStorage cũ nếu đã tồn tại để tránh tạo nhiều DataStorage cho cùng một element
+        // Tuy nhiên, với UniqueId là khóa chính, ta sẽ lưu dữ liệu vào một DataStorage chung
+        // hoặc gắn trực tiếp vào element nếu muốn lưu trên từng element cụ thể.
+        // Trong ví dụ này, chúng ta sẽ tạo một DataStorage riêng biệt trong tài liệu
+        // để lưu trữ danh sách các element được theo dõi.
+
+        // Tìm hoặc tạo DataStorage instance để lưu trữ dữ liệu của chúng ta
+        // Chúng ta có thể tạo một DataStorage duy nhất trong tài liệu để giữ "danh sách" các element đã lưu
+        // Hoặc gắn trực tiếp vào từng element. Ví dụ này sẽ gắn vào DataStorage của document.
+        // Nếu muốn gắn vào từng element, bạn sẽ lấy element.GetEntity() và element.SetEntity()
+
+        // Lấy hoặc tạo một DataStorage element trong tài liệu để lưu Schema
+        // Đây là cách phổ biến để lưu dữ liệu cấp độ tài liệu mà không cần gắn vào một element cụ thể
+        DataStorage dataStorage = new FilteredElementCollector(doc)
+                                    .OfClass(typeof(DataStorage))
+                                    .WhereElementIsNotElementType()
+                                    .FirstOrDefault(ds => ds.Get <= schema.Guid); // Sử dụng Get() thay cho GetEntitySchemaGuid() trong các phiên bản mới
+
+        using (Transaction trans = new Transaction(doc, "Lưu dữ liệu Extensible Storage"))
+        {
+            trans.Start();
+
+            if (dataStorage == null)
+            {
+                dataStorage = DataStorage.Create(doc);
+            }
+
+            // Gắn dữ liệu Entity vào DataStorage
+            // Entity là instance của Schema. Một DataStorage có thể chứa nhiều Entity của các Schema khác nhau.
+            Entity entity = dataStorage.GetEntity(schema);
+            if (entity == null || !entity.IsValid())
+            {
+                entity = new Entity(schema);
+            }
+
+            // Đọc dữ liệu hiện có để thêm mới hoặc cập nhật
+            // Để lưu danh sách, chúng ta sẽ sử dụng một List<string> JSON hoặc một chuỗi để deserialize
+            string jsonListOfElements = "";
+            try
+            {
+                // Kiểm tra xem trường UniqueIdFieldName có tồn tại trong Entity không trước khi đọc
+                if (entity.Get<string>(schema.GetField(MyExtensibleStorageSchema.UniqueIdFieldName)) != null) // Cách kiểm tra tồn tại trường
+                {
+                    // Lỗi: Không thể lưu danh sách element vào một trường đơn lẻ như thế này.
+                    // Để lưu danh sách, ta cần:
+                    // 1. Tạo một trường kiểu String để lưu toàn bộ List<ElementData> đã serialize thành JSON.
+                    // 2. Hoặc tạo nhiều Entity, mỗi Entity đại diện cho một ElementData.
+
+                    // Giải pháp 1: Lưu List<ElementData> dưới dạng JSON trong một trường string duy nhất của Schema.
+                    // Đây là cách đơn giản hơn khi bạn cần quản lý một danh sách các đối tượng.
+                    // (Bạn sẽ cần một Schema khác để lưu trữ List<ElementData> dưới dạng JSON)
+
+                    // Giải pháp 2: Gắn Extensible Storage trực tiếp vào từng Element muốn theo dõi.
+                    // Ví dụ dưới đây sẽ minh họa giải pháp 2 vì nó trực tiếp hơn với bài toán truy vết element.
+                    // Chúng ta sẽ bỏ qua DataStorage và gắn trực tiếp vào selectedElement.
+                }
+            }
+            catch { /* Bỏ qua lỗi nếu trường không tồn tại */ }
+
+            // === CÁCH THỨC LƯU TRỰC TIẾP VÀO ELEMENT ===
+            // Entity được gắn vào element. Mỗi element có thể có một hoặc nhiều Entity.
+            Entity elementEntity = element.GetEntity(schema);
+            if (elementEntity == null || !elementEntity.IsValid())
+            {
+                elementEntity = new Entity(schema);
+            }
+
+            // Gán giá trị cho các trường
+            elementEntity.Set(schema.GetField(MyExtensibleStorageSchema.UniqueIdFieldName), element.UniqueId);
+            elementEntity.Set(schema.GetField(MyExtensibleStorageSchema.CustomNameFieldName), customName);
+            elementEntity.Set(schema.GetField(MyExtensibleStorageSchema.ElementTypeFieldName), element.GetType().Name);
+
+            // Gắn Entity vào element
+            element.SetEntity(elementEntity);
+
+            trans.Commit();
+        }
+    }
+
+    public static ElementData LoadElementData(Document doc, Element element)
+    {
+        Schema schema = MyExtensibleStorageSchema.GetSchema();
+        Entity entity = element.GetEntity(schema);
+
+        if (entity != null && entity.IsValid())
+        {
+            return new ElementData
+            {
+                UniqueId = entity.Get<string>(schema.GetField(MyExtensibleStorageSchema.UniqueIdFieldName)),
+                CustomName = entity.Get<string>(schema.GetField(MyExtensibleStorageSchema.CustomNameFieldName)),
+                ElementType = entity.Get<string>(schema.GetField(MyExtensibleStorageSchema.ElementTypeFieldName))
+            };
+        }
+        return null;
+    }
+
+    public static List<ElementData> GetAllTrackedElements(Document doc)
+    {
+        List<ElementData> trackedElements = new List<ElementData>();
+        Schema schema = MyExtensibleStorageSchema.GetSchema();
+
+        // Lọc tất cả các element trong tài liệu có gắn Schema của chúng ta
+        FilteredElementCollector collector = new FilteredElementCollector(doc);
+        foreach (Element elem in collector.WhereElementIsNotElementType().ToElements()) // Chỉ lấy instances
+        {
+            Entity entity = elem.GetEntity(schema);
+            if (entity != null && entity.IsValid())
+            {
+                trackedElements.Add(new ElementData
+                {
+                    UniqueId = entity.Get<string>(schema.GetField(MyExtensibleStorageSchema.UniqueIdFieldName)),
+                    CustomName = entity.Get<string>(schema.GetField(MyExtensibleStorageSchema.CustomNameFieldName)),
+                    ElementType = entity.Get<string>(schema.GetField(MyExtensibleStorageSchema.ElementTypeFieldName))
+                });
+            }
+        }
+        return trackedElements;
+    }
+}
+
+// Bước 3: Cách sử dụng trong Revit Command
+[Transaction(TransactionMode.Manual)]
+public class SaveElementToExtensibleStorageCommand : IExternalCommand
+{
+    public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+    {
+        UIDocument uidoc = commandData.Application.ActiveUIDocument;
+        Document doc = uidoc.Document;
+
+        try
+        {
+            Reference selectedRef = uidoc.Selection.PickObject(ObjectType.Element, "Chọn một element để lưu vào Extensible Storage");
+            Element selectedElement = doc.GetElement(selectedRef);
+
+            string customName = $"ExtStorage_Custom_{selectedElement.Category.Name}_{selectedElement.Id}";
+            ExtensibleStorageManager.SaveElementData(doc, selectedElement, customName);
+
+            TaskDialog.Show("Thành công", $"Đã lưu dữ liệu của '{selectedElement.Name}' vào Extensible Storage.");
+
+            return Result.Succeeded;
+        }
+        catch (OperationCanceledException)
+        {
+            return Result.Cancelled;
+        }
+        catch (Exception ex)
+        {
+            message = ex.Message;
+            return Result.Failed;
+        }
+    }
+}
+
+[Transaction(TransactionMode.Manual)]
+public class LoadElementFromExtensibleStorageCommand : IExternalCommand
+{
+    public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+    {
+        Document doc = commandData.Application.ActiveUIDocument.Document;
+
+        try
+        {
+            List<ElementData> storedData = ExtensibleStorageManager.GetAllTrackedElements(doc);
+            if (storedData.Any())
+            {
+                string info = "Các Element đã lưu trong Extensible Storage:\n";
+                foreach (var data in storedData)
+                {
+                    Element foundElement = doc.GetElement(data.UniqueId);
+                    info += $"- Tên tùy chỉnh: {data.CustomName}, Loại: {data.ElementType}, UniqueId: {data.UniqueId}\n";
+                    if (foundElement != null)
+                    {
+                        info += $"  -> Tìm thấy trong dự án hiện tại: {foundElement.Name} (ID: {foundElement.Id})\n";
+                    }
+                    else
+                    {
+                        info += "  -> KHÔNG tìm thấy trong dự án hiện tại (có thể đã bị xóa hoặc từ dự án khác).\n";
+                    }
+                }
+                TaskDialog.Show("Dữ liệu Element từ Extensible Storage", info);
+            }
+            else
+            {
+                TaskDialog.Show("Thông báo", "Không có dữ liệu Extensible Storage nào được lưu trong dự án này.");
+            }
+            return Result.Succeeded;
+        }
+        catch (Exception ex)
+        {
+            message = ex.Message;
+            return Result.Failed;
+        }
+    }
+}
+```
+
+_Lưu ý quan trọng: Bạn **phải thay thế `YOUR_UNIQUE_GUID_HERE_1234567890ABCDEF`** trong `MyExtensibleStorageSchema.SchemaGuid` bằng một GUID duy nhất do bạn tự tạo (ví dụ: bằng cách dùng `Guid.NewGuid()` trong C\# và giữ cố định nó). Mỗi ứng dụng và mỗi Schema nên có một GUID riêng để tránh xung đột dữ liệu._
+
+**Phân tích:**
+
+- **Ưu điểm:**
+  - **Bền vững và đi kèm file Revit:** Dữ liệu được nhúng trực tiếp vào file `.rvt`, đảm bảo tính nhất quán khi file được chia sẻ, di chuyển hoặc làm việc nhóm (worksharing).
+  - **An toàn và bảo mật:** Dữ liệu được bảo vệ bởi Revit (khó truy cập nếu không qua API), và bạn có thể thiết lập cấp độ truy cập (Public, Vendor, Application).
+  - **Mối liên hệ chặt chẽ:** Dễ dàng liên kết dữ liệu trực tiếp với các element cụ thể trong mô hình.
+  - **Hỗ trợ transaction:** Các thao tác đọc/ghi dữ liệu được thực hiện trong transaction của Revit, đảm bảo tính toàn vẹn.
+- **Nhược điểm:**
+  - **Phức tạp hơn để triển khai:** Yêu cầu hiểu biết về Schema, Entity, Field và quản lý transaction.
+  - **Giới hạn về kích thước dữ liệu:** Không nên lưu trữ quá nhiều dữ liệu lớn vào Extensible Storage vì nó làm tăng kích thước file Revit.
+  - **Khó truy vấn toàn cục:** Để tìm tất cả các element có Extensible Storage, bạn phải duyệt qua tất cả các element trong tài liệu, có thể chậm với các mô hình lớn.
+  - **Dữ liệu không dễ dàng được "nhìn thấy" bên ngoài:** Khó kiểm tra hoặc chỉnh sửa thủ công nếu không có công cụ đặc biệt.
+
+---
+
+Túm lại, lựa chọn phương pháp lưu trữ `UniqueId` phụ thuộc vào nhu cầu cụ thể của ứng dụng Revit của bạn:
+
+- **Sử dụng File Cấu Hình (JSON):** Phù hợp cho các ứng dụng nhỏ, đơn giản, hoặc khi bạn chỉ cần lưu trữ một vài `UniqueId` cho mục đích tạm thời hoặc cấu hình người dùng cá nhân. Rất nhanh để triển khai.
+- **Sử dụng Cơ Sở Dữ Liệu (SQLite):** Là lựa chọn lý tưởng cho các ứng dụng cần quản lý một lượng lớn `UniqueId` và dữ liệu liên quan, yêu cầu khả năng truy vấn mạnh mẽ, hoặc cần hiệu suất cao. Mặc dù dữ liệu nằm ngoài file Revit, nhưng sự linh hoạt và khả năng mở rộng của database là rất lớn.
+- **Sử dụng Extensible Storage:** Đây là phương pháp tối ưu khi dữ liệu `UniqueId` (và các thông tin liên quan) cần phải "gắn liền" với file Revit và di chuyển cùng với nó. Nó đảm bảo tính nhất quán cao nhất trong môi trường làm việc nhóm và chia sẻ dự án. Tuy nhiên, cần cân nhắc về kích thước dữ liệu và độ phức tạp khi triển khai.
+
+Trong nhiều trường hợp phức tạp, bạn có thể cần kết hợp các phương pháp này. Ví dụ, lưu trữ `UniqueId` chính và các thông tin quan trọng vào Extensible Storage để đảm bảo tính liên kết với mô hình, đồng thời sử dụng cơ sở dữ liệu bên ngoài để lưu trữ các siêu dữ liệu lớn hơn, các log thay đổi, hoặc dữ liệu phân tích chi tiết liên quan đến các element đó.

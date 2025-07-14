@@ -1,0 +1,292 @@
+---
+title: 'Khai Thác GUID Từ Shared Parameters Trong Revit'
+date: '2025-06-10'
+lastmod: '2025-06-10'
+tags: ['revit-api', 'guid', 'guide']
+draft: false
+summary: Trong môi trường BIM, đặc biệt là với Revit, Shared Parameters đóng vai trò cực kỳ quan trọng trong việc chuẩn hóa dữ liệu và đảm bảo khả năng tương tác giữa các dự án và phần tử. Mỗi Shared Parameter được xác định duy nhất bởi một Global Unique Identifier (GUID).
+---
+
+Trong môi trường BIM, đặc biệt là với Revit, **Shared Parameters** đóng vai trò cực kỳ quan trọng trong việc chuẩn hóa dữ liệu và đảm bảo khả năng tương tác giữa các dự án và phần tử. Mỗi Shared Parameter được xác định duy nhất bởi một **Global Unique Identifier (GUID)**. Việc truy cập và thao tác với GUID này là chìa khóa để tự động hóa, kiểm soát chất lượng dữ liệu, và phát triển các công cụ mạnh mẽ thông qua Revit API.
+
+Bài viết này chúng ta thực hành 4 phương pháp chính để trích xuất GUID từ Shared Parameters.
+
+---
+
+### 1\. Truy Cập Trực Tiếp GUID Từ Đối Tượng `Parameter`
+
+Đây là phương pháp phổ biến và hiệu quả nhất khi bạn đã có một đối tượng `Parameter` trong tay và muốn xác định xem nó có phải là Shared Parameter hay không, đồng thời lấy GUID của nó.
+
+Khi bạn truy vấn các tham số của một đối tượng (ví dụ: một tường, một cửa sổ, hoặc một đối tượng FamilyInstance bất kỳ), bạn sẽ nhận được một tập hợp các đối tượng `Parameter`. Không phải tất cả các tham số đều là Shared Parameters; chúng có thể là Built-in Parameters (tham số tích hợp sẵn của Revit) hoặc Project Parameters (tham số dự án). Để lấy GUID, chúng ta cần đảm bảo rằng tham số đó thực sự là Shared Parameter.
+
+**Cơ chế:**
+
+Mỗi đối tượng `Parameter` có một thuộc tính **`Definition`**. Đối với Shared Parameters, `Definition` này sẽ là một thể hiện của lớp **`ExternalDefinition`**. Ngược lại, các loại tham số khác sẽ có các kiểu `Definition` khác (ví dụ: `InternalDefinition` cho Built-in Parameters).
+
+1.  **Lấy đối tượng `Parameter`:** Bạn có thể lấy `Parameter` từ một `Element` bằng cách sử dụng `element.GetParameters()` hoặc `element.LookupParameter("Tên Tham Số")`.
+2.  **Kiểm tra loại `Definition`:** Sau khi có đối tượng `Parameter`, truy cập thuộc tính `Parameter.Definition`.
+3.  **Ép kiểu sang `ExternalDefinition`:** Nếu `Parameter.Definition` là một `ExternalDefinition`, bạn có thể an toàn ép kiểu và truy cập thuộc tính **`GUID`** của nó.
+
+**Ví dụ (C\#):**
+
+```csharp
+using Autodesk.Revit.DB;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+public class SharedParameterGuidExtractor
+{
+    public static Guid? GetSharedParameterGuid(Element element, string parameterName)
+    {
+        // Lấy tham số theo tên
+        Parameter param = element.LookupParameter(parameterName);
+
+        if (param != null)
+        {
+            // Kiểm tra xem Definition của tham số có phải là ExternalDefinition không
+            ExternalDefinition externalDef = param.Definition as ExternalDefinition;
+
+            if (externalDef != null)
+            {
+                // Nếu đúng, trả về GUID của ExternalDefinition
+                return externalDef.GUID;
+            }
+        }
+        return null; // Trả về null nếu không tìm thấy hoặc không phải Shared Parameter
+    }
+
+    public static Dictionary<string, Guid> GetAllSharedParameterGuids(Element element)
+    {
+        Dictionary<string, Guid> sharedParamGuids = new Dictionary<string, Guid>();
+
+        foreach (Parameter param in element.GetParameters())
+        {
+            ExternalDefinition externalDef = param.Definition as ExternalDefinition;
+
+            if (externalDef != null)
+            {
+                // Thêm tên tham số và GUID vào Dictionary
+                sharedParamGuids[param.Definition.Name] = externalDef.GUID;
+            }
+        }
+        return sharedParamGuids;
+    }
+
+    // Ví dụ cách sử dụng trong một lệnh Revit
+    /*
+    public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+    {
+        UIDocument uidoc = commandData.Application.ActiveUIDocument;
+        Document doc = uidoc.Document;
+
+        // Chọn một phần tử bất kỳ để thử nghiệm
+        ElementId selectedId = uidoc.Selection.GetElementIds().FirstOrDefault();
+        if (selectedId == null)
+        {
+            message = "Vui lòng chọn một phần tử.";
+            return Result.Cancelled;
+        }
+
+        Element selectedElement = doc.GetElement(selectedId);
+
+        // Lấy GUID của một Shared Parameter cụ thể (ví dụ: "Comment")
+        // Lưu ý: "Comment" thường là Built-in Parameter, hãy thay bằng tên Shared Parameter của bạn
+        // Để thử nghiệm, bạn có thể tạo một Shared Parameter mới và gán cho phần tử.
+        Guid? commentGuid = GetSharedParameterGuid(selectedElement, "MySharedParameterName");
+        if (commentGuid.HasValue)
+        {
+            TaskDialog.Show("Shared Parameter GUID", $"GUID của 'MySharedParameterName': {commentGuid.Value}");
+        }
+        else
+        {
+            TaskDialog.Show("Shared Parameter GUID", "Không tìm thấy Shared Parameter 'MySharedParameterName' hoặc nó không phải Shared Parameter trên phần tử đã chọn.");
+        }
+
+        // Lấy tất cả GUID của Shared Parameters trên phần tử
+        Dictionary<string, Guid> allGuids = GetAllSharedParameterGuids(selectedElement);
+        string allGuidsMessage = "All Shared Parameters GUIDs on selected element:\n";
+        foreach (var entry in allGuids)
+        {
+            allGuidsMessage += $"{entry.Key}: {entry.Value}\n";
+        }
+        TaskDialog.Show("All Shared Parameters GUIDs", allGuidsMessage);
+
+        return Result.Succeeded;
+    }
+    */
+}
+```
+
+---
+
+### 2\. Duyệt Qua Các Định Nghĩa Shared Parameter Trong Tệp Shared Parameter (Shared Parameter File)
+
+Nếu mục tiêu của bạn là liệt kê tất cả các Shared Parameters (và GUID của chúng) mà không cần chúng phải được gán cho bất kỳ phần tử cụ thể nào trong dự án, bạn có thể đọc trực tiếp từ tệp Shared Parameter. Phương pháp này đặc biệt hữu ích khi bạn muốn kiểm tra các định nghĩa tham số có sẵn hoặc muốn đảm bảo sự đồng bộ giữa các dự án.
+
+**Cơ chế:**
+
+Revit API cung cấp các lớp để tương tác với tệp Shared Parameter (`.txt`). Tệp này được cấu trúc thành các nhóm (`DefinitionGroup`) và mỗi nhóm chứa các định nghĩa tham số (`ExternalDefinition`).
+
+1.  **Mở tệp Shared Parameter:** Sử dụng `Application.OpenSharedParameterFile()` để tải tệp Shared Parameter hiện đang được Revit sử dụng.
+2.  **Duyệt qua các nhóm định nghĩa:** Đối tượng `SharedParameterFile` chứa một bộ sưu tập `DefinitionGroups`.
+3.  **Duyệt qua các định nghĩa trong mỗi nhóm:** Mỗi `DefinitionGroup` chứa một bộ sưu tập `Definitions`. Trong bộ sưu tập này, bạn cần kiểm tra xem `Definition` có phải là `ExternalDefinition` hay không.
+4.  **Lấy GUID:** Từ mỗi `ExternalDefinition`, bạn có thể truy cập thuộc tính **`GUID`**.
+
+**Ví dụ (C\#):**
+
+```csharp
+using Autodesk.Revit.DB;
+using Autodesk.Revit.ApplicationServices; // Cần thiết cho Application
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+public class SharedParameterFileExtractor
+{
+    public static Dictionary<string, Guid> GetGuidsFromSharedParameterFile(Application app)
+    {
+        Dictionary<string, Guid> sharedParamGuids = new Dictionary<string, Guid>();
+
+        // Lấy đường dẫn đến tệp Shared Parameter hiện tại
+        SharedParameterFile spFile = app.OpenSharedParameterFile();
+
+        if (spFile != null)
+        {
+            // Duyệt qua từng nhóm định nghĩa trong tệp
+            foreach (DefinitionGroup group in spFile.Groups)
+            {
+                // Duyệt qua từng định nghĩa trong mỗi nhóm
+                foreach (Definition def in group.Definitions)
+                {
+                    // Kiểm tra xem định nghĩa có phải là ExternalDefinition không
+                    ExternalDefinition externalDef = def as ExternalDefinition;
+
+                    if (externalDef != null)
+                    {
+                        // Thêm tên và GUID của Shared Parameter vào Dictionary
+                        sharedParamGuids[externalDef.Name] = externalDef.GUID;
+                    }
+                }
+            }
+        }
+        else
+        {
+            // Xử lý trường hợp không có tệp Shared Parameter nào được tải
+            Console.WriteLine("Không có tệp Shared Parameter nào được tải.");
+        }
+        return sharedParamGuids;
+    }
+
+    // Ví dụ cách sử dụng trong một lệnh Revit
+    /*
+    public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+    {
+        Application app = commandData.Application.Application;
+        Dictionary<string, Guid> allFileGuids = GetGuidsFromSharedParameterFile(app);
+
+        string allGuidsMessage = "Shared Parameters from file:\n";
+        if (allFileGuids.Count > 0)
+        {
+            foreach (var entry in allFileGuids)
+            {
+                allGuidsMessage += $"{entry.Key}: {entry.Value}\n";
+            }
+        }
+        else
+        {
+            allGuidsMessage = "Không tìm thấy Shared Parameters nào trong tệp hoặc tệp không được tải.";
+        }
+        TaskDialog.Show("Shared Parameters in File", allGuidsMessage);
+
+        return Result.Succeeded;
+    }
+    */
+}
+```
+
+---
+
+### 3\. Sử Dụng GUID để Truy Cập Parameter (`Element.get_Parameter(Guid)`)
+
+Trong một số trường hợp, bạn đã biết GUID của một Shared Parameter và muốn truy cập trực tiếp tham số đó trên một phần tử. Đây là cách hiệu quả nhất khi bạn có GUID và muốn thực hiện các thao tác như đọc/ghi giá trị tham số.
+
+**Cơ chế:**
+
+Lớp `Element` và `FamilyManager` trong Revit API cung cấp các phương thức cho phép bạn truy cập một tham số bằng GUID của nó.
+
+1.  **Xác định GUID:** Bạn cần có sẵn đối tượng `System.Guid` đại diện cho Shared Parameter mong muốn.
+2.  **Gọi phương thức truy cập:** Sử dụng `element.get_Parameter(guid)` (hoặc `element[guid]` trong cú pháp C\# indexer) hoặc `familyManager.get_Parameter(guid)` nếu bạn đang làm việc với các tham số trong môi trường Family.
+
+**Ví dụ (C\#):**
+
+```csharp
+using Autodesk.Revit.DB;
+using System;
+
+public class AccessParameterByGuid
+{
+    public static Parameter GetParameterByGuid(Element element, Guid sharedParameterGuid)
+    {
+        // Truy cập tham số bằng GUID
+        Parameter param = element.get_Parameter(sharedParameterGuid);
+        return param;
+    }
+
+    // Ví dụ cách sử dụng trong một lệnh Revit
+    /*
+    public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+    {
+        UIDocument uidoc = commandData.Application.ActiveUIDocument;
+        Document doc = uidoc.Document;
+
+        // Giả sử bạn có một GUID của Shared Parameter nào đó
+        // Thay thế bằng GUID thực tế của Shared Parameter bạn muốn truy cập
+        Guid myKnownSharedParamGuid = new Guid("YOUR-SHARED-PARAMETER-GUID-HERE");
+
+        ElementId selectedId = uidoc.Selection.GetElementIds().FirstOrDefault();
+        if (selectedId == null)
+        {
+            message = "Vui lòng chọn một phần tử.";
+            return Result.Cancelled;
+        }
+
+        Element selectedElement = doc.GetElement(selectedId);
+
+        Parameter specificParam = GetParameterByGuid(selectedElement, myKnownSharedParamGuid);
+
+        if (specificParam != null)
+        {
+            string paramValue = specificParam.AsValueString(); // Lấy giá trị của tham số
+            TaskDialog.Show("Parameter by GUID", $"Giá trị của tham số (GUID: {myKnownSharedParamGuid}) là: {paramValue}");
+        }
+        else
+        {
+            TaskDialog.Show("Parameter by GUID", $"Không tìm thấy tham số với GUID {myKnownSharedParamGuid} trên phần tử đã chọn.");
+        }
+
+        return Result.Succeeded;
+    }
+    */
+}
+```
+
+---
+
+### 4\. Sử Dụng RevitLookup (Công Cụ Debugging)
+
+Mặc dù không phải là một phương pháp lập trình trực tiếp, **RevitLookup** là một Add-in cực kỳ hữu ích và gần như không thể thiếu cho bất kỳ nhà phát triển Revit API nào. Nó cho phép bạn "snoop" (nghĩa là xem xét sâu) các đối tượng trong Revit và kiểm tra tất cả các thuộc tính của chúng, bao gồm cả GUID của Shared Parameters.
+
+**Cách sử dụng:**
+
+1.  **Cài đặt RevitLookup:** Tải và cài đặt RevitLookup từ GitHub hoặc Autodesk App Store.
+2.  **Kích hoạt:** Trong Revit, chọn một phần tử có chứa Shared Parameter mà bạn muốn kiểm tra.
+3.  **Snoop Current Selection:** Trên ribbon "Add-Ins", tìm nhóm "RevitLookup" và nhấp vào "Snoop Current Selection".
+4.  **Tìm Parameter:** Trong cửa sổ RevitLookup, điều hướng đến phần `Parameters` của đối tượng.
+5.  **Kiểm tra Definition:** Đối với mỗi tham số, bạn có thể mở rộng thuộc tính `Definition`. Nếu đó là Shared Parameter, bạn sẽ thấy `Autodesk.Revit.DB.ExternalDefinition` và có thể tìm thấy thuộc tính **`GUID`** của nó.
+
+**Lợi ích:**
+
+- **Khám phá:** Giúp bạn khám phá cấu trúc dữ liệu và các GUID của Shared Parameters mà không cần viết code.
+- **Debug:** Hỗ trợ gỡ lỗi bằng cách cho phép bạn xác minh GUID của các tham số khi phát triển ứng dụng.
+- **Xác định GUID:** Cực kỳ hữu ích để lấy GUID cho các Shared Parameter hiện có để sử dụng trong các script hoặc ứng dụng của bạn.

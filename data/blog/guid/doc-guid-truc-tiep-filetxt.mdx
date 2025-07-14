@@ -1,0 +1,55 @@
+---
+title: 'Đọc GUID Trực Tiếp Từ Tệp Shared Parameter'
+date: '2025-06-10T15:32:14Z'
+lastmod: '2025-06-10'
+tags: ['revit-api', 'guid', 'guide']
+draft: false
+summary: Tập trung vào việc đọc trực tiếp tệp .txt của Shared Parameter để lấy GUID
+---
+
+## Đọc GUID Trực Tiếp Từ Tệp Shared Parameter (Cách 2)
+
+Trong bài trước, chúng ta đã thảo luận về việc duyệt qua các định nghĩa Shared Parameter trong tệp Shared Parameter. Bây giờ, chúng ta sẽ đi sâu vào cách bạn có thể thực hiện điều này trong C\#, tập trung vào việc đọc trực tiếp tệp `.txt` của Shared Parameter để lấy GUID.
+
+Tệp Shared Parameter về bản chất là một tệp văn bản thuần túy (`.txt`) với một cấu trúc định dạng cụ thể. Mặc dù bạn hoàn toàn có thể mở tệp này bằng Notepad hoặc bất kỳ trình soạn thảo văn bản nào để xem nội dung, nhưng Revit API cung cấp một cách có cấu trúc và an toàn hơn để đọc và phân tích cú pháp tệp này. Điều này đảm bảo rằng bạn đang truy cập dữ liệu một cách chính xác theo cách mà Revit hiểu, thay vì phải tự mình phân tích cú pháp chuỗi.
+
+### Cấu Trúc Tệp Shared Parameter
+
+Tệp `.txt` của Shared Parameter tuân theo một định dạng nhất định, bao gồm các phần:
+
+- **Header:** Chứa thông tin phiên bản của tệp.
+- **Groups:** Mỗi nhóm được định nghĩa bằng một dòng bắt đầu bằng `*GROUP` và tên nhóm.
+- **Parameters:** Trong mỗi nhóm, các tham số được định nghĩa. Mỗi tham số sẽ có một dòng riêng, bao gồm tên, kiểu dữ liệu, GUID và các thuộc tính khác.
+
+Cấu trúc cơ bản của một tham số trong tệp Shared Parameter trông sẽ tương tự như sau:
+
+```
+*PARAM	<TênThamSố>	<KiểuDữLiệu>	<GUID>	<IDNhóm>	<Description>	<IsVisible>	<UserModifiable>
+```
+
+Ví dụ:
+
+```
+# This is a Revit shared parameter file.
+# Do not edit manually.
+
+*META	VERSION:4	CHARSET:1252
+
+*GROUP	ID	MyProjectParameters
+*PARAM	MyLengthParam	LENGTH	12345678-ABCD-EFAB-CDEF-1234567890AB	5	My custom length parameter	0	0
+*PARAM	MyTextParam	TEXT	CDEF1234-ABCD-EFAB-CDEF-1234567890AB	5	A text parameter	0	0
+```
+
+Trong ví dụ trên, `12345678-ABCD-EFAB-CDEF-1234567890AB` và `CDEF1234-ABCD-EFAB-CDEF-1234567890AB` chính là các **GUID** của các Shared Parameter.
+
+### Phương Pháp Lập Trình Với Revit API (Khuyến Nghị)
+
+Mặc dù bạn có thể tự mình đọc tệp `.txt` và phân tích cú pháp các dòng để trích xuất GUID, nhưng cách làm này không được khuyến khích (dễ xảy ra bug nếu không thực hiện tốt). Revit API cung cấp các đối tượng được xây dựng sẵn để xử lý tệp Shared Parameter, giúp việc trích xuất thông tin trở nên dễ dàng và đáng tin cậy hơn nhiều.
+
+Cách tiếp cận an toàn và chính xác nhất là sử dụng các lớp trong không gian tên `Autodesk.Revit.DB` như đã trình bày trong cách 2 của bài viết "Khai Thác GUID Từ Shared Parameters Trong Revit". Các lớp này bao gồm:
+
+- `Application`: Đối tượng ứng dụng Revit hiện tại.
+- `SharedParameterFile`: Đại diện cho tệp Shared Parameter đã tải.
+- `DefinitionGroup`: Đại diện cho một nhóm các tham số trong tệp.
+- `Definition`: Lớp cơ sở cho các định nghĩa tham số.
+- `ExternalDefinition`: Lớp cụ thể cho Shared Parameters, nơi chứa thuộc tính `GUID`.

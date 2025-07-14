@@ -1,7 +1,7 @@
 ---
 title: 'Tối ưu hóa truy vấn trong Revit API'
-date: '2025-06-05'
-lastmod: '2025-06-05'
+date: '2025-02-26'
+lastmod: '2025-02-26'
 tags: ['revit-api', 'filter', 'guide', 'feature']
 draft: false
 summary: 'Khi làm việc với Revit API, một trong những tác vụ phổ biến và quan trọng nhất là truy xuất các phần tử (Elements) từ mô hình. Việc này thường được thực hiện thông qua lớp FilteredElementCollector'
@@ -73,7 +73,6 @@ Các bộ lọc này đòi hỏi Revit phải kiểm tra từng `Element` một 
 **Các Slow Filters phổ biến:**
 
 - **`ParameterFilter`**: Lọc các `Element` dựa trên giá trị của các tham số (Parameters). Đây là một bộ lọc rất mạnh nhưng thường là Slow Filter nếu không được tối ưu. **Tuy nhiên, một số loại `ParameterFilter` có thể được tối ưu hóa nếu sử dụng đúng `StorageType` và `BuiltInParameter`**.
-
   - **Mẹo tối ưu:** Nếu bạn cần lọc theo giá trị tham số, hãy cố gắng kết hợp nó với một hoặc nhiều Quick Filters trước.
 
   ```csharp
