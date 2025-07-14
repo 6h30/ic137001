@@ -1,0 +1,253 @@
+---
+title: 'Quản Lý Shared Parameter File và Định Nghĩa Parameters Với Revit API C#'
+date: '2025-06-10'
+lastmod: '2025-06-10'
+tags: ['revit-api', 'guid', 'guide']
+draft: false
+summary: Việc quản lý Shared Parameter File và định nghĩa các thông số trực tiếp bằng Revit API mang lại cho bạn quyền kiểm soát tối ưu đối với dữ liệu trong mô hình BIM. Bạn có thể tự động hóa việc thiết lập các tiêu chuẩn dữ liệu, đảm bảo rằng mọi dự án đều tuân thủ các quy tắc bạn đã đề ra. Khả năng này là cực kỳ hữu ích cho các công ty muốn duy trì sự nhất quán và chất lượng dữ liệu BIM trên quy mô lớn.
+---
+
+Chúng ta đã đi qua cách đọc và ghi dữ liệu vào các **Shared Parameters** hiện có trong Revit bằng cách sử dụng **GUID**. Tuy nhiên, câu hỏi đặt ra là: điều gì sẽ xảy ra nếu Shared Parameter mà bạn muốn sử dụng chưa tồn tại? Hoặc nếu bạn muốn tạo một bộ Shared Parameters mới và chuẩn hóa cho dự án của mình một cách tự động?
+
+Đây chính là lúc bạn cần nắm vững cách **quản lý và định nghĩa các Shared Parameters trực tiếp từ Revit API**. Khả năng này cho phép bạn kiểm soát hoàn toàn tệp Shared Parameter (`.txt`) của mình, tạo các nhóm và định nghĩa các thông số mới một cách lập trình, mang lại sự linh hoạt và tự động hóa cao nhất.
+
+### 1\. Cấu Trúc của Shared Parameter File Trong Revit API
+
+Khi làm việc với tệp Shared Parameter (`.txt`) thông qua API, chúng ta sẽ tương tác với một số lớp chính:
+
+- **`Application.SharedParametersFilename`**: Đây là thuộc tính quan trọng nhất để thiết lập hoặc lấy đường dẫn đến tệp Shared Parameter hiện đang được Revit sử dụng.
+- **`Application.OpenSharedParameterFile()`**: Phương thức này tải tệp Shared Parameter từ đường dẫn đã chỉ định và trả về một đối tượng `SharedParameterFile`.
+- **`SharedParameterFile`**: Đối tượng này đại diện cho toàn bộ nội dung của tệp `.txt`. Nó chứa một tập hợp các `DefinitionGroup`.
+- **`DefinitionGroup`**: Đại diện cho một nhóm thông số trong tệp Shared Parameter. Mỗi nhóm có một tên duy nhất và chứa một tập hợp các `ExternalDefinition`.
+- **`ExternalDefinition`**: Đại diện cho định nghĩa của một Shared Parameter cụ thể (tên, GUID, kiểu dữ liệu, v.v.). Đây chính là nơi GUID của parameter được lưu trữ.
+- **`ExternalDefinitionCreationOptions`**: Một lớp giúp bạn định nghĩa các thuộc tính khi tạo mới một `ExternalDefinition`, bao gồm tên, kiểu dữ liệu (`ParameterType`), và liệu nó có thể sửa đổi được bởi người dùng hay không.
+
+Mối quan hệ giữa chúng có thể hình dung như sau:
+`Application` -\> `SharedParameterFile` -\> `DefinitionGroup` -\> `ExternalDefinition`
+
+### 2\. Các Thao Tác Cơ Bản Với Shared Parameter File
+
+Hãy cùng khám phá các thao tác chính mà bạn có thể thực hiện:
+
+#### a. Thiết Lập hoặc Lấy Đường Dẫn đến Shared Parameter File
+
+Trước khi làm bất cứ điều gì với tệp Shared Parameter, bạn cần cho Revit biết tệp đó nằm ở đâu.
+
+```csharp
+// Lấy đường dẫn hiện tại của Shared Parameter File
+string currentSpfPath = app.SharedParametersFilename;
+
+// Đặt đường dẫn đến Shared Parameter File mới hoặc đã tồn tại
+// Đảm bảo đường dẫn này có quyền ghi nếu bạn muốn tạo/chỉnh sửa file
+string myNewSpfPath = @"C:\MySharedParameters\MyCustomSPFile.txt";
+app.SharedParametersFilename = myNewSpfPath;
+```
+
+**Lưu ý:** Nếu tệp tại `myNewSpfPath` chưa tồn tại, Revit API sẽ tự động tạo một tệp Shared Parameter mới khi bạn thêm thông số vào đó.
+
+#### b. Mở/Tải Shared Parameter File
+
+Để làm việc với nội dung của tệp, bạn cần mở nó:
+
+```csharp
+SharedParameterFile sharedParametersFile = app.OpenSharedParameterFile();
+
+if (sharedParametersFile == null)
+{
+    TaskDialog.Show("Lỗi", "Không thể mở Shared Parameter File. Đảm bảo đường dẫn hợp lệ.");
+    return Result.Failed;
+}
+```
+
+#### c. Tạo Một Group Mới Trong Shared Parameter File
+
+Thông thường, bạn sẽ muốn tổ chức các Shared Parameters của mình vào các nhóm.
+
+```csharp
+// Kiểm tra xem nhóm đã tồn tại chưa
+DefinitionGroup myNewGroup = sharedParametersFile.Groups.get_Item("Thông số kỹ thuật");
+
+if (myNewGroup == null)
+{
+    // Nếu chưa tồn tại, tạo nhóm mới
+    myNewGroup = sharedParametersFile.Groups.Create("Thông số kỹ thuật");
+    TaskDialog.Show("Thông báo", "Đã tạo nhóm 'Thông số kỹ thuật' mới.");
+}
+else
+{
+    TaskDialog.Show("Thông báo", "Nhóm 'Thông số kỹ thuật' đã tồn tại.");
+}
+```
+
+#### d. Tạo Một Shared Parameter Mới Trong Một Group
+
+Đây là thao tác quan trọng nhất để định nghĩa một Shared Parameter mới.
+
+```csharp
+// Giả sử 'myNewGroup' đã được tạo hoặc lấy từ file
+// Tạo các tùy chọn cho định nghĩa thông số mới
+ExternalDefinitionCreationOptions options =
+    new ExternalDefinitionCreationOptions("Mã Thiết Bị", ParameterType.Text);
+
+// Quan trọng: Gán GUID cho parameter mới.
+// Nếu bạn muốn tái sử dụng một GUID cũ (ví dụ, từ một định nghĩa đã xóa), bạn có thể dùng nó.
+// Nếu không, hãy tạo GUID mới.
+options.GUID = Guid.NewGuid(); // Tạo GUID hoàn toàn mới
+
+// Cấu hình thêm (tùy chọn)
+options.Description = "Mã số định danh cho từng thiết bị";
+options.UserModifiable = true; // Cho phép người dùng chỉnh sửa trong Revit UI
+
+// Tạo Shared Parameter (ExternalDefinition)
+ExternalDefinition newExternalDefinition = myNewGroup.Definitions.Create(options);
+
+if (newExternalDefinition != null)
+{
+    TaskDialog.Show("Thành công", $"Đã tạo Shared Parameter '{newExternalDefinition.Name}' với GUID: {newExternalDefinition.Id}");
+}
+else
+{
+    TaskDialog.Show("Lỗi", "Không thể tạo Shared Parameter.");
+}
+```
+
+**Lưu ý về `options.GUID`:**
+
+- **`Guid.NewGuid()`**: Luôn tạo một GUID hoàn toàn mới. Đây là cách an toàn nhất khi bạn tạo một parameter thực sự mới.
+- **Tái sử dụng GUID**: Trong một số trường hợp nâng cao (ví dụ: bạn đã xóa một Shared Parameter và muốn tạo lại nó với cùng một GUID để không làm mất dữ liệu cũ trên các đối tượng), bạn có thể gán một GUID đã có sẵn. Tuy nhiên, hãy cực kỳ cẩn thận với thao tác này để tránh xung đột hoặc hiểu lầm dữ liệu.
+
+### 3\. Ví Dụ Code (C\#): Tạo Group và Shared Parameter Trong File
+
+Dưới đây là một ví dụ đầy đủ hơn, kết hợp các thao tác trên để tạo một nhóm và một Shared Parameter mới trong tệp `.txt`.
+
+```csharp
+using Autodesk.Revit.ApplicationServices;
+using Autodesk.Revit.Attributes;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
+using System;
+using System.IO; // Để kiểm tra file
+using System.Linq; // Để sử dụng LINQ
+
+[Transaction(TransactionMode.Manual)]
+public class ManageSharedParameterFile : IExternalCommand
+{
+    public Result Execute(
+        ExternalCommandData commandData,
+        ref string message,
+        ElementSet elements)
+    {
+        UIApplication uiApp = commandData.Application;
+        Application app = uiApp.Application;
+
+        // 1. Xác định đường dẫn cho Shared Parameter File
+        string spfFolderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "RevitSharedParameters");
+        if (!Directory.Exists(spfFolderPath))
+        {
+            Directory.CreateDirectory(spfFolderPath);
+        }
+        string spfPath = Path.Combine(spfFolderPath, "MyProjectSharedParameters.txt");
+
+        // 2. Thiết lập đường dẫn cho Revit Application
+        // Cần một Transaction để thay đổi Application settings
+        using (Transaction transaction = new Transaction(commandData.Application.ActiveUIDocument.Document, "Set SPF Path"))
+        {
+            transaction.Start();
+            app.SharedParametersFilename = spfPath;
+            transaction.Commit();
+        }
+
+        // 3. Mở Shared Parameter File
+        SharedParameterFile sharedParametersFile = app.OpenSharedParameterFile();
+
+        if (sharedParametersFile == null)
+        {
+            TaskDialog.Show("Lỗi", $"Không thể mở hoặc tạo Shared Parameter File tại:\n{spfPath}\n" +
+                                   "Đảm bảo có quyền ghi vào thư mục.");
+            return Result.Failed;
+        }
+
+        // 4. Tạo hoặc lấy Group
+        string groupName = "ThongSoQuanLy";
+        DefinitionGroup myGroup = sharedParametersFile.Groups.get_Item(groupName);
+
+        using (Transaction transaction = new Transaction(commandData.Application.ActiveUIDocument.Document, "Create SP Group/Param"))
+        {
+            transaction.Start();
+
+            if (myGroup == null)
+            {
+                myGroup = sharedParametersFile.Groups.Create(groupName);
+                if (myGroup != null)
+                {
+                    TaskDialog.Show("Thông báo", $"Đã tạo nhóm Shared Parameter mới: '{groupName}'.");
+                }
+                else
+                {
+                    TaskDialog.Show("Lỗi", $"Không thể tạo nhóm Shared Parameter: '{groupName}'.");
+                    transaction.RollBack();
+                    return Result.Failed;
+                }
+            }
+            else
+            {
+                TaskDialog.Show("Thông báo", $"Nhóm Shared Parameter '{groupName}' đã tồn tại.");
+            }
+
+            // 5. Tạo hoặc lấy Shared Parameter trong Group
+            string paramName = "Ma_Tai_San";
+            ExternalDefinition existingParam = myGroup.Definitions.get_Item(paramName) as ExternalDefinition;
+
+            if (existingParam == null)
+            {
+                // Tạo tùy chọn định nghĩa Shared Parameter mới
+                ExternalDefinitionCreationOptions options =
+                    new ExternalDefinitionCreationOptions(paramName, ParameterType.Text);
+
+                options.GUID = Guid.NewGuid(); // Tạo GUID mới cho parameter
+                options.Description = "Mã số duy nhất cho tài sản";
+                options.UserModifiable = true; // Có thể chỉnh sửa bởi người dùng
+
+                ExternalDefinition newParam = myGroup.Definitions.Create(options);
+
+                if (newParam != null)
+                {
+                    TaskDialog.Show("Thành công", $"Đã tạo Shared Parameter mới:\n" +
+                                                  $"Tên: {newParam.Name}\n" +
+                                                  $"GUID: {newParam.Id}\n" +
+                                                  $"Kiểu: {newParam.ParameterType}\n" +
+                                                  $"Trong nhóm: {myGroup.Name}");
+                }
+                else
+                {
+                    TaskDialog.Show("Lỗi", $"Không thể tạo Shared Parameter: '{paramName}'.");
+                    transaction.RollBack();
+                    return Result.Failed;
+                }
+            }
+            else
+            {
+                TaskDialog.Show("Thông báo", $"Shared Parameter '{paramName}' đã tồn tại trong nhóm '{groupName}' với GUID: {existingParam.Id}.");
+            }
+
+            transaction.Commit();
+        }
+
+        return Result.Succeeded;
+    }
+}
+```
+
+**Giải thích code:**
+
+- **Đường dẫn file:** Code tạo một thư mục `RevitSharedParameters` trong My Documents và một tệp `.txt` tên `MyProjectSharedParameters.txt` để lưu trữ các Shared Parameters. Đảm bảo ứng dụng của bạn có quyền ghi vào thư mục này.
+- **Transaction cho `app.SharedParametersFilename`**: Việc gán giá trị cho `app.SharedParametersFilename` cũng cần nằm trong một `Transaction` vì nó thay đổi cài đặt của ứng dụng Revit.
+- **Kiểm tra tồn tại:** Trước khi tạo Group hoặc Parameter mới, code kiểm tra xem chúng đã tồn tại chưa để tránh lỗi.
+- **`ExternalDefinitionCreationOptions`**: Đây là cách bạn định nghĩa các thuộc tính của Shared Parameter mới, bao gồm tên, kiểu dữ liệu (`ParameterType`), và một **GUID mới hoàn toàn**.
+- **`myGroup.Definitions.Create(options)`**: Phương thức này thực sự tạo Shared Parameter trong tệp `.txt`.
+
+### 4\. Các Trường Hợp Nâng Cao (Không đi sâu vào code chi tiết)
+
+- **Liệt kê các Group và Definition hiện có:** Bạn có thể duyệt qua `sharedParametersFile.Groups` và `group.Definitions` để lấy thông tin về tất cả các Shared Parameters đã tồn tại.
+- **Xóa Group hoặc Definition:** Mặc dù API có phương thức để xóa, nhưng hãy rất cẩn thận khi thực hiện thao tác này, vì nó có thể ảnh hưởng đến các dự án hoặc Family đang sử dụng các Shared Parameters đó.
+- **Thêm Shared Parameter vào Project hoặc Family (`Binding`):** Việc tạo Shared Parameter trong tệp `.txt` chỉ là bước đầu. Để nó xuất hiện và có thể sử dụng trong một dự án hoặc Family, bạn cần tạo các `Binding` (InstanceBinding hoặc TypeBinding) và thêm chúng vào `BindingMap` của dự án. Đây là một chủ đề phức tạp hơn và có thể cần một bài viết riêng.

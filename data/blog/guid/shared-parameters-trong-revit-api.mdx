@@ -1,0 +1,79 @@
+---
+title: 'Shared Parameters trong Revit API'
+date: '2025-06-08'
+lastmod: '2025-06-08'
+tags: ['revit-api', 'guid', 'guide']
+draft: false
+summary: Shared Parameters là một công cụ mạnh mẽ để chuẩn hóa và quản lý dữ liệu trong các mô hình Revit, vượt ra ngoài giới hạn của một dự án hay Family đơn lẻ. Và cốt lõi của sự mạnh mẽ đó chính là **GUID** - yếu tố định danh duy nhất, đảm bảo tính chính xác và nhất quán của dữ liệu.
+---
+
+## Shared Parameters Là Gì và Tại Sao Chúng Ta Cần Đến Chúng Trong Revit?
+
+### Các Loại Thông Số Trong Revit
+
+1.  **System Parameters (Thông số hệ thống):** Đây là những thông số "có sẵn" mà Revit tạo ra cho các đối tượng hệ thống (ví dụ: chiều cao tường, tên vật liệu). Bạn không thể tạo mới hay xóa chúng, chúng là một phần không thể thiếu của hệ thống Revit.
+2.  **Project Parameters (Thông số dự án):** Được tạo ra và chỉ tồn tại trong một dự án Revit cụ thể. Chúng hữu ích cho việc quản lý thông tin đặc thù của dự án đó, nhưng không thể chia sẻ trực tiếp sang các dự án hay Family khác.
+3.  **Family Parameters (Thông số Family):** Những thông số này được định nghĩa bên trong một Family (.rfa) và chỉ có tác dụng trong phạm vi của Family đó.
+
+**So sánh nhanh:**
+
+| Loại Parameter       | Phạm vi áp dụng           | Có thể tag/export không? | Chia sẻ giữa project được không? |
+| -------------------- | ------------------------- | ------------------------ | -------------------------------- |
+| Family Parameter     | Chỉ trong family hiện tại | Không                    | Không                            |
+| Project Parameter    | Trong 1 project cụ thể    | Không                    | Không                            |
+| **Shared Parameter** | Nhiều project và family   | **Có**                   | **Có**                           |
+
+Vậy vấn đề nằm ở đâu? Hãy tưởng tượng bạn cần một thông số "Mã tài sản" để gán cho tất cả các thiết bị trong nhiều dự án và Family khác nhau. Nếu bạn sử dụng Project Parameter, bạn sẽ phải tạo lại nó cho từng dự án. Tương tự, nếu dùng Family Parameter, bạn sẽ phải định nghĩa lại trong mỗi Family. Điều này dẫn đến sự không nhất quán về tên gọi, kiểu dữ liệu, và gây khó khăn trong việc quản lý, tổng hợp dữ liệu sau này.
+
+**Shared Parameters** chính là giải pháp mạnh mẽ để khắc phục những hạn chế này\!
+
+### Shared Parameters: Giải Pháp Cho Tính Nhất Quán và Khả Năng Chia Sẻ
+
+**Shared Parameter** là một loại thông số đặc biệt được định nghĩa trong một tệp tin văn bản bên ngoài (thường là file `.txt`). Điều này cho phép chúng được **chia sẻ và sử dụng một cách nhất quán** trên nhiều dự án, nhiều Family, và thậm chí là giữa các phần mềm khác nhau có khả năng tương tác với Revit.
+
+#### Lợi Ích Vượt Trội Của Shared Parameters:
+
+- **Tính nhất quán:** Đảm bảo rằng cùng một thông số (ví dụ: "Mã tài sản") sẽ có cùng định nghĩa, kiểu dữ liệu và ý nghĩa trên mọi mô hình, bất kể nó được sử dụng ở đâu.
+- **Khả năng chia sẻ:** Dễ dàng thêm vào bất kỳ dự án hoặc Family nào mà không cần phải định nghĩa lại từ đầu. Điều này tiết kiệm thời gian và giảm thiểu lỗi.
+- **Xuất/Nhập dữ liệu hiệu quả:** Giúp việc trích xuất, chỉnh sửa và nhập lại dữ liệu BIM trở nên dễ dàng và chính xác hơn, phục vụ cho các quy trình làm việc đòi hỏi trao đổi dữ liệu thường xuyên.
+- **Hỗ trợ ứng dụng bên ngoài:** Các ứng dụng phát triển trên Revit API có thể truy cập và thao tác với dữ liệu của Shared Parameters một cách đáng tin cậy, mở ra khả năng tự động hóa và tích hợp mạnh mẽ.
+
+---
+
+### GUID: "Linh Hồn" Định Danh Của Shared Parameters
+
+Mỗi Shared Parameter, dù tên gọi của nó là gì, đều được gán một định danh duy nhất gọi là **GUID (Globally Unique Identifier)**. GUID là một chuỗi ký tự dài và độc nhất vô nhị trên toàn cầu (ví dụ: `a1b2c3d4-e5f6-7890-1234-567890abcdef`).
+
+#### Vai Trò Của GUID Trong Shared Parameters:
+
+Hãy hình dung thế này: Bạn có thể có hai người cùng tên "Nguyễn Văn A" ở hai thành phố khác nhau, nhưng số căn cước công dân của họ chắc chắn là duy nhất. Tương tự, bạn có thể vô tình tạo ra hai Shared Parameters với cùng một tên hiển thị "Mã tài sản" trong hai tệp Shared Parameter khác nhau. Tuy nhiên, chính **GUID** mới là thứ giúp Revit và các ứng dụng API **nhận diện chính xác** đó là cùng một thông số (nếu chúng có cùng GUID) hay là hai thông số hoàn toàn khác nhau (nếu GUID khác nhau), bất kể tên hiển thị của chúng.
+
+GUID đóng vai trò cực kỳ quan trọng vì nó giúp:
+
+- **Ngăn ngừa xung đột:** Đảm bảo Revit và các ứng dụng biết chính xác thông số nào đang được tham chiếu, ngay cả khi tên hiển thị bị thay đổi hoặc trùng lặp giữa các tệp Shared Parameter.
+- **Định danh toàn cầu:** Một Shared Parameter với một GUID cụ thể sẽ được hiểu là cùng một thông số trên mọi máy tính, mọi dự án, mọi Family mà nó được sử dụng. Đây là chìa khóa cho sự nhất quán dữ liệu trong môi trường BIM phức tạp.
+- **Làm việc với API:** Trong Revit API, GUID là công cụ chính và đáng tin cậy nhất để truy cập, đọc và ghi dữ liệu vào một Shared Parameter. Nó giúp các nhà phát triển tạo ra các công cụ và quy trình tự động hóa mạnh mẽ.
+
+Bạn có thể thấy GUID xuất hiện trong tệp tin `.txt` của Shared Parameters như sau, mỗi dòng `*PARAM` tương ứng với một thông số và chứa GUID của nó:
+
+```
+# This is a Revit shared parameter file.
+# Do not edit manually.
+*GROUP	MyGroup	My Shared Parameters Group
+*PARAM	GUID_PARAM_1	a1b2c3d4-e5f6-7890-1234-567890abcdef	TEXT	0	Mã tài sản
+*PARAM	GUID_PARAM_2	f0e9d8c7-b6a5-4321-fedc-ba9876543210	LENGTH	0	Chiều dài thiết bị
+```
+
+---
+
+### Tổng Quan Về Cách Sử Dụng Shared Parameters Trong Giao Diện Người Dùng Revit
+
+Trước khi đi sâu vào khía cạnh lập trình, hãy cùng xem cách Shared Parameters được quản lý và sử dụng thông qua giao diện người dùng (UI) của Revit:
+
+1.  **Tạo Shared Parameter File:** Để bắt đầu, bạn cần tạo hoặc chọn một tệp `.txt` làm nơi lưu trữ các Shared Parameters của mình. Bạn có thể thực hiện việc này bằng cách vào tab **Manage** trên thanh công cụ Revit, sau đó chọn **Shared Parameters**.
+2.  **Tạo Group và Parameter:** Trong hộp thoại Shared Parameters, bạn có thể tổ chức các thông số của mình thành các nhóm (`Groups`) để dễ quản lý. Sau đó, bạn tạo từng thông số (`Parameter`) với tên, kiểu dữ liệu mong muốn (ví dụ: text, number, length) và gán chúng vào một nhóm đã tạo.
+3.  **Thêm Shared Parameter vào Dự án/Family:** Sau khi đã định nghĩa các Shared Parameters trong tệp `.txt`, bạn có thể thêm chúng vào:
+    - **Dự án:** Trong dự án Revit của bạn, hãy vào tab **Manage** \> **Project Parameters**. Chọn **Add**, sau đó chọn **Shared Parameter** và duyệt đến thông số bạn muốn. Cuối cùng, bạn cần gán thông số này cho các hạng mục (Categories) cụ thể mà bạn muốn nó xuất hiện.
+    - **Family:** Khi đang chỉnh sửa một Family trong Family Editor, bạn vào **Family Types** \> **Add Parameter**. Tương tự, chọn **Shared Parameter** và duyệt đến thông số mong muốn để thêm vào Family của mình.
+
+Việc hiểu và sử dụng Shared Parameters một cách hiệu quả là một kỹ năng quan trọng đối với bất kỳ ai làm việc chuyên sâu với Revit, đặc biệt là trong các dự án lớn hoặc khi cần trao đổi dữ liệu BIM một cách nhất quán.
