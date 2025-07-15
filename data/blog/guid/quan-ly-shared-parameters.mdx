@@ -238,7 +238,7 @@ public class ManageSharedParameterFile : IExternalCommand
 }
 ```
 
-**Giải thích code:**
+**Làm rõ code:**
 
 - **Đường dẫn file:** Code tạo một thư mục `RevitSharedParameters` trong My Documents và một tệp `.txt` tên `MyProjectSharedParameters.txt` để lưu trữ các Shared Parameters. Đảm bảo ứng dụng của bạn có quyền ghi vào thư mục này.
 - **Transaction cho `app.SharedParametersFilename`**: Việc gán giá trị cho `app.SharedParametersFilename` cũng cần nằm trong một `Transaction` vì nó thay đổi cài đặt của ứng dụng Revit.

@@ -11,11 +11,7 @@ summary: Việc đọc Shared Parameters thông qua GUID là một kỹ thuật 
 
 Bạn đã biết rằng GUID là chìa khóa để nhận diện một Shared Parameter bất kể tên hiển thị của nó. Trong Revit API, việc truy cập một Shared Parameter cụ thể từ một `Element` (một bức tường, cửa, cột, v.v.) thông qua GUID là phương pháp đáng tin cậy và chính xác nhất.
 
-### 1\. Hiểu Về Đối Tượng `Parameter` Trong Revit API
-
-Khi làm việc với các thông số trong Revit API, bạn sẽ thường xuyên tương tác với đối tượng `Parameter`.
-
-- **`Parameter`** là một lớp trong Revit API đại diện cho một thông số cụ thể (ví dụ: chiều cao, vật liệu, mã tài sản) của một `Element`. Nó chứa giá trị của thông số đó, cùng với các thông tin về định nghĩa của nó.
+### 1\. Tương tác với đối tượng `Parameter`
 
 Bạn có thể lấy tất cả các `Parameter` của một `Element` thông qua thuộc tính `Element.Parameters` (một `ParameterSet`) hoặc phương thức `Element.GetParameters()`.
 
@@ -44,11 +40,11 @@ Chính từ `ExternalDefinition` này, chúng ta mới có thể truy cập đư
 
 1.  **Xác định GUID của Shared Parameter mục tiêu:** Đây là GUID của Shared Parameter mà bạn muốn đọc. Bạn có thể tìm thấy nó trong Shared Parameter File (.txt) hoặc đã biết từ trước.
 2.  **Lấy đối tượng `Element`:** Bạn cần có đối tượng `Element` mà bạn muốn đọc thông số từ đó (ví dụ: một bức tường, một cửa, một đối tượng chung).
-3.  **Duyệt qua tất cả `Parameter` của `Element`:** Lặp qua tập hợp các `Parameter` của `Element` đó.
+3.  Lặp qua tập hợp các `Parameter` của `Element` đó.
 4.  **Kiểm tra xem `Parameter` có phải là Shared Parameter không:** Sử dụng thuộc tính `Parameter.IsShared`.
-5.  **Lấy `GUID` của Shared Parameter:** Nếu là Shared Parameter, ép kiểu `Parameter.Definition` sang `ExternalDefinition` và lấy thuộc tính `Id` (là một `Guid`).
-6.  **So sánh `GUID`:** So sánh `GUID` lấy được với `GUID` mục tiêu của bạn.
-7.  **Truy xuất giá trị:** Nếu `GUID` khớp, bạn đã tìm thấy đúng Shared Parameter và có thể đọc giá trị của nó dựa trên `StorageType` của parameter.
+5.  Nếu là Shared Parameter, ép kiểu `Parameter.Definition` sang `ExternalDefinition` và lấy thuộc tính `Id` (là một `Guid`).
+6.  So sánh `GUID` lấy được với `GUID` mục tiêu của bạn.
+7.  Nếu `GUID` khớp, bạn đã tìm thấy đúng Shared Parameter và có thể đọc giá trị của nó dựa trên `StorageType` của parameter.
 
 ### 4\. Ví Dụ Code (C\#): Đọc Shared Parameter Theo GUID
 
@@ -179,9 +175,9 @@ public class ReadSharedParameterByGuid : IExternalCommand
 }
 ```
 
-**Giải thích code:**
+**Làm rõ code:**
 
-- Chúng ta khởi tạo một `Guid` (`targetGuid`) là GUID của Shared Parameter mà bạn muốn tìm. **Quan trọng: Bạn phải thay đổi `a1b2c3d4-e5f6-7890-1234-567890abcdef` bằng GUID thực tế của Shared Parameter của bạn.**
+- Chúng ta khởi tạo một `Guid` (`targetGuid`) là GUID của Shared Parameter mà bạn muốn tìm. **Bạn phải thay đổi `a1b2c3d4-e5f6-7890-1234-567890abcdef` bằng GUID thực tế của Shared Parameter của bạn.**
 - Người dùng được yêu cầu chọn một `Element` trong mô hình.
 - Code sẽ duyệt qua tất cả các `Parameter` của `Element` đó.
 - Với mỗi `Parameter`, chúng ta kiểm tra xem nó có phải là Shared Parameter hay không bằng `p.IsShared`.

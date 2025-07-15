@@ -278,9 +278,9 @@ public Result ReadExtensibleStorage(ExternalCommandData commandData, ref string 
 
 ### 3\. Những lưu ý quan trọng khi sử dụng GUID
 
-- **Tạo GUID duy nhất:** Luôn sử dụng các công cụ tạo **GUID** chuyên dụng để đảm bảo tính duy nhất. Đừng cố gắng tự nghĩ ra **GUID**.
-- **Lưu trữ GUID cẩn thận:** Đối với Shared Parameters và Extensible Storage, **GUID** của chúng là không thể thay đổi. Hãy lưu trữ chúng trong code của bạn (ví dụ: trong một lớp tĩnh `public static readonly Guid`) để dễ dàng truy cập và tái sử dụng.
-- **Phân biệt `ElementId` và `UniqueId`:** Nhớ rằng `ElementId` thay đổi, `UniqueId` không thay đổi trong cùng một tài liệu Revit.
+- Luôn sử dụng các công cụ tạo **GUID** chuyên dụng để đảm bảo tính duy nhất. Đừng cố gắng tự nghĩ ra **GUID**.
+- Đối với Shared Parameters và Extensible Storage, **GUID** của chúng là không thể thay đổi. Hãy lưu trữ chúng trong code của bạn (ví dụ: trong một lớp tĩnh `public static readonly Guid`) để dễ dàng truy cập và tái sử dụng.
+- Nhớ rằng `ElementId` thay đổi, `UniqueId` không thay đổi trong cùng một tài liệu Revit.
 - **Khi nào dùng GUID?**
   - Bạn cần định danh một đối tượng hoặc dữ liệu mà phải duy nhất trên toàn cầu và bền vững qua nhiều phiên làm việc, nhiều dự án hoặc các hệ thống khác nhau.
   - Làm việc với Shared Parameters.
