@@ -8,7 +8,7 @@ summary: Một số bạn có thể nghĩ rằng BIM khá mới. Ngay cả đố
 
 # **BIM Có Thật Sự Mới Không?**
 
-Một số bạn có thể nghĩ rằng **BIM** là điều gì đó khá mới mẻ. Ngay cả đối với tui, lần đầu tiên tui nghe đến từ viết tắt này là khoảng 10 năm trước. Khi đó, tui đang là sinh viên ngành xây dựng, và đang phải tìm kiếm đề tài cho môn học, trong quá trình tìm tài liệu, tui đã xem được 1 video trên youtube của HSD ["Ứng dụng BIM cho nhà thầu xây dựng"](https://www.youtube.com/watch?v=GOLWRfMX-uQ). Đề tài của nhóm tui khi đó "Tiết kiệm chi phí cho nhà thầu xây dựng" tuy chưa có nhiều thông tin nhưng khi đó chúng tui hiểu theo 1 cách gãy gọn BIM là cần thiết cho nhà thầu xây dựng, và với vai trò là nhà thầu thì bài toán tiết kiệm chi phí cho chủ đầu tư cũng đồng nghĩa gia tăng lợi nhuận cho nhà thầu.
+Một số bạn có thể nghĩ rằng **BIM** là điều gì đó khá mới mẻ. Ngay cả đối với tui, lần đầu tiên tui nghe đến từ viết tắt này là khoảng 10 năm trước. Khi đó, tui đang là sinh viên ngành xây dựng, và đang phải tìm kiếm đề tài cho môn học, trong quá trình tìm tài liệu, tui đã xem được 1 video trên youtube của HSD ["Ứng dụng BIM cho nhà thầu xây dựng"](https://www.youtube.com/watch?v=GOLWRfMX-uQ). Đề tài của nhóm tui khi đó "Tiết kiệm chi phí cho nhà thầu xây dựng" tuy chưa có nhiều thông tin nhưng khi đó tụi tui hiểu theo 1 cách gãy gọn BIM là cần thiết cho nhà thầu xây dựng, và với vai trò là nhà thầu thì bài toán tiết kiệm chi phí cho chủ đầu tư cũng đồng nghĩa gia tăng lợi nhuận cho nhà thầu.
 
 Khi này nói về BIM là cực kì hạn chế và BIM thì chưa có bất kì tài liệu hay văn bản nào đề cập đến. Có thể một vài bạn đã quen thuộc với thuật ngữ này lâu hơn một chút thì khả năng là tiếp cận từ các tài liệu tiếng anh.
 
