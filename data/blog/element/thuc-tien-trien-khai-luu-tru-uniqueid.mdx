@@ -14,7 +14,7 @@ Bài viết này sẽ đi sâu vào ba phương pháp thực tiễn nhất để
 
 ---
 
-### **1. Phương Pháp 1: Lưu Trữ `UniqueId` vào File Cấu Hình (JSON)**
+### **Phương Pháp 1: Lưu Trữ `UniqueId` vào File Cấu Hình (JSON)**
 
 Việc lưu trữ dữ liệu vào một file cấu hình, điển hình là JSON, là một cách đơn giản và nhanh chóng để duy trì thông tin qua các phiên làm việc. Phương pháp này đặc biệt phù hợp với các ứng dụng nhỏ, độc lập, hoặc khi bạn cần lưu trữ một lượng dữ liệu tương đối ít mà không yêu cầu phức tạp về truy vấn hay quản lý.
 
@@ -153,7 +153,7 @@ _Lưu ý: Để sử dụng các ví dụ trên, bạn cần cài đặt thư vi
 - **Ưu điểm:**
   - Không yêu cầu thiết lập cơ sở dữ liệu hay các cấu trúc phức tạp.
   - File JSON có thể được mở và xem bằng trình soạn thảo văn bản.
-  - - Dễ dàng di chuyển file cấu hình giữa các máy (nếu cần).
+  - Dễ dàng di chuyển file cấu hình giữa các máy (nếu cần).
 - **Nhược điểm:**
   - Không phù hợp để lưu trữ hàng ngàn `UniqueId` vì mỗi lần đọc/ghi sẽ tải toàn bộ dữ liệu vào bộ nhớ.
   - Không có các tính năng tìm kiếm, lọc, hoặc sắp xếp mạnh mẽ như cơ sở dữ liệu.
@@ -162,7 +162,7 @@ _Lưu ý: Để sử dụng các ví dụ trên, bạn cần cài đặt thư vi
 
 ---
 
-### **2. Phương Pháp 2: Lưu Trữ `UniqueId` vào Cơ Sở Dữ Liệu (SQLite)**
+### **Phương Pháp 2: Lưu Trữ `UniqueId` vào Cơ Sở Dữ Liệu (SQLite)**
 
 Khi ứng dụng của bạn cần quản lý một lượng lớn `UniqueId`, thực hiện các truy vấn phức tạp, hoặc yêu cầu hiệu suất cao hơn, việc sử dụng một cơ sở dữ liệu là lựa chọn tối ưu. **SQLite** là một cơ sở dữ liệu nhẹ, không yêu cầu máy chủ, rất phù hợp cho các ứng dụng desktop như plugin Revit. Nó lưu trữ dữ liệu trong một file đơn giản trên đĩa.
 
@@ -375,7 +375,7 @@ _Lưu ý: Để sử dụng ví dụ trên, bạn cần cài đặt thư viện 
 
 ---
 
-### **3. Phương Pháp 3: Lưu Trữ `UniqueId` vào Extensible Storage (Gắn trực tiếp vào file Revit)**
+### **Phương Pháp 3: Lưu Trữ `UniqueId` vào Extensible Storage (Gắn trực tiếp vào file Revit)**
 
 Extensible Storage là một tính năng mạnh mẽ của Revit API, cho phép bạn lưu trữ dữ liệu tùy chỉnh trực tiếp vào tài liệu Revit hoặc gắn dữ liệu đó vào một element cụ thể. Dữ liệu này "đi kèm" với tệp RVT, có nghĩa là khi bạn chia sẻ hoặc di chuyển file Revit, dữ liệu của bạn cũng sẽ đi theo, đảm bảo tính nhất quán cao nhất. Đây là phương pháp lý tưởng khi dữ liệu bạn muốn lưu trữ có mối liên hệ chặt chẽ với bản thân tài liệu Revit hoặc các element bên trong nó.
 

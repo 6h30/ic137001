@@ -11,7 +11,7 @@ summary: Việc đọc Shared Parameters thông qua GUID là một kỹ thuật 
 
 Bạn đã biết rằng GUID là chìa khóa để nhận diện một Shared Parameter bất kể tên hiển thị của nó. Trong Revit API, việc truy cập một Shared Parameter cụ thể từ một `Element` (một bức tường, cửa, cột, v.v.) thông qua GUID là phương pháp đáng tin cậy và chính xác nhất.
 
-### 1\. Tương tác với đối tượng `Parameter`
+### Tương tác với đối tượng `Parameter`
 
 Bạn có thể lấy tất cả các `Parameter` của một `Element` thông qua thuộc tính `Element.Parameters` (một `ParameterSet`) hoặc phương thức `Element.GetParameters()`.
 
@@ -25,7 +25,7 @@ Trong đó, các `Parameter` có thể là:
 - **`BuiltInParameter`**: Các thông số được Revit định nghĩa sẵn (ví dụ: `BuiltInParameter.ALL_MODEL_TYPE_NAME`). Chúng có một `BuiltInParameterGroup` và không có GUID.
 - **`UserDefinedParameter`**: Bao gồm Project Parameters và **Shared Parameters**. Đây là những thông số do người dùng tạo.
 
-### 2\. Lấy `Definition` và `GUID` của Shared Parameter
+### Lấy `Definition` và `GUID` của Shared Parameter
 
 Mỗi `Parameter` đều có một `Definition` đi kèm. `Definition` mô tả các đặc tính của một thông số, như tên, kiểu dữ liệu (`StorageType`), và nhóm. Đối với Shared Parameters, `Definition` này có một vai trò đặc biệt:
 
@@ -34,7 +34,7 @@ Mỗi `Parameter` đều có một `Definition` đi kèm. `Definition` mô tả 
 
 Chính từ `ExternalDefinition` này, chúng ta mới có thể truy cập được **`GUID`** của Shared Parameter.
 
-### 3\. Các Bước Đọc Giá Trị Của Shared Parameter Dựa Trên GUID
+### Các Bước Đọc Giá Trị Của Shared Parameter Dựa Trên GUID
 
 Để đọc giá trị của một Shared Parameter từ một `Element` bằng GUID, chúng ta sẽ thực hiện các bước sau:
 
@@ -46,7 +46,7 @@ Chính từ `ExternalDefinition` này, chúng ta mới có thể truy cập đư
 6.  So sánh `GUID` lấy được với `GUID` mục tiêu của bạn.
 7.  Nếu `GUID` khớp, bạn đã tìm thấy đúng Shared Parameter và có thể đọc giá trị của nó dựa trên `StorageType` của parameter.
 
-### 4\. Ví Dụ Code (C\#): Đọc Shared Parameter Theo GUID
+### Ví Dụ Code (C\#): Đọc Shared Parameter Theo GUID
 
 Hãy cùng xem một đoạn code ví dụ minh họa các bước trên. Giả sử bạn muốn đọc một Shared Parameter có tên hiển thị là "Mã tài sản" và có GUID cụ thể.
 

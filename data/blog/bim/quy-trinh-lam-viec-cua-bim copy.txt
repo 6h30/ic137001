@@ -1,6 +1,6 @@
 ---
-title: 'Từ viết tắt BIM '
-date: '2025-07-02'
+title: 'Quy trình làm việc của BIM '
+date: '2023-07-01T15:30:03Z'
 tags: ['bim', 'foundation']
 draft: false
 summary: Kiến trúc là một trong những ngành nghề lâu đời nhất trên thế giới. Một thế kỷ hoặc hơn trước, một nhóm kiến trúc sư (architectural team) bao gồm một kiến trúc sư (architect) và một kỹ sư (engineer). Họ chỉ cần ngồi lại, uống cà phê, dùng bút và giấy, rồi trò chuyện và cùng nhau giải quyết tất cả các chi tiết.
@@ -24,7 +24,7 @@ Họ bao gồm:
 - Kỹ sư MEP (_MEP engineers_)
 - Tổng thầu (_general contractors_)
 - Nhà thầu phụ (_subcontractors_)
-- Đại diện quy tắc thành phố (_city code_)
+- Đại diện sở xây dựng (_city code_)
 - Đơn vị an ninh (_security_)
 - Đơn vị chứng nhận (_certification_)
 - ...và nhiều người khác nữa
@@ -35,7 +35,7 @@ Không chỉ vậy, **tất cả họ đều sử dụng phần mềm riêng** �
 
 ## **Chúng Ta Đang Giao Tiếp Thế Nào?**
 
-Đội ngũ đó đã cố gắng làm việc cùng nhau bằng cách sử dụng công nghệ tiên tiến nhất của thế kỷ 21 — và ý tôi là **email**.
+Đội ngũ đó đã cố gắng làm việc cùng nhau bằng cách sử dụng công nghệ tiên tiến nhất của thế kỷ 21 — và ý tui là **email**.
 
 Chúng ta **gửi hàng tấn email mỗi ngày**, và **nhận lại số lượng gấp đôi**.
 
@@ -44,7 +44,7 @@ Chúng ta **gửi hàng tấn email mỗi ngày**, và **nhận lại số lư�
 - **Và thông tin dễ dàng bị thất lạc.**
 
 Nếu chẳng may dòng **tiêu đề email không khớp** với nội dung cuộc thảo luận, bạn biết rồi đấy…
-Tôi chắc rằng bạn đang **hình dung cuộc sống làm việc hàng ngày của mình ngay lúc này.**
+Tui chắc rằng bạn đang **hình dung cuộc sống làm việc hàng ngày của mình ngay lúc này.**
 
 ---
 
@@ -79,28 +79,28 @@ Chắc chắn, **BIM còn nhiều tiềm năng hơn thế**, nhưng đây là **
 
 Đúng vậy, **BIM là về sharing information và working together**.
 
-Tôi biết điều đó có thể **gây lo ngại**, nên tôi cũng muốn đảm bảo với bạn rằng:
+Tui biết điều đó có thể **gây lo ngại**, nên tui cũng muốn đảm bảo với bạn rằng:
 **các câu hỏi về luật pháp, bảo hiểm và sở hữu trí tuệ** luôn tồn tại.
 
 Và đó là điều hoàn toàn **tự nhiên** — ai cũng muốn **bảo vệ bản vẽ, nghiên cứu và tệp nguồn** của mình.
 
 Những câu hỏi này **đã và đang được nghiên cứu ở nhiều quốc gia**, với nhiều phương pháp khác nhau.
-**Đừng ngần ngại hỏi các chuyên gia xung quanh bạn.**
+**Đừng ngần ngại hỏi các chuyên gia xung quanh bạn.** hoặc liên hệ 1 công ty tư vấn xây dựng.
 
 ---
 
 ## **Tầm Nhìn “Không Tưởng” Về BIM**
 
-Tôi cũng muốn chia sẻ với bạn **tầm nhìn không tưởng (utopic vision)** của tôi về BIM.
+Tui cũng muốn chia sẻ với bạn **tầm nhìn không tưởng (utopic vision)** của tui về BIM.
 
 Tưởng tượng **tất cả chúng ta cùng làm việc vì một dự án chung**.
 
-Tôi muốn **so sánh điều này với việc nuôi dạy con giữa những bậc cha mẹ đã ly hôn**:
+Tui muốn **so sánh điều này với việc chúng ta là thành viên trong 1 lớp học**:
 
 > Bạn có thể có những ý kiến khác nhau,
-> nhưng **vì lợi ích của con cái**, bạn cần phải **gắn bó như một đội** — ít nhất là trước mặt chúng.
+> nhưng **vì lợi ích của cả lớp**, bạn cần phải **gắn bó như một đội** — ít nhất là trước mặt thầy cô.
 
-Tôi biết cuộc sống thực **không đơn giản như vậy**.
+Tui biết cuộc sống thực **không đơn giản như vậy**.
 Nhưng hãy cứ **ghi nhớ điều này**: thói quen không thay đổi trong một ngày.
 
 Nếu mọi người **tin tưởng lẫn nhau để xây dựng một dự án tuyệt vời**,

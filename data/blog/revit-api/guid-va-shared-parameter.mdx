@@ -14,7 +14,7 @@ Trong BIM, việc đảm bảo tính nhất quán của dữ liệu trên nhiề
 
 ---
 
-### 1\. Bản chất của Shared Parameters: GUID là trái tim
+### Bản chất của Shared Parameters: GUID là trái tim
 
 Shared Parameters là các tham số tùy chỉnh mà bạn định nghĩa và lưu trữ trong một tệp `.txt` riêng biệt (tệp Shared Parameters). Không giống như Project Parameters hay Family Parameters thông thường, Shared Parameters có thể được tải vào bất kỳ dự án hoặc Family nào, và điều kỳ diệu là chúng sẽ luôn được coi là **cùng một tham số** trên các môi trường khác nhau.
 
@@ -25,7 +25,7 @@ Lý do cho sự "nhất quán" này chính là **GUID**. Mỗi khi bạn tạo m
 
 ---
 
-### 2\. Cấu trúc tệp Shared Parameters: Nơi GUID cư trú
+### Cấu trúc tệp Shared Parameters: Nơi GUID cư trú
 
 Tệp Shared Parameters (`.txt`) thực chất là một tệp văn bản thuần túy với cấu trúc đặc biệt. Bạn có thể mở nó bằng Notepad để xem cách **GUID** được lưu trữ.
 
@@ -48,11 +48,11 @@ Trong mỗi dòng `PARAM`, cột thứ hai chính là **GUID** của tham số �
 
 ---
 
-### 3\. Làm việc với Shared Parameters và GUID trong Revit API
+### Làm việc với Shared Parameters và GUID trong Revit API
 
 Khi phát triển Add-in, việc tương tác với Shared Parameters đòi hỏi bạn phải sử dụng **GUID** một cách chính xác.
 
-#### 3.1. Truy xuất Shared Parameters từ Element
+#### Truy xuất Shared Parameters từ Element
 
 Cách đáng tin cậy nhất để tìm một Shared Parameter trên một `Element` là duyệt qua tất cả các `Parameter` của nó và so sánh **GUID**.
 
@@ -140,7 +140,7 @@ public class AccessSharedParamByGuid : IExternalCommand
 }
 ```
 
-#### 3.2. Tạo và gán Shared Parameters trong dự án
+#### Tạo và gán Shared Parameters trong dự án
 
 Để một Shared Parameter có thể được sử dụng trên các `Element` trong dự án, nó phải được thêm vào dự án dưới dạng một `Binding`. Quá trình này cũng sử dụng **GUID**.
 
@@ -255,10 +255,10 @@ public class CreateAndBindSharedParameter : IExternalCommand
 
 ---
 
-### 4\. Những cân nhắc và thực tiễn tốt nhất
+### Những cân nhắc và thực tiễn tốt nhất
 
-- **Tạo GUID cho Shared Parameters:** Khi tạo Shared Parameter trong giao diện người dùng Revit hoặc thông qua API, hãy luôn đảm bảo bạn sử dụng một **GUID** mới cho mỗi tham số thực sự mới.
-- **Quản lý tệp Shared Parameters:** Tệp Shared Parameters là tài sản quan trọng. Hãy lưu trữ nó ở vị trí dễ truy cập và quản lý phiên bản cẩn thận.
+- Khi tạo Shared Parameter trong giao diện người dùng Revit hoặc thông qua API, hãy luôn đảm bảo bạn sử dụng một **GUID** mới cho mỗi tham số thực sự mới.
+- Tệp Shared Parameters là tài sản quan trọng. Hãy lưu trữ nó ở vị trí dễ truy cập và quản lý phiên bản cẩn thận.
 - **Chia sẻ tệp Shared Parameters giữa các nhóm:** Để đảm bảo tính nhất quán dữ liệu trong một công ty hoặc dự án lớn, tất cả các thành viên trong nhóm cần sử dụng cùng một tệp Shared Parameters.
 - **Sử dụng RevitLookup:** Đây là công cụ không thể thiếu để xác định **GUID** của Shared Parameters đã tồn tại trên các `Element` trong mô hình của bạn. Chỉ cần chọn một `Element`, chạy RevitLookup, tìm tham số đó, và bạn sẽ thấy `GUID` của nó.
 - **Tránh phụ thuộc vào tên tham số:** Như đã nhấn mạnh, tên hiển thị của Shared Parameter có thể thay đổi. Luôn dựa vào **GUID** khi lập trình để truy vấn hoặc thao tác với chúng.
@@ -266,7 +266,7 @@ public class CreateAndBindSharedParameter : IExternalCommand
 
 ---
 
-### Kết luận
+### Túm lại
 
 **GUID** là yếu tố then chốt đằng sau sức mạnh và tính bền vững của **Shared Parameters** trong Revit. Nắm vững cách **GUID** định danh các tham số này và cách tương tác với chúng trong **Revit API** sẽ giúp bạn tạo ra các Add-in mạnh mẽ, đáng tin cậy, có khả năng quản lý dữ liệu BIM một cách nhất quán trên nhiều dự án và Family. Đây là một kỹ năng thiết yếu cho bất kỳ nhà phát triển Revit API nào muốn xây dựng các giải pháp tự động hóa và quản lý thông tin hiệu quả.
 

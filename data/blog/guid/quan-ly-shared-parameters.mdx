@@ -11,7 +11,7 @@ Chúng ta đã đi qua cách đọc và ghi dữ liệu vào các **Shared Param
 
 Đây chính là lúc bạn cần nắm vững cách **quản lý và định nghĩa các Shared Parameters trực tiếp từ Revit API**. Khả năng này cho phép bạn kiểm soát hoàn toàn tệp Shared Parameter (`.txt`) của mình, tạo các nhóm và định nghĩa các thông số mới một cách lập trình, mang lại sự linh hoạt và tự động hóa cao nhất.
 
-### 1\. Cấu Trúc của Shared Parameter File Trong Revit API
+### Cấu Trúc của Shared Parameter File Trong Revit API
 
 Khi làm việc với tệp Shared Parameter (`.txt`) thông qua API, chúng ta sẽ tương tác với một số lớp chính:
 
@@ -25,11 +25,11 @@ Khi làm việc với tệp Shared Parameter (`.txt`) thông qua API, chúng ta 
 Mối quan hệ giữa chúng có thể hình dung như sau:
 `Application` -\> `SharedParameterFile` -\> `DefinitionGroup` -\> `ExternalDefinition`
 
-### 2\. Các Thao Tác Cơ Bản Với Shared Parameter File
+### Các Thao Tác Cơ Bản Với Shared Parameter File
 
 Hãy cùng khám phá các thao tác chính mà bạn có thể thực hiện:
 
-#### a. Thiết Lập hoặc Lấy Đường Dẫn đến Shared Parameter File
+#### Thiết Lập hoặc Lấy Đường Dẫn đến Shared Parameter File
 
 Trước khi làm bất cứ điều gì với tệp Shared Parameter, bạn cần cho Revit biết tệp đó nằm ở đâu.
 
@@ -45,7 +45,7 @@ app.SharedParametersFilename = myNewSpfPath;
 
 **Lưu ý:** Nếu tệp tại `myNewSpfPath` chưa tồn tại, Revit API sẽ tự động tạo một tệp Shared Parameter mới khi bạn thêm thông số vào đó.
 
-#### b. Mở/Tải Shared Parameter File
+#### Mở/Tải Shared Parameter File
 
 Để làm việc với nội dung của tệp, bạn cần mở nó:
 
@@ -59,7 +59,7 @@ if (sharedParametersFile == null)
 }
 ```
 
-#### c. Tạo Một Group Mới Trong Shared Parameter File
+#### Tạo Một Group Mới Trong Shared Parameter File
 
 Thông thường, bạn sẽ muốn tổ chức các Shared Parameters của mình vào các nhóm.
 
@@ -79,7 +79,7 @@ else
 }
 ```
 
-#### d. Tạo Một Shared Parameter Mới Trong Một Group
+#### Tạo Một Shared Parameter Mới Trong Một Group
 
 Đây là thao tác quan trọng nhất để định nghĩa một Shared Parameter mới.
 
@@ -116,7 +116,7 @@ else
 - **`Guid.NewGuid()`**: Luôn tạo một GUID hoàn toàn mới. Đây là cách an toàn nhất khi bạn tạo một parameter thực sự mới.
 - **Tái sử dụng GUID**: Trong một số trường hợp nâng cao (ví dụ: bạn đã xóa một Shared Parameter và muốn tạo lại nó với cùng một GUID để không làm mất dữ liệu cũ trên các đối tượng), bạn có thể gán một GUID đã có sẵn. Tuy nhiên, hãy cực kỳ cẩn thận với thao tác này để tránh xung đột hoặc hiểu lầm dữ liệu.
 
-### 3\. Ví Dụ Code (C\#): Tạo Group và Shared Parameter Trong File
+### Ví Dụ Code (C\#): Tạo Group và Shared Parameter Trong File
 
 Dưới đây là một ví dụ đầy đủ hơn, kết hợp các thao tác trên để tạo một nhóm và một Shared Parameter mới trong tệp `.txt`.
 
@@ -240,13 +240,13 @@ public class ManageSharedParameterFile : IExternalCommand
 
 **Làm rõ code:**
 
-- **Đường dẫn file:** Code tạo một thư mục `RevitSharedParameters` trong My Documents và một tệp `.txt` tên `MyProjectSharedParameters.txt` để lưu trữ các Shared Parameters. Đảm bảo ứng dụng của bạn có quyền ghi vào thư mục này.
+- Code tạo một thư mục `RevitSharedParameters` trong My Documents và một tệp `.txt` tên `MyProjectSharedParameters.txt` để lưu trữ các Shared Parameters. Đảm bảo ứng dụng của bạn có quyền ghi vào thư mục này.
 - **Transaction cho `app.SharedParametersFilename`**: Việc gán giá trị cho `app.SharedParametersFilename` cũng cần nằm trong một `Transaction` vì nó thay đổi cài đặt của ứng dụng Revit.
 - **Kiểm tra tồn tại:** Trước khi tạo Group hoặc Parameter mới, code kiểm tra xem chúng đã tồn tại chưa để tránh lỗi.
 - **`ExternalDefinitionCreationOptions`**: Đây là cách bạn định nghĩa các thuộc tính của Shared Parameter mới, bao gồm tên, kiểu dữ liệu (`ParameterType`), và một **GUID mới hoàn toàn**.
 - **`myGroup.Definitions.Create(options)`**: Phương thức này thực sự tạo Shared Parameter trong tệp `.txt`.
 
-### 4\. Các Trường Hợp Nâng Cao (Không đi sâu vào code chi tiết)
+### Các Trường Hợp Nâng Cao (Không đi sâu vào code chi tiết)
 
 - **Liệt kê các Group và Definition hiện có:** Bạn có thể duyệt qua `sharedParametersFile.Groups` và `group.Definitions` để lấy thông tin về tất cả các Shared Parameters đã tồn tại.
 - **Xóa Group hoặc Definition:** Mặc dù API có phương thức để xóa, nhưng hãy rất cẩn thận khi thực hiện thao tác này, vì nó có thể ảnh hưởng đến các dự án hoặc Family đang sử dụng các Shared Parameters đó.

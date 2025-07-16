@@ -14,7 +14,7 @@ Trong **Revit API**, việc định danh các đối tượng một cách duy nh
 
 ---
 
-### 1\. GUID là gì và tại sao nó quan trọng trong Revit API?
+### GUID là gì và tại sao nó quan trọng trong Revit API?
 
 **GUID** là một số 128-bit được tạo ra theo một thuật toán đảm bảo rằng nó gần như là duy nhất trên toàn cầu. Một **GUID** có dạng chuỗi hexadecimal như `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx` (ví dụ: `8a45e8a0-2f16-4c4f-9e7b-1a5c6d8e9f01`).
 
@@ -33,9 +33,9 @@ Trong Revit API, **GUID** đóng vai trò quan trọng trong việc định danh
 
 ---
 
-### 2\. Các ứng dụng thực tế của GUID trong Revit API
+### Các ứng dụng thực tế của GUID trong Revit API
 
-#### 2.1. Truy cập Shared Parameters bằng GUID
+#### Truy cập Shared Parameters bằng GUID
 
 Đây là ứng dụng phổ biến nhất và mạnh mẽ nhất của **GUID**. Thay vì tìm Shared Parameter bằng tên (có thể trùng hoặc bị đổi), việc sử dụng **GUID** là cách đáng tin cậy nhất.
 
@@ -104,7 +104,7 @@ public class GetSharedParameterByGuid : IExternalCommand
 
 **Lưu ý:** Bạn có thể dễ dàng tìm thấy **GUID** của một Shared Parameter bằng cách sử dụng **RevitLookup** trên một phần tử có Parameter đó.
 
-#### 2.2. Sử dụng `UniqueId` để định danh Element bền vững
+#### Sử dụng `UniqueId` để định danh Element bền vững
 
 Mỗi `Element` trong một tài liệu Revit đều có một thuộc tính `UniqueId` (kiểu `string`), đây là một định danh duy nhất và bền vững. Điều này rất hữu ích khi bạn cần lưu trữ tham chiếu đến một `Element` bên ngoài Revit, sau đó tìm lại nó.
 
@@ -130,7 +130,7 @@ else
 
 **Lưu ý:** `UniqueId` chỉ duy nhất trong một tài liệu Revit. Nếu bạn copy một `Element` sang một tài liệu mới, nó sẽ có một `UniqueId` mới. Tuy nhiên, nếu bạn sao lưu và phục hồi tài liệu, `UniqueId` vẫn được giữ nguyên.
 
-#### 2.3. Định danh Add-in và Command
+#### Định danh Add-in và Command
 
 Khi bạn tạo một `IExternalCommand` hoặc `IExternalApplication`, bạn cần gán cho nó một `GUID` duy nhất trong file `.addin`. Điều này giúp Revit phân biệt các Add-in khác nhau và ngăn ngừa xung đột.
 
@@ -142,7 +142,7 @@ Khi bạn tạo một `IExternalCommand` hoặc `IExternalApplication`, bạn c�
   <AddIn Type="Command">
     <Assembly>C:\Path\To\Your\Addin.dll</Assembly>
     <ClientId>YOUR_COMMAND_GUID_HERE</ClientId> <FullClassName>MyNamespace.MyRevitCommand</FullClassName>
-    <Text>Lệnh Của Tôi</Text>
+    <Text>Lệnh Của Tui</Text>
     <Description>Mô tả ngắn gọn về lệnh.</Description>
     <VisibilityMode>AlwaysVisible</VisibilityMode>
     <VendorId>ABC</VendorId>
@@ -159,7 +159,7 @@ Khi bạn tạo một `IExternalCommand` hoặc `IExternalApplication`, bạn c�
 
 Bạn có thể tạo **GUID** mới bằng cách sử dụng tính năng "Create GUID" trong Visual Studio (Tools -\> Create GUID) hoặc các công cụ tạo **GUID** trực tuyến.
 
-#### 2.4. Lưu trữ dữ liệu mở rộng (Extensible Storage)
+#### Lưu trữ dữ liệu mở rộng (Extensible Storage)
 
 **Extensible Storage** là một tính năng mạnh mẽ cho phép bạn đính kèm dữ liệu tùy chỉnh vào bất kỳ `Element` nào trong mô hình Revit, một cách bền vững. Các `Schema` và `Field` của dữ liệu này được định danh bằng **GUID**.
 
@@ -276,7 +276,7 @@ public Result ReadExtensibleStorage(ExternalCommandData commandData, ref string 
 
 ---
 
-### 3\. Những lưu ý quan trọng khi sử dụng GUID
+### Những lưu ý quan trọng khi sử dụng GUID
 
 - Luôn sử dụng các công cụ tạo **GUID** chuyên dụng để đảm bảo tính duy nhất. Đừng cố gắng tự nghĩ ra **GUID**.
 - Đối với Shared Parameters và Extensible Storage, **GUID** của chúng là không thể thay đổi. Hãy lưu trữ chúng trong code của bạn (ví dụ: trong một lớp tĩnh `public static readonly Guid`) để dễ dàng truy cập và tái sử dụng.
@@ -291,7 +291,7 @@ public Result ReadExtensibleStorage(ExternalCommandData commandData, ref string 
 
 ---
 
-### Kết luận
+### Túm lại
 
 **GUID** là một khái niệm mạnh mẽ và không thể thiếu trong phát triển **Revit API**, đặc biệt khi bạn cần giải quyết các bài toán về tính bền vững và khả năng tương tác dữ liệu. Nắm vững cách sử dụng **GUID** trong việc định danh Shared Parameters, `UniqueId` của `Element` và Extensible Storage sẽ mở ra những cánh cửa mới cho việc xây dựng các Add-in Revit mạnh mẽ, linh hoạt và có khả năng tích hợp cao với các hệ thống BIM khác.
 

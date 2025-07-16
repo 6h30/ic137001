@@ -1,0 +1,52 @@
+---
+title: 'Giới thiệu về BIM'
+date: '2023-03-01T15:30:01Z'
+tags: ['bim', 'foundation']
+draft: false
+summary: Một số bạn có thể nghĩ rằng BIM khá mới. Ngay cả đối với tui, lần đầu tiên tui nghe thấy từ viết tắt này là khoảng 10 năm trước.
+---
+
+# **BIM Có Thật Sự Mới Không?**
+
+Một số bạn có thể nghĩ rằng **BIM** là điều gì đó khá mới mẻ. Ngay cả đối với tui, lần đầu tiên tui nghe đến từ viết tắt này là khoảng 10 năm trước. Khi đó, tui đang là sinh viên ngành xây dựng, và đang phải tìm kiếm đề tài cho môn học, trong quá trình tìm tài liệu, tui đã xem được 1 video trên youtube của HSD ["Ứng dụng BIM cho nhà thầu xây dựng"](https://www.youtube.com/watch?v=GOLWRfMX-uQ). Đề tài của nhóm tui khi đó "Tiết kiệm chi phí cho nhà thầu xây dựng" tuy chưa có nhiều thông tin nhưng khi đó chúng tui hiểu theo 1 cách gãy gọn BIM là cần thiết cho nhà thầu xây dựng, và với vai trò là nhà thầu thì bài toán tiết kiệm chi phí cho chủ đầu tư cũng đồng nghĩa gia tăng lợi nhuận cho nhà thầu.
+
+Khi này nói về BIM là cực kì hạn chế và BIM thì chưa có bất kì tài liệu hay văn bản nào đề cập đến. Có thể một vài bạn đã quen thuộc với thuật ngữ này lâu hơn một chút thì khả năng là tiếp cận từ các tài liệu tiếng anh.
+
+Quay về khi BIM là điều mới mẻ, bạn có thể **ngạc nhiên** khi biết rằng **nghiên cứu về việc tối ưu hóa quy trình xây dựng ** đã rất **phong phú và phức tạp** — với sự tham gia từ **Hoa Kỳ, Tây Âu và cả các nước thuộc Khối Xô Viết** — và điều đó **bắt đầu từ đầu những năm 60**.
+
+đã khá lâu rồi, người ta đã nỗ lực cải thiện ngành công nghiệp xây dựng, từ các **bản vẽ CAD** xuất hiện vào năm **1982**. hưm, đây là 1 số thông tin đọc cho vui thôi.
+
+Sự chuyển đổi này **từng có những người phản đối**, không giống như ngày nay (đã được biết đến rộng rãi hơn, và hiện tại đã được bộ xây dựng đưa thành tiêu chuẩn).
+
+## **Từ Vẽ Tay Đến CAD: Một Cuộc Cách Mạng Không Thể Đảo Ngược**
+
+Xét rằng **tiền bối của chúng ta đã vẽ bằng tay** trong **nhiều thế kỷ**, thì các **công cụ hỗ trợ bởi máy tính** thật sự là một **cuộc cách mạng đáng kinh ngạc**.
+
+Và ai lại muốn quay lại vẽ tay bây giờ?
+**Không ai cả**, ngoại trừ một số **"khủng long cuối cùng"** chưa bắt đầu chuyển đổi sang CAD.
+
+Không nghi ngờ gì nữa, **các bản vẽ bằng tay (hand rendered drawings)** rất đẹp —
+**nhưng chúng cực kỳ chậm để tạo ra**, và… **ai còn thời gian nữa chứ?**
+
+## **BIM – Không Hề Mới, Nhưng Luôn Mới Với Nhiều Người**
+
+Quay trở lại với từ viết tắt của chúng ta: **BIM – Building Information Modeling (Mô hình thông tin xây dựng)**.
+
+Thuật ngữ chính thức “BIM” lần đầu tiên xuất hiện vào **năm 1992**, nhưng vào thời điểm đó, **quy trình vẫn chưa sẵn sàng để triển khai rộng rãi**.
+
+Vậy còn bây giờ thì sao?
+
+Chà, chúng ta **đang tiến gần hơn bao giờ hết** đến khái niệm **kỹ thuật tích hợp** — nơi **mọi người cùng báo cáo cho một nhà lãnh đạo duy nhất**.
+
+## **BIM Làm Gì? Và Làm Sao Để Nó Hoạt Động?**
+
+BIM **yêu cầu những người trong ngành xây dựng** giao tiếp **rõ ràng** — với **bất kỳ số lượng công ty nào**, có thể là 2 hay 50.
+Mỗi công ty có thể có **tham vọng khác nhau**, **tầm nhìn khác nhau**.
+
+Nhưng với BIM, **tất cả họ sẽ làm việc cùng nhau**, chia sẻ thông tin thông qua một môi trường dữ liệu chung (**common data environment**).
+
+## **Không Quá Mới, Nhưng Ngày Càng Được Chuẩn Hóa**
+
+Vì vậy, **khái niệm BIM không hẳn là mới**.
+
+Và trong suốt nhiều năm qua, **các tiêu chuẩn khác nhau** đã được phát triển trên toàn cầu để **hỗ trợ việc triển khai BIM hiệu quả trong ngành xây dựng**.

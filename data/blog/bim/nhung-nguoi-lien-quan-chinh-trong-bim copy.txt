@@ -1,0 +1,90 @@
+---
+title: 'Những người liên quan chính trong Bim'
+date: '2023-07-01T15:30:02Z'
+tags: ['bim', 'foundation']
+draft: false
+summary: Khi bắt đầu tìm hiểu về Mô hình thông tin công trình (BIM), chúng ta có xu hướng chỉ xem xét BIM dành cho lĩnh vực cụ thể của mình.
+---
+
+Khi bắt đầu tìm hiểu về **Mô hình thông tin công trình (BIM)**, chúng ta có xu hướng chỉ xem xét BIM dành cho lĩnh vực cụ thể của mình.
+
+Một **kiến trúc sư (architect)** thường nhầm lẫn nó với việc tạo mô hình 3D (3D modeling).
+**Nhà thầu (contractor)** có thể nghĩ BIM chỉ dành cho việc phối hợp (coordination) và phân tích (analysis).
+Còn **chủ sở hữu (owner)** có thể chỉ thấy giá trị của việc kết xuất 3D (3D rendering).
+
+Đây chỉ là một vài ví dụ về **nhận thức thực tế về BIM**. Điều đó không có nghĩa là chúng đều sai hoặc đúng — mà chỉ cho thấy **cái nhìn tổng thể hơn** về cách các chuyên gia khác nhau có thể tiếp cận BIM.
+
+---
+
+## **BIM Liên Quan Đến Tất Cả Mọi Người**
+
+Trước hết, **mọi người đều bị ảnh hưởng và hưởng lợi từ BIM**.
+Mỗi bên liên quan trong ngành xây dựng (building industry stakeholders) đều có vai trò và thu lợi từ việc sử dụng BIM.
+
+**Vòng đời BIM (BIM lifecycle)** — giống như vòng đời của một tòa nhà — có bốn giai đoạn:
+
+1. **Lập trình cải tạo BIM** (_BIM renovation programmation_)
+2. **Thiết kế BIM** (_BIM design_)
+3. **Xây dựng BIM** (_BIM construction_)
+4. **BIM cho quản lý và bảo trì cơ sở vật chất** (_BIM for facility management and maintenance_)
+
+Và sau đó, quá trình lại bắt đầu lại cho việc **cải tạo (renovation)** hoặc **tháo dỡ (deconstruction)** — trước đây thường được gọi là **phá dỡ (demolition)**.
+
+---
+
+## **Một Góc Nhìn Khác: Vòng Đời Qua Thời Gian và Chi Phí**
+
+Bây giờ, hãy cùng nhìn vào một góc độ khác của vòng đời công trình — qua **thời gian** và **chi phí**.
+
+Những biểu đồ này đến từ một **nghiên cứu của Pháp về các tòa nhà công cộng**. Những gì tui sắp giải thích có vẻ hiển nhiên với một số bạn, nhưng đôi khi chúng ta cần một chút nhắc nhở.
+
+Nếu chúng ta nhìn vào **vòng đời bất động sản (real estate lifecycle)** trong hơn **30 năm**, ta sẽ thấy:
+
+- Giai đoạn **thiết kế (design)** và **xây dựng (construction)** chỉ là **một phần nhỏ**, thường kéo dài **3 đến 4 năm**.
+- Nếu xét theo chi phí của tòa nhà, thì **nghiên cứu (studies)** và **xây dựng (construction)** chỉ chiếm khoảng **1/4 tổng chi phí cơ sở vật chất**.
+
+---
+
+## **Vì Sao BIM Quan Trọng Với Chủ Sở Hữu?**
+
+Thông qua những sơ đồ đó, tui muốn bạn nhận ra lý do **tại sao BIM lại rất quan trọng đối với các chủ sở hữu**, và tại sao BIM **đang dần trở thành yêu cầu bắt buộc ở nhiều quốc gia**.
+
+Một số nghiên cứu cho thấy **chủ sở hữu có thể tiết kiệm 10% đến 20% chi phí quản lý tòa nhà (building management expenses)**. Nhưng để làm được điều đó, **ba giai đoạn đầu**:
+
+1. **Lập trình BIM (BIM programming)**
+2. **Thiết kế (design)**
+3. **Xây dựng (build)**
+
+…phải được thực hiện đúng cách.
+
+- **Chương trình BIM (BIM programs)** xác định nhu cầu.
+- **Thiết kế BIM (BIM design)** tạo điều kiện thuận lợi cho việc triển khai với **hình ảnh hóa (visualization)** và **phân tích mô phỏng (simulation analysis)** như:
+  - năng lượng (energy),
+  - tính bền vững (sustainability), v.v.
+
+- Ngoài ra, phản hồi từ **các nhà thầu (contractors)** và **người quản lý cơ sở vật chất (facility manager)** cũng rất quan trọng — họ chuẩn bị **bộ tài liệu xây dựng (construction set)** để mọi thứ được xác định và sẵn sàng thi công.
+
+---
+
+## **Giai Đoạn Thi Công Và Vai Trò Của Nhà Thầu**
+
+Trong quá trình **xây dựng (construction)**, **nhà thầu (constructor)** không chỉ đơn thuần thi công mà còn:
+
+- Theo dõi, cập nhật và **nuôi dưỡng mô hình BIM**
+- Chuẩn bị sẵn sàng cho việc **bàn giao mô hình hoàn công (as built model delivery)**
+
+Họ cũng có thể sử dụng các công cụ BIM để:
+
+- **Phối hợp (coordinate)**
+- **Lên lịch (schedule)**
+- **Theo dõi kế hoạch (planning)** và **chi phí (cost)** một cách rất chặt chẽ
+
+…giúp đảm bảo **giao hàng đúng hạn và không phát sinh thêm chi phí**.
+
+---
+
+## **Mỗi Bên Đều Có Vai Trò Và Giá Trị Trong BIM**
+
+Bây giờ bạn đã thấy, tất cả các **bên liên quan trong ngành xây dựng** đều có vai trò rõ ràng trong quy trình BIM.
+
+Ở **mỗi giai đoạn**, các bên liên quan đều có những nhiệm vụ quan trọng và trải nghiệm **mức độ lợi ích khác nhau** từ BIM.

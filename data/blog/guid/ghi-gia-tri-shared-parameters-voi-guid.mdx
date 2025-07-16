@@ -9,9 +9,7 @@ summary: Kỹ thuật ghi Shared Parameters thông qua GUID là nền tảng cho
 
 Trong bài viết trước, chúng ta đã thành công trong việc truy xuất và đọc giá trị của Shared Parameters từ các đối tượng Revit thông qua **GUID**. Tuy nhiên, để thực sự biến Revit thành một công cụ làm việc hiệu quả, chúng ta không chỉ cần đọc, mà còn cần khả năng **ghi và cập nhật dữ liệu** một cách lập trình.
 
-Việc cập nhật Shared Parameters là một kỹ năng cực kỳ mạnh mẽ, cho phép bạn tự động điền thông tin, đồng bộ hóa dữ liệu từ các nguồn bên ngoài, hoặc điều chỉnh thuộc tính của hàng loạt đối tượng chỉ với vài dòng code.
-
-### 1\. Các Bước Ghi Giá Trị Vào Shared Parameter
+### Các Bước Ghi Giá Trị Vào Shared Parameter
 
 Để ghi hoặc cập nhật giá trị cho một Shared Parameter trên một `Element` thông qua API, chúng ta sẽ thực hiện các bước sau:
 
@@ -21,7 +19,7 @@ Việc cập nhật Shared Parameters là một kỹ năng cực kỳ mạnh m�
 4.  **Đặt giá trị mới:** Sử dụng các phương thức `Set()` phù hợp với `StorageType` của parameter.
 5.  **Kết thúc `Transaction`:** `Commit()` giao dịch nếu mọi thứ thành công, hoặc `RollBack()` nếu có lỗi.
 
-### 2\. Ví Dụ Code (C\#): Cập Nhật Giá Trị Shared Parameter Bằng GUID
+### Ví Dụ Code (C\#): Cập Nhật Giá Trị Shared Parameter Bằng GUID
 
 Hãy cùng xem một đoạn code ví dụ minh họa cách cập nhật một Shared Parameter. Chúng ta sẽ tiếp tục sử dụng ví dụ "Mã tài sản" từ bài trước.
 
@@ -155,7 +153,7 @@ public class WriteSharedParameterByGuid : IExternalCommand
   - `desiredParameter.Set(1.23);` cho `StorageType.Double` (Revit sử dụng đơn vị nội bộ, hãy cẩn thận khi đặt giá trị số thực)
   - `desiredParameter.Set(new ElementId(12345));` cho `StorageType.ElementId`
 
-### 3\. Lưu Ý Quan Trọng Khi Ghi Shared Parameters
+### Lưu Ý Quan Trọng Khi Ghi Shared Parameters
 
 - Luôn đảm bảo giá trị bạn gán khớp với `StorageType` của Shared Parameter. Gán sai kiểu dữ liệu sẽ gây ra lỗi runtime.
 - Không bao giờ cố gắng sửa đổi mô hình Revit bên ngoài một `Transaction` đang hoạt động.

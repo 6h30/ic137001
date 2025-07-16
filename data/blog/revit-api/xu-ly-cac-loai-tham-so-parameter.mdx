@@ -12,7 +12,7 @@ Sự đa dạng về loại **Parameters** và cách chúng được lưu trữ 
 
 ---
 
-### 1\. Hiểu các loại Parameters và tầm quan trọng của chúng
+### Hiểu các loại Parameters và tầm quan trọng của chúng
 
 Trước khi đi vào các vấn đề, hãy nhắc lại các loại **Parameters** chính trong Revit:
 
@@ -27,9 +27,9 @@ Mỗi loại **Parameter** có cách truy cập và thao tác hơi khác nhau, v
 
 ---
 
-### 2\. Các thách thức thường gặp khi làm việc với Parameters
+### Các thách thức thường gặp khi làm việc với Parameters
 
-#### 2.1. Phân biệt Instance và Type Parameters
+#### Phân biệt Instance và Type Parameters
 
 Đây là một trong những lỗi phổ biến nhất. Một **Parameter** có thể là **Instance** hoặc **Type**, và cách bạn truy cập nó sẽ khác nhau.
 
@@ -50,7 +50,7 @@ Mỗi loại **Parameter** có cách truy cập và thao tác hơi khác nhau, v
   }
   ```
 
-#### 2.2. Xử lý các loại giá trị của Parameter (StorageType)
+#### Xử lý các loại giá trị của Parameter (StorageType)
 
 Mỗi **Parameter** có một `StorageType` riêng (Integer, Double, String, ElementId, None). Bạn phải sử dụng phương thức `As...()` phù hợp để truy xuất giá trị. Nếu sử dụng sai, bạn sẽ gặp lỗi `InvalidCastException` hoặc nhận giá trị không chính xác.
 
@@ -89,7 +89,7 @@ if (param != null)
 }
 ```
 
-#### 2.3. Khác biệt giữa Internal Units và Display Units
+#### Khác biệt giữa Internal Units và Display Units
 
 Revit lưu trữ hầu hết các giá trị số (chiều dài, diện tích, khối lượng...) dưới dạng **Internal Units** (đơn vị nội bộ), thường là Feet cho chiều dài và Foot² cho diện tích. Khi đọc hoặc ghi các giá trị này, bạn cần chuyển đổi giữa **Internal Units** và **Display Units** (đơn vị hiển thị mà người dùng thấy).
 
@@ -116,7 +116,7 @@ Revit lưu trữ hầu hết các giá trị số (chiều dài, diện tích, k
 
 - **Trước Revit 2021:** Sử dụng các phương thức `CovertFromInternalUnits` và `ConvertToInternalUnits` của `UnitUtils` với `DisplayUnitType` `enum` cũ.
 
-#### 2.4. Xác định Built-in Parameters theo tên (string name)
+#### Xác định Built-in Parameters theo tên (string name)
 
 Bạn không thể dùng `LookupParameter("WALL_HEIGHT_PARAM")` để tìm một `BuiltInParameter`. Thay vào đó, bạn phải sử dụng `BuiltInParameter` `enum`.
 
@@ -128,7 +128,7 @@ Parameter heightParam = wall.get_Parameter(BuiltInParameter.WALL_HEIGHT_PARAM);
 // Parameter heightParam = wall.LookupParameter("WALL_HEIGHT_PARAM");
 ```
 
-#### 2.5. Xử lý Shared Parameters
+#### Xử lý Shared Parameters
 
 Để truy cập **Shared Parameters**, bạn cần có định nghĩa của nó (một đối tượng `Definition`) từ `BindingMap` hoặc bằng cách duyệt qua `Parameters` của `Element` và kiểm tra `GUID` của chúng.
 
@@ -149,7 +149,7 @@ foreach (Parameter param in parameters)
 
 Đây là một cách phổ biến và đáng tin cậy hơn để truy cập Shared Parameters so với việc dựa vào tên (string name), vì tên có thể bị người dùng thay đổi.
 
-#### 2.6. Kiểm tra khả năng đọc/ghi của Parameter (`IsReadOnly` / `IsReadWrite`)
+#### Kiểm tra khả năng đọc/ghi của Parameter (`IsReadOnly` / `IsReadWrite`)
 
 Không phải mọi **Parameter** đều có thể được sửa đổi bằng API. Luôn kiểm tra thuộc tính `IsReadOnly` hoặc `IsReadWrite` trước khi cố gắng đặt giá trị.
 
@@ -167,7 +167,7 @@ else
 
 ---
 
-### 3\. Giải pháp và thực tiễn tốt nhất
+### Giải pháp và thực tiễn tốt nhất
 
 - **Sử dụng `BuiltInParameter` cho các tham số dựng sẵn:** Luôn ưu tiên dùng `BuiltInParameter` `enum` để truy cập các tham số dựng sẵn.
 - **Dùng `ForgeTypeId` cho đơn vị và loại tham số (Revit 2021+):** Đây là cách tiếp cận tương lai và ổn định nhất.
@@ -179,7 +179,7 @@ else
 
 ---
 
-### Kết luận
+### Túm lại
 
 Làm việc với **Parameters** là cốt lõi của mọi Add-in Revit. Mặc dù có những thách thức do sự đa dạng và cách lưu trữ khác nhau, việc hiểu rõ các loại **Parameters**, cách chúng hoạt động, và áp dụng các thực tiễn tốt nhất sẽ giúp bạn viết code mạnh mẽ, đáng tin cậy và hiệu quả hơn. Hãy nhớ rằng, **Parameters** là cầu nối giữa code của bạn và dữ liệu BIM giá trị.
 

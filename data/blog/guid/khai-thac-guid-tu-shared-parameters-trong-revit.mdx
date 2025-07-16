@@ -7,13 +7,11 @@ draft: false
 summary: Trong môi trường BIM, đặc biệt là với Revit, Shared Parameters đóng vai trò cực kỳ quan trọng trong việc chuẩn hóa dữ liệu và đảm bảo khả năng tương tác giữa các dự án và phần tử. Mỗi Shared Parameter được xác định duy nhất bởi một Global Unique Identifier (GUID).
 ---
 
-Việc truy cập và thao tác với GUID này là chìa khóa để tự động hóa, kiểm soát chất lượng dữ liệu, và phát triển các công cụ mạnh mẽ thông qua Revit API.
-
-Bài viết này chúng ta thực hành 4 phương pháp chính để trích xuất GUID từ Shared Parameters.
+Việc truy cập và thao tác với GUID này là chìa khóa để tự động hóa, kiểm soát chất lượng dữ liệu, và phát triển các công cụ mạnh mẽ thông qua Revit API. Bài viết này chúng ta thực hành 4 phương pháp chính để trích xuất GUID từ Shared Parameters.
 
 ---
 
-### 1\. Truy Cập Trực Tiếp GUID Từ Đối Tượng `Parameter`
+### Truy Cập Trực Tiếp GUID Từ Đối Tượng `Parameter`
 
 Đây là phương pháp phổ biến và hiệu quả nhất khi bạn đã có một đối tượng `Parameter` trong tay và muốn xác định xem nó có phải là Shared Parameter hay không, đồng thời lấy GUID của nó.
 
@@ -120,7 +118,7 @@ public class SharedParameterGuidExtractor
 
 ---
 
-### 2\. Duyệt Qua Các Định Nghĩa Shared Parameter Trong Tệp Shared Parameter (Shared Parameter File)
+### Duyệt Qua Các Định Nghĩa Shared Parameter Trong Tệp Shared Parameter (Shared Parameter File)
 
 Nếu mục tiêu của bạn là liệt kê tất cả các Shared Parameters (và GUID của chúng) mà không cần chúng phải được gán cho bất kỳ phần tử cụ thể nào trong dự án, bạn có thể đọc trực tiếp từ tệp Shared Parameter. Phương pháp này đặc biệt hữu ích khi bạn muốn kiểm tra các định nghĩa tham số có sẵn hoặc muốn đảm bảo sự đồng bộ giữa các dự án.
 
@@ -207,7 +205,7 @@ public class SharedParameterFileExtractor
 
 ---
 
-### 3\. Sử Dụng GUID để Truy Cập Parameter (`Element.get_Parameter(Guid)`)
+### Sử Dụng GUID để Truy Cập Parameter (`Element.get_Parameter(Guid)`)
 
 Trong một số trường hợp, bạn đã biết GUID của một Shared Parameter và muốn truy cập trực tiếp tham số đó trên một phần tử. Đây là cách hiệu quả nhất khi bạn có GUID và muốn thực hiện các thao tác như đọc/ghi giá trị tham số.
 
@@ -273,7 +271,7 @@ public class AccessParameterByGuid
 
 ---
 
-### 4\. Sử Dụng RevitLookup (Công Cụ Debugging)
+### Sử Dụng RevitLookup (Công Cụ Debugging)
 
 Mặc dù không phải là một phương pháp lập trình trực tiếp, **RevitLookup** là một Add-in cực kỳ hữu ích và gần như không thể thiếu cho bất kỳ nhà phát triển Revit API nào. Nó cho phép bạn "snoop" (nghĩa là xem xét sâu) các đối tượng trong Revit và kiểm tra tất cả các thuộc tính của chúng, bao gồm cả GUID của Shared Parameters.
 

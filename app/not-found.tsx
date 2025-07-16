@@ -13,7 +13,7 @@ export default function NotFound() {
           Ố ồ, bài viết này không tồn tại.
         </p>
         <p className="mb-8">
-          Đừng lo lắng, bạn có thể tìm thấy nhiều bài viết khác trên trang chủ của tôi.
+          Đừng lo lắng, bạn có thể tìm thấy nhiều bài viết khác trên trang chủ của tui.
         </p>
         <Link
           href="/"
