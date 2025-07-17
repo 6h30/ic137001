@@ -1,0 +1,73 @@
+---
+title: 'Tùy Chỉnh Keynotes Trong Revit'
+date: '2024-05-20T00:02:04Z'
+tags: ['bim', 'practices']
+draft: false
+authors: ['ductruong']
+summary: 'Việc cấu hình Keynotes là một bước nhỏ nhưng có tác động lớn đến sự "thông minh" và khả năng tương tác của mô hình BIM.'
+---
+
+Chúng ta đã cùng nhau khám phá nhiều khía cạnh của việc tạo ra một mô hình BIM "chất lượng", từ LOD, Ma trận Trách nhiệm, đến việc chọn đúng công cụ và mô hình hóa theo tầng. Hôm nay, mình muốn giới thiệu một tính năng cực kỳ mạnh mẽ trong Revit mà ít người để ý nhưng lại vô cùng hữu ích, đặc biệt khi bạn cần kết nối mô hình của mình với các phần mềm **dự toán chi phí** hay **lập đặc điểm kỹ thuật (specifications)**: đó chính là **Cấu hình Chú thích (Keynotes)**!
+
+Keynotes cho phép chúng ta "gắn" các tiêu chuẩn phân loại quốc tế như **OmniClass** hay **Masterspec** trực tiếp vào các đối tượng trong Revit. Điều này không chỉ giúp mô hình của bạn trở nên "thông minh" hơn mà còn đảm bảo sự đồng bộ dữ liệu xuyên suốt các giai đoạn của dự án.
+
+### Bắt đầu với Cài đặt Keynote
+
+Để bắt đầu, mình đã mở một dự án mẫu kiến trúc trong Revit. Bây giờ, hãy cùng xem cách Keynote classification hoạt động nhé:
+
+1.  Vào tab **Annotate (Chú thích)**.
+2.  Trong nhóm **Tag (Thẻ)**, bạn sẽ thấy tùy chọn **Keynote (Chú thích)**.
+3.  Chọn **Keynote Settings (Cài đặt chú thích)**.
+
+### Khám phá các loại Keynote mặc định và "kho báu" phân loại
+
+Khi mở Cài đặt Keynote, bạn sẽ thấy mặc định là **Revit Keynote Imperial 2010**. Đây là một bộ Keynote được cài đặt sẵn cùng với Revit.
+
+Nếu bạn tò mò muốn xem có những loại Keynote nào khác, hãy nhấp vào **Browse (Duyệt)**. Bạn sẽ được dẫn đến thư viện Revit, nơi có các phiên bản Keynote khác nhau theo năm và cả phân loại **Uniformat Classification** nữa.
+
+Bạn cũng có thể nhấp vào **View (Xem)** ngay bên dưới nút Duyệt để xem cấu trúc của **Revit Keynotes Imperial 2010**. Đây là một hệ thống phân loại với nhiều bộ phận (Division), nhưng nó không phải là một phân loại chính thức được công nhận rộng rãi. Thay vào đó, bạn có thể sử dụng các tiêu chuẩn chính thức hơn như **OmniClass** (mà Revit cũng cung cấp) hoặc tìm các tệp văn bản **Masterspecs** hay **OmniClass** trực tuyến.
+
+### "Thay áo" cho hệ thống phân loại
+
+Bây giờ, hãy thử chuyển sang **Uniformat Classification**. Sau khi chọn và nhấp **OK**, Revit có thể sẽ thông báo về việc cần cập nhật thủ công cho từng đối tượng nếu có sự không tương thích về mã hóa (vì Revit Keynotes mặc định dùng cả chữ và số, trong khi Uniformat có thể khác). Cứ nhấn **OK** nhé.
+
+Nếu bạn xem cấu trúc của Uniformat, bạn sẽ thấy nó được tổ chức hơi khác một chút. Ví dụ, "A" dành cho **kết cấu móng (substructure)**, "B" cho **lớp vỏ (shell)**, và "C" cho **nội thất (interior)**. Việc nắm rõ cấu trúc này sẽ giúp bạn dễ dàng tìm kiếm và gán Keynote sau này.
+
+### "Gắn mã" vào đối tượng của bạn!
+
+Sau khi đã cấu hình Keynote Settings, giờ là lúc chúng ta gắn các mã phân loại này vào đối tượng của mình.
+
+Giả sử mình chọn một chiếc ghế sofa (bạn có thể chọn sàn, tường, hay bất kỳ đối tượng nào khác).
+
+1.  Vào **Edit Type (Chỉnh sửa kiểu)**.
+2.  Trong mục **Identity Data (Dữ liệu nhận dạng)**, bạn sẽ thấy trường **Keynotes**.
+3.  Nhấp vào ba dấu chấm nhỏ. Một cửa sổ sẽ hiện ra, hiển thị tệp văn bản Keynote mà bạn đã thiết lập.
+4.  Bạn sẽ phải tìm mục phù hợp. Ví dụ, với chiếc ghế sofa này, bạn sẽ tìm trong phần **Furniture (Nội thất)**.
+
+### Mẹo "tìm kiếm thần tốc" cho Keynotes dài dằng dặc!
+
+Tệp Keynote có thể rất dài, và việc cuộn từng dòng để tìm kiếm có vẻ hơi "oải" đúng không? Mình có một mẹo nhỏ đây:
+
+1.  Trở lại **Keynote Settings**.
+2.  Nhấp vào **Browse**.
+3.  **Nhấp chuột phải** vào tệp văn bản Keynote và chọn **Open (Mở)**.
+4.  Tệp văn bản sẽ mở ra. Bây giờ, bạn có thể sử dụng chức năng **Edit (Chỉnh sửa)** và **Find (Tìm kiếm)** để nhanh chóng tìm bất kỳ đối tượng, loại vật liệu, hoặc mã nào bạn cần.
+5.  Khi tìm thấy, bạn có thể để tệp đó mở ở chế độ nền. Sau đó quay lại Revit và gán Keynote cho đối tượng của mình.
+
+### Ví dụ thực tế: Gán Keynote cho tường nội thất
+
+Để minh họa, nếu mình đang chọn một bức tường nội thất:
+
+1.  Mình nhấp vào **Edit Type (Chỉnh sửa kiểu)**.
+2.  Trong mục **Keynote**, mình sẽ tìm trong phần "C" (nội thất) và chọn **Interior Partition (Vách ngăn nội thất)**. Bạn sẽ thấy các tùy chọn rất cụ thể hoặc tổng quát, tùy thuộc vào hệ thống phân loại. Bạn không nhất thiết phải cung cấp quá nhiều thông tin nếu không cần.
+3.  Nhấp **OK** hai lần.
+
+Giờ đây, đối tượng tường nội thất của bạn đã chứa thông tin phân loại quan trọng!
+
+### Luôn nhớ LOD!
+
+Dĩ nhiên, bạn có thể sử dụng các thẻ (tags) và chú giải (legend) để hiển thị thông tin Keynote này trên bản vẽ. Nhưng mục đích chính ở đây là chỉ ra cách bạn "nhúng" thông tin phân loại đó vào chính đối tượng.
+
+Cuối cùng, đừng quên kiểm tra **Ma trận LOD (Level of Development)** của dự án bạn! Ma trận này sẽ chỉ rõ bạn có cần thông tin phân loại đó ở giai đoạn nào và nên tuân theo phân loại nào.
+
+Việc cấu hình Keynotes là một bước nhỏ nhưng có tác động lớn đến sự "thông minh" và khả năng tương tác của mô hình BIM.

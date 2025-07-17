@@ -1,0 +1,55 @@
+---
+title: 'Giải Pháp BIM Tránh "Đục Tường Bừa Bãi" Tại Công Trường'
+date: '2024-07-08T00:04:02Z'
+tags: ['bim', 'practices']
+draft: false
+authors: ['ductruong']
+summary: 'Một trong những "cơn ác mộng" của thi công là phát hiện ra rằng đường ống MEP hay cửa, cửa sổ bị "đụng" vào kết cấu mà chưa được tính toán trước. Điều này không chỉ gây ra lãng phí vật liệu, thời gian mà còn ảnh hưởng đến chất lượng công trình.'
+---
+
+Một trong những "cơn ác mộng" của thi công là phát hiện ra rằng đường ống MEP hay cửa, cửa sổ bị "đụng" vào kết cấu mà chưa được tính toán trước. Điều này không chỉ gây ra lãng phí vật liệu, thời gian mà còn ảnh hưởng đến chất lượng công trình. Hôm nay, mình muốn chia sẻ một giải pháp BIM cực kỳ hiệu quả để giải quyết bài toán này: **phối hợp lỗ mở kết cấu (structural openings)** ngay từ giai đoạn thiết kế!
+
+Mục tiêu là gì? Đơn giản thôi: **đảm bảo mọi lỗ mở cho cửa ra vào, cửa sổ, và đặc biệt là hệ thống MEP, được phối hợp chặt chẽ và xác nhận trước khi đưa ra công trường.** Nhờ đó, chúng ta có thể tránh được những sai sót đáng tiếc và đảm bảo quá trình thi công diễn ra suôn sẻ.
+
+### "Vũ khí bí mật": Void Family và Quy trình Phối hợp
+
+Hãy hình dung thế này: Thay vì đội MEP cứ tự vẽ đường ống của mình và đội kết cấu cứ thiết kế tường, dầm của họ, chúng ta sẽ tạo ra một quy trình "giao tiếp" chuẩn chỉ.
+
+Mình đã chuẩn bị một tệp Revit đặc biệt. Trong tệp này, mình đã liên kết cả **mô hình kết cấu (structural model)** và **mô hình MEP**. Và tất nhiên, mình có một số ống dẫn (duct) MEP đang chạy xuyên qua vị trí tường kết cấu. Rõ ràng, ở đây, chúng ta cần một lỗ mở trên bức tường kết cấu đó để đường ống đi xuyên qua.
+
+Vậy, "vũ khí bí mật" của chúng ta là gì? Đó là một **void family (họ đối tượng rỗng)**.
+
+Mình đã tự tạo một family. Nó chỉ đơn giản là một "hộp rỗng" không hơn không kém, nhưng bên trong nó, mình đã cài đặt một số **tham số (parameters)** rất cụ thể.
+
+Hãy xem nó hoạt động thế nào nhé:
+
+1.  Mình vào tab **Architecture (Kiến trúc)**, chọn **Component (Cấu kiện)**.
+2.  Sau đó, mình đặt cái "hộp rỗng" này lên vị trí bức tường kết cấu mà đường ống MEP của mình cần đi qua.
+3.  Mình có thể dễ dàng di chuyển và điều chỉnh kích thước của lỗ mở này sao cho phù hợp với đường ống. Tất nhiên, mình khuyên các bạn nên sử dụng các **tham số thể hiện (instance parameter)** cho việc này để dễ dàng điều chỉnh sau này.
+
+Khi nhìn xuống các thuộc tính, bạn sẽ thấy tất cả các kích thước của lỗ mở được hiển thị rõ ràng.
+
+### Quản lý Lỗ Mở Bằng Bảng Thống Kê (Schedule) – Không còn "trống đánh xuôi kèn thổi ngược"!
+
+Điểm mạnh thực sự của phương pháp này nằm ở chỗ, khi chúng ta có một tệp Revit chỉ chứa những "hộp rỗng" này, chúng ta có thể dễ dàng **lập bảng thống kê (schedule)** chúng!
+
+Mình đã tạo một **bảng thống kê lỗ mở tường (wall opening schedule)** bao gồm:
+
+- **ID:** Mã định danh riêng.
+- **Hạng mục (Trade):** Đơn vị nào yêu cầu lỗ mở (ví dụ: MEP, Kiến trúc).
+- **Người yêu cầu (User):** Ai là người tạo yêu cầu này.
+- **Cấp độ (Level):** Lỗ mở nằm ở tầng nào.
+- **Kích thước (Dimension):** Chiều rộng, chiều cao của lỗ mở.
+- Và quan trọng nhất là các tham số quản lý quy trình: **Trạng thái (Status)**, **Phiên bản (Version)**, và **Ngày (Date)**.
+
+Nhờ bảng thống kê này, chúng ta có thể **theo dõi sát sao** tình trạng của từng lỗ mở. Điều này đảm bảo việc phối hợp diễn ra cực kỳ hiệu quả:
+
+1.  Mình tạo yêu cầu lỗ mở bằng **void family**.
+2.  Mình gửi tệp này cho các **kỹ sư kết cấu** để họ xem xét và xác nhận.
+3.  Khi họ đã **xác nhận (valid)**, họ sẽ ghi lại (record) các lỗ mở này vào mô hình kết cấu của họ.
+
+Bằng cách này, khi chúng ta chạy **kiểm tra xung đột (clash detection)** giữa các mô hình, các lỗ mở đã được xác nhận sẽ **không còn bị phát hiện là xung đột nữa!** Đây là một bước đột phá lớn, giúp chúng ta loại bỏ hàng loạt các xung đột "giả" và tập trung vào những vấn đề thực sự cần giải quyết.
+
+Với phương pháp này, chúng ta có khả năng quản lý rất dễ dàng bất kỳ lỗ mở kết cấu nào sẽ cần thiết cho việc thi công dự án sau này. Nó không chỉ tiết kiệm thời gian, tiền bạc mà còn nâng cao chất lượng phối hợp giữa các bộ môn, hướng tới một dự án BIM thực sự hiệu quả.
+
+Bạn đã từng áp dụng phương pháp tương tự để phối hợp lỗ mở chưa? Hãy chia sẻ kinh nghiệm của bạn ở phần bình luận nhé!

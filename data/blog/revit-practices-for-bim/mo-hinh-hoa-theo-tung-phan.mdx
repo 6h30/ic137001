@@ -1,0 +1,48 @@
+---
+title: 'Mô hình hóa theo thực tế xây dựng'
+date: '2024-05-08T00:02:02Z'
+tags: ['bim', 'practices']
+draft: false
+authors: ['ductruong']
+summary: 'Những ai đã và đang làm việc với BIM hẳn đều có lúc đứng trước một lựa chọn: Khi mô hình hóa một dự án cao tầng, có nên vẽ một cây cột (hoặc bức tường) thẳng tuột từ tầng trệt lên đến mái nhà cho "tiện" không?'
+---
+
+Những ai đã và đang làm việc với **BIM** hẳn đều có lúc đứng trước một lựa chọn: Khi mô hình hóa một dự án cao tầng, có nên vẽ một cây **cột** (hoặc bức tường) thẳng tuột từ tầng trệt lên đến mái nhà cho "tiện" không? Hoặc một bức tường xuyên qua vài tầng chẳng hạn? "Trên bản vẽ thì trông vẫn y chang mà," bạn có thể nghĩ vậy. "Và mình cũng chẳng phải lo căn chỉnh giữa các tầng nữa." Nghe có vẻ hợp lý đúng không?
+
+Nhưng khoan đã, hãy dừng lại một chút và tự hỏi: **Liệu ngoài thực tế, công trình có được xây dựng như vậy không?**
+
+### Nguyên tắc "mô hình hóa theo thực tế xây dựng"
+
+Trong quá trình mô hình hóa một **nguyên mẫu (prototype)** – tức là bản sao kỹ thuật số của công trình – chúng ta cần phải áp dụng các **ràng buộc (constraints), quy tắc và phương pháp xây dựng trong thực tế**. Đây chính là điểm mấu chốt!
+
+Đúng là đôi khi có những bức tường có thể được xây thẳng qua hai tầng. Nhưng nếu bạn không chắc chắn liệu yếu tố đó có thực sự được thi công theo cách đó ngoài công trường hay không, hãy làm theo lời khuyên của mình: **Luôn mô hình hóa từng yếu tố theo từng tầng.**
+
+Bạn có thể thắc mắc: "Việc đó có thực sự quan trọng đến thế không?" Hãy cùng mình xem một ví dụ nhỏ để thấy điều đó ảnh hưởng đến những gì nhé.
+
+### "Bức tường thẳng tuột" và những rắc rối không ngờ
+
+Mình đã thử nghiệm trên một dự án nhỏ với vài tầng và vài bức tường khác nhau. Để minh họa, mình đã "biến tấu" ba bức tường riêng biệt trên ba tầng thành chỉ một bức tường thẳng từ tầng trệt lên đến mái nhà.
+
+Đầu tiên, bạn sẽ thấy ngay một vấn đề khi có một bức tường cắt xuyên qua tất cả các tầng: Nếu bạn muốn bức tường đó ngắn hơn (ví dụ, để tạo một khoảng trống cho cửa sổ hoặc một chi tiết kiến trúc), bạn buộc phải sử dụng **lỗ mở tường (wall opening)**.
+
+Mình thử đi đến tầng ba và tạo một lỗ mở tường. Mình vào mục **Kiến trúc (Architecture)**, chọn **Lỗ mở tường (Wall Opening)**, chọn bức tường của mình và nhanh chóng tạo một lỗ.
+
+Khi mình chọn lỗ mở đó và nhìn vào các **ràng buộc (constraint)**, mình nhận ra một điều đáng ngạc nhiên: **Ràng buộc cơ sở (base constraint) của lỗ mở đó, mặc dù mình đặt nó ở tầng ba, lại tự động gắn vào... Tầng Chính (Main Level)!** Tại sao ư? Vì bức tường đó bắt đầu từ Tầng Chính. Điều này có nghĩa là mọi thứ gắn liền với bức tường đó sẽ bị gắn vào cùng một tầng. Đây là một vấn đề lớn nếu bạn cần tạo **lịch trình (schedule)** và muốn sắp xếp đối tượng theo từng tầng. Đây là vấn đề đầu tiên mà mình gặp phải.
+
+### Bài học từ "Lịch trình Tường": Số lượng và Khối lượng bị ảnh hưởng!
+
+Để thấy rõ hơn hậu quả, mình đã tạo một **lịch trình tường (wall schedule)** bao gồm thông tin về các tầng, khối lượng bê tông và số lượng tường.
+
+Mình so sánh hai phiên bản: một phiên bản khi mình mô hình hóa mỗi bức tường theo từng tầng một cách cẩn thận, và một phiên bản với bức tường "thẳng tuột" từ tầng trệt lên mái.
+
+Kết quả thật rõ ràng: Bạn có thể thấy phiên bản khi mỗi tầng có một bức tường riêng biệt cho ra thông tin **khối lượng trên mỗi tầng** và **số lượng trên mỗi tầng** hoàn toàn chính xác. Trong khi đó, với bức tường "thẳng tuột", Revit không thể tự động chia bức tường đó theo tầng mà chỉ tính toán dựa trên cách bạn mô hình hóa nó. Tức là, nếu một bức tường xuyên qua 3 tầng, Revit sẽ coi đó là "một" bức tường duy nhất, chứ không phải "ba" bức tường cho 3 tầng khác nhau. Điều này sẽ làm sai lệch nghiêm trọng các thông tin cần thiết cho **dự toán viên**!
+
+### Luôn "chia nhỏ" khi không chắc chắn!
+
+Vậy nên, đây là **quy tắc chung (rule of thumb)** mà mình luôn tâm niệm: **Nếu bạn không chắc chắn phải làm gì, hãy luôn mô hình hóa mọi yếu tố theo từng tầng.**
+
+Thành thật mà nói, những lần hiếm hoi mình không tuân theo quy tắc này, mình đều hối hận và cuối cùng phải "mô hình hóa lại" (remodel) từ đầu. Nó không chỉ tốn thời gian mà còn ảnh hưởng đến độ chính xác của toàn bộ dự án, đặc biệt là phần **dự toán**.
+
+Đây là một quy tắc tốt nên tuân theo trong mọi trường hợp để đảm bảo mô hình của bạn vừa chính xác, vừa dễ quản lý, và quan trọng nhất là "thân thiện" với các công đoạn tiếp theo của dự án.
+
+Bạn có đồng ý với quan điểm này không? Hãy chia sẻ kinh nghiệm của bạn về việc mô hình hóa theo tầng nhé.
