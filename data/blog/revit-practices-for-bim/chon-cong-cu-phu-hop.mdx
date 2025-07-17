@@ -1,0 +1,46 @@
+---
+title: 'Công cụ phù hợp'
+date: '2024-04-28T00:01:04Z'
+tags: ['bim', 'practices']
+draft: false
+authors: ['ductruong']
+summary: 'Đôi khi chỉ vì một lựa chọn sai lầm nhỏ mà chúng ta phải "mô hình hóa rồi lại mô hình hóa lại" một cách vô ích, tốn bao nhiêu công sức!'
+---
+
+## Cứ tưởng dễ mà dễ thật… nếu bạn biết cách!
+
+Sau khi đã cùng nhau tìm hiểu về tầm quan trọng của LOD và Ma trận Trách nhiệm trong dự án, hôm nay, mình muốn chia sẻ một "mảnh ghép" nhỏ nhưng cực kỳ quan trọng khác trong quá trình làm việc với **Revit** (và cả các phần mềm thiết kế khác nữa): đó là **lựa chọn công cụ và quy trình mô hình hóa sao cho đúng đắn**. Nghe có vẻ cơ bản, nhưng đôi khi chỉ vì một lựa chọn sai lầm nhỏ mà chúng ta phải "mô hình hóa rồi lại mô hình hóa lại" một cách vô ích, tốn bao nhiêu công sức!
+
+Mình nhận ra một điều: khi làm việc với Revit, chúng ta thường có xu hướng chọn ngay chức năng nào nhanh nhất hoặc tiện nhất để đạt được kết quả mình muốn. Nhưng khoan đã! Đừng vội vàng như thế. Dưới đây là một vài lời khuyên "tâm huyết" của mình, không chỉ dành riêng cho một trường hợp cụ thể nào mà là những nguyên tắc chung cho mọi người dùng Revit.
+
+### Dừng lại 3 giây và… nghĩ!
+
+Trước khi bạn vội vàng "nhấp chuột" vào bất kỳ chức năng nào, hãy dành một chút thời gian và **suy nghĩ thật kỹ về kết quả cuối cùng mà bạn cần**. Mình hay tự hỏi bản thân 3 câu hỏi dưới đây:
+
+#### [1 là] Tôi có thực sự cần cái này không? (Và cần ở dạng 2D hay 3D?)
+
+Đây là câu hỏi đầu tiên và quan trọng nhất. Phản xạ của mình thường là xem lại **Kế hoạch Thực hiện BIM (BIM Execution Plan)** của dự án. Kế hoạch này thường đã giải đáp hầu hết các câu hỏi kiểu này rồi. Nếu không có, hãy dùng **"lẽ thường"** của bạn.
+
+Ví dụ nhé: Bạn cần một chi tiết nào đó hiện lên thật đẹp trong bản kết xuất hình ảnh? Vậy thì hãy cân nhắc: liệu việc mô hình hóa nó trong 3D có đáng với công sức bỏ ra không, hay chỉ cần xử lý một chút trong **Photoshop** là đủ? Hay bạn có thật sự cần tính toán khối lượng vật liệu cho nó không? Hay chỉ ước lượng bằng một công thức trong bảng thống kê là ổn rồi?
+
+Một lời khuyên "xương máu" nữa: **Đừng mô hình hóa những thứ mà trước đây bạn chưa bao giờ vẽ trong 2D!** Mình biết nó trông rất "ngầu" khi ở trong 3D, nhưng bạn có thực sự có thời gian để làm chi tiết đến mức đó không? Đôi khi chỉ một mô hình 3D đơn giản trên vài mặt cắt là đủ. Hoặc đôi khi, sự thật là… "chẳng ai quan tâm" đến chi tiết đó cả! Nhưng đừng quên hỏi ý kiến đồng nghiệp nhé, đôi khi chúng ta không thể biết được.
+
+#### [2 là] Cái này có khả năng thay đổi và cập nhật cao không? (Và thay đổi về dữ liệu hay hình dạng?)
+
+Trong các dự án, sự thay đổi là điều không thể tránh khỏi. Nếu một yếu tố nào đó có khả năng thay đổi cao, hãy nghĩ về cách mình mô hình hóa nó. Đôi khi, mình sẵn sàng chọn phương pháp "lâu nhất" để mô hình hóa một yếu tố, chỉ vì mình biết rằng nếu có bất kỳ cập nhật nào sau này, mình có thể điều chỉnh nó chỉ trong vài cú nhấp chuột.
+
+Cũng đừng quên tận dụng **tham số toàn cục (global parameters)** cho các dữ liệu có thể thay đổi. Chúng ta đều hiểu cảm giác "đau khổ" khi phải chỉnh sửa hàng loạt vào phút chót trước khi nộp bài đúng không? Vậy nên, hãy cố gắng **dự đoán** các thay đổi! Điều này không chỉ tăng chất lượng mô hình mà còn nâng cao năng suất của cả nhóm.
+
+#### [3 là] Đây có phải là một mô hình BIM không?
+
+Tất nhiên rồi, một câu hỏi không thể thiếu khi nói về **BIM**. Mình sẽ không "tha" cho bạn dễ dàng thế đâu! Có hai điều quan trọng bạn cần luôn ghi nhớ khi làm việc với mô hình BIM:
+
+- **Mô hình này sẽ được chia sẻ với những người khác.** Họ sẽ truy cập vào các yếu tố mô hình của bạn, bao gồm cả các đường mô hình 3D. Vì vậy, đừng cố gắng "vá víu" mọi thứ bằng các công cụ chú thích (annotation tool) chỉ để nó trông đẹp mắt trên bản vẽ. Nếu nó không phải là một đối tượng 3D thực sự, người khác sẽ không thể làm việc với nó.
+
+- **Hãy sẵn sàng cho tương lai!** Một số nhóm đã bắt đầu thử nghiệm các dự án "không giấy tờ" (no-paper projects). Đừng vội nghĩ "à, thì mình vẫn nộp PDF qua email đấy thôi, cũng là không giấy tờ mà." Không, không phải ý đó đâu! Khái niệm ở đây là **chỉ nộp mô hình BIM**. Nếu một đối tượng hay dữ liệu được tạo ra chỉ bằng công cụ chú thích mà không phải là một phần của mô hình 3D thực sự, thì nó không tồn tại trong "thế giới BIM". Vì vậy, hãy duy trì những thói quen mô hình hóa tốt ngay từ bây giờ nhé.
+
+Và cuối cùng, một điều mình muốn nhấn mạnh: **Luôn sử dụng đúng công cụ!** Bạn đang mô hình hóa một cây cột, vậy tại sao lại định nhấp vào công cụ tường (wall tool)? (Vâng, mình biết, đôi khi mình cũng vậy đó, haha!). Một số đối tượng thì quá rõ ràng, nhưng một số khác thì không. Nhưng việc sử dụng đúng công cụ là vô cùng quan trọng để đối tượng được **gán nhãn và phân loại đúng cách**. Nếu không, sẽ rất khó khăn để thực hiện các phân tích bóc tách khối lượng, hoặc đơn giản là để người khác (ngay cả người không trực tiếp mô hình hóa dự án) có thể nhanh chóng điều hướng và hiểu được dự án. Nó cũng ảnh hưởng đến khả năng hiển thị và đồ họa của mô hình. Tóm lại, một quả táo là một quả táo, không phải một hạt đậu!
+
+Mình biết đôi khi sẽ tiện lợi hơn khi "ép" hoặc "ghi đè" một đối tượng vào một danh mục khác. Thật tiếc là Revit chưa cho phép điều đó. Và nếu bạn cần xuất dự án sang **IFC**, việc phân loại sẽ theo đúng danh mục Revit trong quá trình chuyển đổi đó.
+
+Mình hy vọng những chia sẻ này đã cung cấp cho bạn đủ "lý do" để suy nghĩ kỹ trước khi bắt đầu bất kỳ công việc mô hình hóa nào. Bây giờ thì, hãy cùng vui vẻ và tạo ra những mô hình chất lượng nhé!

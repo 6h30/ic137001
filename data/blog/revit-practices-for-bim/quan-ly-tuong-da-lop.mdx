@@ -1,0 +1,67 @@
+---
+title: 'Câu Chuyện Về Bức Tường Đa Lớp'
+date: '2024-06-28T00:04:01Z'
+tags: ['bim', 'practices']
+draft: false
+authors: ['ductruong']
+summary: 'Đây không chỉ là vấn đề về hiệu suất mà còn ảnh hưởng trực tiếp đến độ chính xác của thông tin trong mô hình.'
+---
+
+## "Tránh Mô Hình Hóa Đúp": Làm Sao Để BIM "Sạch" Mà Vẫn Đẹp 2D?
+
+Những ai đã từng "nhúng tay" vào dự án BIM chắc chắn sẽ quen thuộc với một thử thách quen thuộc này: làm thế nào để tránh **mô hình hóa hai lần các cấu kiện kết cấu**, đặc biệt là những bức tường đa lớp phức tạp? Đây không chỉ là vấn đề về hiệu suất mà còn ảnh hưởng trực tiếp đến **độ chính xác** của thông tin trong mô hình. Bởi vì, nguyên tắc cốt lõi của BIM là: **mỗi cấu kiện chỉ nên được mô hình hóa một lần duy nhất!**
+
+Thế nhưng, với một bức tường gồm nhiều lớp vật liệu (kết cấu, hoàn thiện), làm sao chúng ta đạt được điều đó mà vẫn đảm bảo sự phối hợp chặt chẽ với đội ngũ kết cấu? Mình đã thử nghiệm và đúc kết được một vài cách tiếp cận, và hôm nay mình muốn chia sẻ với các bạn để chúng ta cùng thảo luận, tìm ra phương án phù hợp nhất cho từng dự án và các bên liên quan.
+
+Để dễ hình dung, mình đã nhập một tệp Revit kết cấu vào dự án kiến trúc của mình và đổi màu các cấu kiện kết cấu thành màu xanh lam. Nhìn vào đó, bạn có thể dễ dàng phân biệt đâu là phần kiến trúc, đâu là phần kết cấu.
+
+Trong một thế giới lý tưởng, chúng ta sẽ không bao giờ tạo bất kỳ cấu kiện nào không thuộc về phạm vi công việc của mình. Dĩ nhiên, với những cấu kiện như cửa hoặc cửa sổ, chúng ta vẫn phải tạo lại chúng trong mô hình kiến trúc để phục vụ cho mục đích hiển thị và thống kê.
+
+Vậy điều này có ý nghĩa gì đối với một bức tường đa lớp?
+
+### Cách 1: Chia nhỏ bức tường – Ưu và nhược điểm
+
+Thay vì tạo một bức tường đa lớp duy nhất bao gồm cả phần kết cấu và hoàn thiện, mình đã thử tách nó ra. Cụ thể, mình sẽ có:
+
+1.  Một **bức tường kết cấu** (do đội kết cấu mô hình).
+2.  Và **hai bức tường riêng biệt** dành cho các lớp hoàn thiện ở mỗi bên (do đội kiến trúc mô hình).
+
+Nghe có vẻ hợp lý và tuân thủ nguyên tắc "mỗi bộ môn chỉ mô hình hóa phần việc của mình" đúng không? Tuy nhiên, khi nhìn vào **bản vẽ 2D**, mình thấy ngay một số vấn đề:
+
+- Mình **không thể liên kết mô hình kết cấu** của mình với bức tường kiến trúc. Điều này có thể gây khó khăn khi làm việc trên chế độ xem 2D, vì đôi khi các đường nét không "khớp" hoàn hảo.
+- Thậm chí nó còn **ảnh hưởng đến việc bóc tách khối lượng vật liệu cách nhiệt** hoặc các lớp hoàn thiện khác, vì chúng không được "gắn" liền mạch với lõi kết cấu.
+
+### Cách 2: "Rỗng hóa" lớp kết cấu trong bức tường kiến trúc
+
+Vì những rắc rối ở Cách 1, một số anh em đã tìm ra một giải pháp khác. Thay vì loại bỏ lớp kết cấu và chia thành ba bức tường, họ vẫn **giữ nguyên một bức tường đa lớp duy nhất** trong mô hình kiến trúc.
+
+Tuy nhiên, trong cấu trúc bức tường đó, **lớp mà bộ môn kết cấu chịu trách nhiệm sẽ được đặt tên là "void" (rỗng)**. Điều này có nghĩa là bạn vẫn có đủ thông tin về các lớp vật liệu hoàn thiện, đồng thời phần lõi kết cấu được "đánh dấu" là khoảng trống, để tránh trùng lặp với mô hình kết cấu của đội kết cấu.
+
+Ưu điểm của cách này là gì?
+
+- Bạn vẫn giữ được bất kỳ **hiệu chỉnh đồ họa** nào bạn cần cho bức tường đa lớp.
+- Các **chi tiết góc tường** của bạn sẽ hiển thị tốt hơn nhiều, trông "sạch" và chính xác hơn trên bản vẽ 2D.
+- Tương tự, nếu có cấu trúc bên trong (ví dụ như cột ẩn trong tường), chúng ta cũng có thể coi đó là một "khoảng trống" trong bức tường kiến trúc của mình.
+
+Khi nhìn vào mặt cắt, mọi thứ trông khá ổn. Tuy nhiên, nếu bạn quyết định theo cách này, bạn có thể phải làm tương tự với sàn, bởi vì bây giờ bạn có cả hai phần (kết cấu và kiến trúc) trong cùng một đối tượng. Sẽ có một vấn đề tương tự nếu chúng không thể được gắn vào nhau. Mặc dù ở phía bên này, mọi thứ lại hoàn hảo vì chúng ta chỉ thấy phần kết cấu.
+
+### Cách 3: Giữ ba bức tường riêng biệt và "lọc" chúng khi xuất BIM
+
+Một giải pháp khác mà mình muốn khám phá là thực sự **giữ ba bức tường khác nhau** nhưng với một chút "mẹo". Chúng ta sẽ có:
+
+1.  Lớp hoàn thiện bên ngoài.
+2.  Lớp hoàn thiện bên trong.
+3.  Và một bức tường "kết cấu" riêng biệt mà chúng ta tự vẽ trong mô hình kiến trúc.
+
+Nhưng có một điểm khác biệt: bức tường "kết cấu" mà mình vẽ này thực chất là một **khoảng trống (void)**. Mình gọi nó là "kết cấu" chỉ để biểu diễn đồ họa cấu trúc, giúp bản vẽ 2D của mình hoàn chỉnh.
+
+Lợi ích của cách này là gì?
+
+- Việc xử lý các **lớp hoàn thiện trong bản vẽ 2D** trở nên dễ dàng hơn rất nhiều.
+- Điều đặc biệt là bạn có thể **lọc bức tường "kết cấu rỗng" này để nó sẽ không được xuất với mô hình BIM chính thức!** Nhờ đó, bạn có bức tường này cho chế độ xem 2D của mình (để bản vẽ đẹp và đủ chi tiết), nhưng nó sẽ không xuất hiện trong mô hình BIM chính thức mà bạn trao đổi với các bên khác, tránh trùng lặp với mô hình kết cấu thực tế.
+
+### Không có "đũa thần", nhưng vẫn có lựa chọn!
+
+Rõ ràng, không có một "giải pháp thần tốc" nào cho vấn đề này. Chúng ta vẫn đang sống trong một thế giới mà các bản vẽ 2D vẫn là một phần quan trọng của quy trình, vì vậy sẽ có một số liên kết mà chúng ta phải xử lý. Trừ khi chúng ta sử dụng một ít **vùng che (masking region)** (nhưng đó không phải là cách nhanh nhất), chúng ta sẽ cần tìm các giải pháp nhanh hơn và tốt hơn.
+
+Điều quan trọng nhất là: **Khi bạn truyền mô hình của mình, nó phải chỉ chứa thông tin thuộc trách nhiệm của bạn.** Nhưng điều đó không ngăn cản bạn "làm lộn xộn" mọi thứ trong quá trình làm việc nội bộ của mình. Chỉ cần cẩn thận tạo các **chế độ xem đã lọc (filtered views)** để nhanh chóng xuất mô hình BIM của bạn mà không mất thời gian "dọn dẹp" thủ công.

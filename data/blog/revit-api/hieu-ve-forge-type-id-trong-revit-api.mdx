@@ -14,7 +14,7 @@ Trong các phiên bản **Revit API** gần đây (đặc biệt là từ Revit 
 
 ---
 
-### 1\. Vấn đề với `BuiltInParameter` và `BuiltInCategory` truyền thống
+### Vấn đề với `BuiltInParameter` và `BuiltInCategory` truyền thống
 
 Trong nhiều năm, các lập trình viên **Revit API** đã quen thuộc với việc sử dụng `BuiltInParameter` và `BuiltInCategory` (các `enum` trong Revit API) để xác định các tham số và hạng mục dựng sẵn của Revit. Mặc dù tiện lợi, chúng có một số hạn chế đáng kể:
 
@@ -24,7 +24,7 @@ Trong nhiều năm, các lập trình viên **Revit API** đã quen thuộc vớ
 
 ---
 
-### 2\. `ForgeTypeId`: Tiêu chuẩn mới cho định danh dữ liệu
+### `ForgeTypeId`: Tiêu chuẩn mới cho định danh dữ liệu
 
 `ForgeTypeId` là một kiểu dữ liệu mới được thiết kế để khắc phục những hạn chế trên. Nó cung cấp một cơ chế định danh độc lập với phiên bản và linh hoạt hơn cho các loại dữ liệu, đơn vị, tham số, và các đối tượng khác trong Revit và hệ sinh thái Forge rộng lớn hơn.
 
@@ -42,11 +42,11 @@ Trong nhiều năm, các lập trình viên **Revit API** đã quen thuộc vớ
 
 ---
 
-### 3\. Cách sử dụng `ForgeTypeId` trong Revit API
+### Cách sử dụng `ForgeTypeId` trong Revit API
 
 Từ Revit 2021 trở đi, nhiều phương thức API đã được quá tải (overload) để chấp nhận `ForgeTypeId` thay vì các `ElementId` hoặc `enum` truyền thống.
 
-#### 3.1. Chuyển đổi từ/sang `ForgeTypeId`
+#### Chuyển đổi từ/sang `ForgeTypeId`
 
 Bạn có thể chuyển đổi giữa `BuiltInParameter`/`BuiltInCategory` và `ForgeTypeId` bằng các phương thức của lớp `ParameterUtils` và `Category`.
 
@@ -68,7 +68,7 @@ BuiltInCategoryTypeId(BuiltInCategory.OST_Walls);
 BuiltInCategory biCategory = Category.GetBuiltInCategory(wallCategoryTypeId);
 ```
 
-#### 3.2. Truy xuất giá trị tham số bằng `ForgeTypeId`
+#### Truy xuất giá trị tham số bằng `ForgeTypeId`
 
 Bạn có thể sử dụng `ForgeTypeId` để truy xuất giá trị của tham số một cách rõ ràng hơn và độc lập với phiên bản.
 
@@ -92,7 +92,7 @@ if (wallHeightParameter != null)
 }
 ```
 
-#### 3.3. Lọc phần tử bằng `ForgeTypeId`
+#### Lọc phần tử bằng `ForgeTypeId`
 
 Các phương thức của `FilteredElementCollector` cũng được quá tải để chấp nhận `ForgeTypeId`.
 
@@ -110,7 +110,7 @@ ForgeTypeId lengthSpec = SpecTypeId.Length;
 // ParameterFilterElement.CreateParameterFilterElement(doc, "MyLengthFilter", new List<ElementId>(), new ParameterFilterRuleFactory.CreateHasValueRule(lengthSpec));
 ```
 
-#### 3.4. Định danh các đơn vị với `UnitTypeId` và `SpecTypeId`
+#### Định danh các đơn vị với `UnitTypeId` và `SpecTypeId`
 
 `UnitTypeId` và `SpecTypeId` là một phần của hệ thống `ForgeTypeId` giúp bạn làm việc với các đơn vị và loại tham số một cách nhất quán.
 
@@ -130,7 +130,7 @@ TaskDialog.Show("Unit Conversion", $"10 feet = {lengthInMm} mm");
 
 ---
 
-### 4\. Lợi ích khi chuyển sang sử dụng `ForgeTypeId`
+### Lợi ích khi chuyển sang sử dụng `ForgeTypeId`
 
 - **Tính tương thích tương lai:** Add-in của bạn sẽ ít bị ảnh hưởng bởi những thay đổi nội bộ của Revit API trong các phiên bản sau. Một `ForgeTypeId` đã được định nghĩa sẽ ổn định hơn nhiều so với các giá trị `enum` cũ.
 - **Tích hợp tốt hơn với Forge:** Nếu bạn có kế hoạch phát triển các giải pháp tích hợp với Autodesk Forge (ví dụ: hiển thị dữ liệu Revit trên web, phân tích dữ liệu trên đám mây), `ForgeTypeId` sẽ tạo ra sự nhất quán về định danh dữ liệu.
@@ -139,10 +139,8 @@ TaskDialog.Show("Unit Conversion", $"10 feet = {lengthInMm} mm");
 
 ---
 
-### Kết luận
+### Túm lại
 
 Việc chuyển đổi sang sử dụng `ForgeTypeId` có thể đòi hỏi một chút thay đổi trong thói quen lập trình, nhưng lợi ích về tính ổn định, tương thích và khả năng mở rộng là rất lớn. Với sự ra đời của `ForgeTypeId`, Autodesk đang xây dựng một nền tảng API vững chắc hơn cho tương lai của BIM và hệ sinh thái Forge. Hãy bắt đầu tích hợp `ForgeTypeId` vào các dự án **Revit API** mới của bạn và dần dần cập nhật các Add-in hiện có để tận dụng tối đa những ưu điểm này.
 
 Bạn đã bắt đầu chuyển đổi sang `ForgeTypeId` trong các dự án của mình chưa? Bạn thấy những lợi ích hay thách thức nào khi sử dụng nó? Hãy chia sẻ kinh nghiệm của bạn ở phần bình luận nhé\!
-
----

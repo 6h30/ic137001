@@ -33,10 +33,10 @@ Vậy vấn đề nằm ở đâu? Hãy tưởng tượng bạn cần một thô
 
 #### Lợi Ích Vượt Trội Của Shared Parameters:
 
-- **Tính nhất quán:** Đảm bảo rằng cùng một thông số (ví dụ: "Mã tài sản") sẽ có cùng định nghĩa, kiểu dữ liệu và ý nghĩa trên mọi mô hình, bất kể nó được sử dụng ở đâu.
-- **Khả năng chia sẻ:** Dễ dàng thêm vào bất kỳ dự án hoặc Family nào mà không cần phải định nghĩa lại từ đầu. Điều này tiết kiệm thời gian và giảm thiểu lỗi.
-- **Xuất/Nhập dữ liệu hiệu quả:** Giúp việc trích xuất, chỉnh sửa và nhập lại dữ liệu BIM trở nên dễ dàng và chính xác hơn, phục vụ cho các quy trình làm việc đòi hỏi trao đổi dữ liệu thường xuyên.
-- **Hỗ trợ ứng dụng bên ngoài:** Các ứng dụng phát triển trên Revit API có thể truy cập và thao tác với dữ liệu của Shared Parameters một cách đáng tin cậy, mở ra khả năng tự động hóa và tích hợp mạnh mẽ.
+- Đảm bảo rằng cùng một thông số (ví dụ: "Mã tài sản") sẽ có cùng định nghĩa, kiểu dữ liệu và ý nghĩa trên mọi mô hình, bất kể nó được sử dụng ở đâu.
+- Dễ dàng thêm vào bất kỳ dự án hoặc Family nào mà không cần phải định nghĩa lại từ đầu. Điều này tiết kiệm thời gian và giảm thiểu lỗi.
+- Giúp việc trích xuất, chỉnh sửa và nhập lại dữ liệu BIM trở nên dễ dàng và chính xác hơn, phục vụ cho các quy trình làm việc đòi hỏi trao đổi dữ liệu thường xuyên.
+- Các ứng dụng phát triển trên Revit API có thể truy cập và thao tác với dữ liệu của Shared Parameters một cách đáng tin cậy, mở ra khả năng tự động hóa và tích hợp mạnh mẽ.
 
 ---
 
@@ -50,9 +50,9 @@ Hãy hình dung thế này: Bạn có thể có hai người cùng tên "Nguyễ
 
 GUID đóng vai trò cực kỳ quan trọng vì nó giúp:
 
-- **Ngăn ngừa xung đột:** Đảm bảo Revit và các ứng dụng biết chính xác thông số nào đang được tham chiếu, ngay cả khi tên hiển thị bị thay đổi hoặc trùng lặp giữa các tệp Shared Parameter.
-- **Định danh toàn cầu:** Một Shared Parameter với một GUID cụ thể sẽ được hiểu là cùng một thông số trên mọi máy tính, mọi dự án, mọi Family mà nó được sử dụng. Đây là chìa khóa cho sự nhất quán dữ liệu trong môi trường BIM phức tạp.
-- **Làm việc với API:** Trong Revit API, GUID là công cụ chính và đáng tin cậy nhất để truy cập, đọc và ghi dữ liệu vào một Shared Parameter. Nó giúp các nhà phát triển tạo ra các công cụ và quy trình tự động hóa mạnh mẽ.
+- Đảm bảo Revit và các ứng dụng biết chính xác thông số nào đang được tham chiếu, ngay cả khi tên hiển thị bị thay đổi hoặc trùng lặp giữa các tệp Shared Parameter.
+- Một Shared Parameter với một GUID cụ thể sẽ được hiểu là cùng một thông số trên mọi máy tính, mọi dự án, mọi Family mà nó được sử dụng. Đây là chìa khóa cho sự nhất quán dữ liệu trong môi trường BIM phức tạp.
+- Trong Revit API, GUID là công cụ chính và đáng tin cậy nhất để truy cập, đọc và ghi dữ liệu vào một Shared Parameter. Nó giúp các nhà phát triển tạo ra các công cụ và quy trình tự động hóa mạnh mẽ.
 
 Bạn có thể thấy GUID xuất hiện trong tệp tin `.txt` của Shared Parameters như sau, mỗi dòng `*PARAM` tương ứng với một thông số và chứa GUID của nó:
 
@@ -76,4 +76,4 @@ Trước khi đi sâu vào khía cạnh lập trình, hãy cùng xem cách Share
     - **Dự án:** Trong dự án Revit của bạn, hãy vào tab **Manage** \> **Project Parameters**. Chọn **Add**, sau đó chọn **Shared Parameter** và duyệt đến thông số bạn muốn. Cuối cùng, bạn cần gán thông số này cho các hạng mục (Categories) cụ thể mà bạn muốn nó xuất hiện.
     - **Family:** Khi đang chỉnh sửa một Family trong Family Editor, bạn vào **Family Types** \> **Add Parameter**. Tương tự, chọn **Shared Parameter** và duyệt đến thông số mong muốn để thêm vào Family của mình.
 
-Việc hiểu và sử dụng Shared Parameters một cách hiệu quả là một kỹ năng quan trọng đối với bất kỳ ai làm việc chuyên sâu với Revit, đặc biệt là trong các dự án lớn hoặc khi cần trao đổi dữ liệu BIM một cách nhất quán.
+Sử dụng Shared Parameters một cách hiệu quả là một kỹ năng quan trọng khi làm việc chuyên sâu với Revit, đặc biệt là trong các dự án lớn hoặc khi cần trao đổi dữ liệu BIM một cách nhất quán.

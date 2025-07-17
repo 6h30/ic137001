@@ -16,7 +16,7 @@ Bài viết cuối cùng trong series về **GUID** và **Shared Parameters** tr
 
 Giờ là lúc chúng ta tổng hợp lại kiến thức này và nhìn vào bức tranh lớn hơn: **làm thế nào để áp dụng những khả năng này vào các trường hợp thực tế phức tạp, và những lưu ý quan trọng để đảm bảo code của bạn hoạt động ổn định và hiệu quả.**
 
-### 1\. Gắn Shared Parameters Vào Category/Element: Sử Dụng `Binding`
+### Gắn Shared Parameters Vào Category/Element: Sử Dụng `Binding`
 
 Việc tạo một Shared Parameter trong file `.txt` chỉ là bước đầu tiên. Để parameter đó thực sự hiển thị và có thể được sử dụng trong một dự án hoặc Family, bạn cần "gắn" (bind) nó vào một hoặc nhiều Category (hạng mục) của Revit. Quá trình này được thực hiện thông qua các đối tượng `Binding` trong Revit API.
 
@@ -88,7 +88,7 @@ using (Transaction tr = new Transaction(doc, "Gắn Shared Parameter vào Projec
 - `BuiltInParameterGroup.PG_DATA`: Chỉ định nhóm thông số mà Shared Parameter sẽ xuất hiện trong giao diện Revit (ví dụ: Data, Graphics, Identity Data...).
 - Bạn cần đảm bảo `newExternalDefinition` thực sự là một `ExternalDefinition` (tức là một Shared Parameter).
 
-### 2\. Các Trường Hợp Sử Dụng Nâng Cao
+### Các Trường Hợp Sử Dụng Nâng Cao
 
 Kết hợp các kỹ thuật đã học, bạn có thể tạo ra nhiều công cụ Revit API mạnh mẽ:
 
@@ -98,11 +98,11 @@ Kết hợp các kỹ thuật đã học, bạn có thể tạo ra nhiều công
 - **Kiểm Tra và Đánh Giá Chất Lượng Dữ Liệu:** Tự động quét các mô hình Revit để kiểm tra xem các Shared Parameters quan trọng có bị thiếu, có giá trị không hợp lệ, hoặc có sai định dạng hay không, sau đó báo cáo hoặc tự động sửa chữa.
 - **Tạo Tham Số "Động" (Dynamic Parameters):** Mặc dù Revit API không cho phép tạo "Dynamic Shared Parameters" theo nghĩa là chúng tự thay đổi giá trị mà không cần code, bạn có thể tạo các add-in chạy định kỳ hoặc theo sự kiện để tính toán và cập nhật giá trị của Shared Parameters dựa trên các yếu tố khác trong mô hình.
 
-### 3\. Lưu Ý Quan Trọng Khi Làm Việc Với GUID & Shared Parameters
+### Lưu Ý Quan Trọng Khi Làm Việc Với GUID & Shared Parameters
 
 Để đảm bảo các ứng dụng của bạn hoạt động hiệu quả, ổn định và không gây ra lỗi dữ liệu, hãy ghi nhớ những điểm sau:
 
-- **Quản Lý `Transaction` Một Cách Nghiêm Ngặt:** Luôn luôn thực hiện các thay đổi đối với mô hình trong một `Transaction` và sử dụng khối `using` để đảm bảo `Transaction` được xử lý đúng cách, bất kể có lỗi hay không. `using (Transaction tr = new Transaction(doc, "Tên giao dịch")) { tr.Start(); /* Code */ tr.Commit(); }`
+- Luôn luôn thực hiện các thay đổi đối với mô hình trong một `Transaction` và sử dụng khối `using` để đảm bảo `Transaction` được xử lý đúng cách, bất kể có lỗi hay không. `using (Transaction tr = new Transaction(doc, "Tên giao dịch")) { tr.Start(); /* Code */ tr.Commit(); }`
 - **Xử Lý GUID Cẩn Thận:**
   - **Không tự ý thay đổi GUID của Shared Parameter đã tồn tại:** Khi bạn tạo một Shared Parameter, GUID của nó là vĩnh viễn. Việc thay đổi GUID của một parameter đã được sử dụng có thể dẫn đến mất dữ liệu hoặc không thể truy cập được dữ liệu cũ.
   - **Tạo GUID mới cho parameter mới:** Luôn sử dụng `Guid.NewGuid()` khi định nghĩa một Shared Parameter thực sự mới để đảm bảo tính duy nhất.
@@ -117,5 +117,5 @@ Kết hợp các kỹ thuật đã học, bạn có thể tạo ra nhiều công
 - **Hiệu Suất:**
   - Hạn chế việc đọc/ghi file Shared Parameter (`.txt`) quá nhiều lần trong cùng một phiên làm việc, đặc biệt trong các vòng lặp lớn.
   - Nếu bạn đang cập nhật hàng ngàn Element, hãy cố gắng thực hiện tất cả các thay đổi trong một hoặc một vài `Transaction` lớn thay vì nhiều `Transaction` nhỏ để cải thiện hiệu suất.
-- **Tương Thích Phiên Bản Revit:** Revit API có thể thay đổi qua các phiên bản. Luôn kiểm tra tài liệu API cho phiên bản Revit mà bạn đang phát triển để đảm bảo các phương thức và lớp bạn đang sử dụng vẫn còn hiệu lực.
-- **Quản Lý Lỗi (Error Handling):** Sử dụng các khối `try-catch` để bắt và xử lý các ngoại lệ (exception) một cách duyên dáng, cung cấp thông báo lỗi hữu ích cho người dùng.
+- Revit API có thể thay đổi qua các phiên bản. Luôn kiểm tra tài liệu API cho phiên bản Revit mà bạn đang phát triển để đảm bảo các phương thức và lớp bạn đang sử dụng vẫn còn hiệu lực.
+- Sử dụng các khối `try-catch` để bắt và xử lý các ngoại lệ (exception) một cách duyên dáng, cung cấp thông báo lỗi hữu ích cho người dùng.

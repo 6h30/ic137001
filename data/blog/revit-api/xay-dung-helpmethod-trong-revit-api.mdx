@@ -14,7 +14,7 @@ Trong bài viết trước, chúng ta đã thảo luận về những thách th�
 
 ---
 
-### 1\. Tại sao cần Helper Methods cho Parameters?
+### Tại sao cần Helper Methods cho Parameters?
 
 Bạn có thể tự hỏi, tại sao phải mất công viết các hàm riêng khi Revit API đã cung cấp sẵn các phương thức `LookupParameter()`, `AsDouble()`, `Set()`? Dưới đây là những lý do chính:
 
@@ -26,11 +26,11 @@ Bạn có thể tự hỏi, tại sao phải mất công viết các hàm riêng
 
 ---
 
-### 2\. Thiết kế các Helper Methods cơ bản
+### Thiết kế các Helper Methods cơ bản
 
 Chúng ta sẽ xây dựng một lớp tĩnh (`static class`) tên là `ParameterUtils` (hoặc tên tương tự) để chứa các hàm hỗ trợ này. Điều này giúp các hàm dễ dàng được gọi từ bất kỳ đâu trong Add-in của bạn.
 
-#### 2.1. Hàm đọc giá trị Parameter (Get Parameter Value)
+#### Hàm đọc giá trị Parameter (Get Parameter Value)
 
 Chúng ta cần một hàm có thể đọc giá trị của một **Parameter** và trả về đúng kiểu dữ liệu, đồng thời xử lý các trường hợp không tìm thấy **Parameter** hoặc `StorageType` không khớp.
 
@@ -143,7 +143,7 @@ public static class ParameterUtils
 }
 ```
 
-#### 2.2. Hàm ghi giá trị Parameter (Set Parameter Value)
+#### Hàm ghi giá trị Parameter (Set Parameter Value)
 
 Hàm ghi giá trị cần kiểm tra `IsReadWrite` và đảm bảo việc chuyển đổi đơn vị nếu cần.
 
@@ -256,7 +256,7 @@ public static class ParameterUtils
 
 ---
 
-### 3\. Cách sử dụng Helper Methods hiệu quả
+### Cách sử dụng Helper Methods hiệu quả
 
 Với các Helper Methods đã tạo, code của bạn sẽ trở nên sạch sẽ hơn rất nhiều:
 
@@ -336,7 +336,7 @@ public class MyParameterCommand : IExternalCommand
 
 ---
 
-### 4\. Nâng cao các Helper Methods
+### Nâng cao các Helper Methods
 
 Các Helper Methods trên là điểm khởi đầu tuyệt vời. Bạn có thể mở rộng chúng để xử lý các tình huống phức tạp hơn:
 
@@ -349,7 +349,7 @@ Các Helper Methods trên là điểm khởi đầu tuyệt vời. Bạn có th�
 
 ---
 
-### Kết luận
+### Túm lại
 
 Xây dựng một bộ **Helper Methods** vững chắc để quản lý **Parameters** là một khoản đầu tư xứng đáng cho bất kỳ dự án **Revit API** nào. Nó không chỉ giúp code của bạn sạch sẽ, dễ đọc và dễ bảo trì hơn mà còn giảm thiểu đáng kể lỗi phát sinh do thao tác sai với các loại **Parameters** khác nhau. Hãy bắt đầu xây dựng thư viện Helper của riêng bạn ngay hôm nay để nâng cao hiệu quả phát triển Add-in Revit\!
 
