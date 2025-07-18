@@ -4,36 +4,36 @@ date: '2024-04-18T00:01:02Z'
 tags: ['bim', 'practices']
 draft: false
 authors: ['ductruong']
-summary: 'Tôi từng nhận được một mô hình Revit từ một nhóm thiết kế nước ngoài. Nhìn vào danh sách file và cấu trúc model, tôi thấy ngay một điều: không ai trong nhóm thật sự biết chuyện gì đang diễn ra. Có tệp tên “Project1_Final_REAL_FINAL.rvt”, có cấp độ mang tên “Level 2?” (vâng, với dấu hỏi), và khung nhìn thì hỗn độn đến mức ngay cả một người quen thuộc với dự án cũng không biết cái nào dùng để làm gì.'
+summary: 'Tui từng nhận được một mô hình Revit từ một nhóm thiết kế nước ngoài. Nhìn vào danh sách file và cấu trúc model, tui thấy ngay một điều: không ai trong nhóm thật sự biết chuyện gì đang diễn ra. Có tệp tên “Project1_Final_REAL_FINAL.rvt”, có cấp độ mang tên “Level 2?” (vâng, với dấu hỏi), và khung nhìn thì hỗn độn đến mức ngay cả một người quen thuộc với dự án cũng không biết cái nào dùng để làm gì.'
 ---
 
-Tôi từng nhận được một mô hình Revit từ một nhóm thiết kế nước ngoài. Nhìn vào danh sách file và cấu trúc model, tôi thấy ngay một điều: không ai trong nhóm thật sự biết chuyện gì đang diễn ra. Có tệp tên “Project1_Final_REAL_FINAL.rvt”, có cấp độ mang tên “Level 2?” (vâng, với dấu hỏi), và khung nhìn thì hỗn độn đến mức ngay cả một người quen thuộc với dự án cũng không biết cái nào dùng để làm gì.
+Công việc hiện tại cho tui tham khảo nhiều mô hình Revit từ các nhóm thiết kế nước ngoài. Có lần trong một mô hình Revit, nhìn vào danh sách file và cấu trúc model, tui thấy ngay một điều: không ai trong nhóm thật sự biết chuyện gì đang diễn ra. Có tệp tên “Project1_Final_REAL_FINAL.rvt”, có cấp độ mang tên “Level 2?” (vâng, với dấu hỏi), và khung nhìn thì hỗn độn đến mức ngay cả một người quen thuộc với dự án cũng không biết cái nào dùng để làm gì.
 
-Từ lúc đó, tôi hiểu rằng: **quy ước đặt tên và mã hóa không phải là việc “để sau tính” – nó là nền tảng để mọi người đọc hiểu mô hình, điều hướng thông tin, và quan trọng nhất, làm việc cùng nhau.**
+Từ lúc đó, tui hiểu rằng: **quy ước đặt tên và mã hóa không phải là việc “để sau tính” – nó là nền tảng để mọi người đọc hiểu mô hình, điều hướng thông tin, và quan trọng nhất, làm việc cùng nhau.**
 
 Mỗi quốc gia, mỗi chủ đầu tư có thể sẽ mang theo một bộ tiêu chuẩn riêng – đôi khi là bộ MasterFormat từ Bắc Mỹ, đôi khi là Uniclass từ Anh Quốc, hoặc chỉ đơn giản là một cách đặt tên nội bộ của công ty. Và thế là, mô hình BIM cũng biến thành một cái bản đồ – nhưng bản đồ này chỉ hữu ích khi mọi người cùng sử dụng một bộ ký hiệu.
 
-Tôi vẫn thường bắt đầu bằng câu hỏi:
+Tui vẫn thường bắt đầu bằng câu hỏi:
 
 > "Nếu bạn mở một mô hình chưa từng thấy trước đây, bạn có thể hiểu ngay nó đang nói gì không?"
 
 Câu trả lời phần lớn là **không**, nếu không có một quy ước đặt tên rõ ràng.
 
-Trong thực tế, việc đặt tên không chỉ là cho vui – nó mang theo thông tin. Ví dụ, khi một file tên là `Office-STR-DD-R2020.rvt`, tôi biết ngay đây là mô hình kết cấu (`STR`) của một dự án văn phòng, đang ở giai đoạn thiết kế chi tiết (`DD`), và dùng Revit 2020. Không cần mở file, tôi đã hình dung được rất nhiều.
+Trong thực tế, việc đặt tên không chỉ là cho vui – nó mang theo thông tin. Ví dụ, khi một file tên là `Office-STR-DD-R2020.rvt`, tui biết ngay đây là mô hình kết cấu (`STR`) của một dự án văn phòng, đang ở giai đoạn thiết kế chi tiết (`DD`), và dùng Revit 2020. Không cần mở file, tui đã hình dung được rất nhiều.
 
-Cấp độ cũng vậy. Đừng để mô hình có `Level 1`, `Level 2`, rồi `Level A` – mỗi người hiểu theo cách khác, và thế là bạn dựng lộn tầng. Một lần, tôi từng thấy hệ thống ống nước được vẽ xuyên cả sàn chỉ vì cấp độ “L1” trong mô hình A không khớp với “L1” trong mô hình B.
+Cấp độ cũng vậy. Đừng để mô hình có `Level 1`, `Level 2`, rồi `Level A` – mỗi người hiểu theo cách khác, và thế là bạn dựng lộn tầng. Một lần, tui từng thấy hệ thống ống nước được vẽ xuyên cả sàn chỉ vì cấp độ “L1” trong mô hình A không khớp với “L1” trong mô hình B.
 
 Revit cho ta một hệ thống phân lớp rất rõ: từ danh mục (category), đến họ (family), loại (type), và đối tượng cụ thể (instance). Trong cấu trúc đó, chúng ta có thể áp dụng quy ước đặt tên theo cách rất có tổ chức, để không chỉ mô hình gọn gàng, mà việc bảo trì – về sau – cũng không biến thành một cơn ác mộng.
 
-Tôi có một đồng nghiệp từng thêm chữ cái đầu tên của người dựng vào tên family – như `LEL_DoorDouble` để biết ai đã tạo. Người khác thì dùng mã ngành nghề, như `ST_SlabEdge` cho các phần kết cấu. Không có cách đúng hay sai tuyệt đối – chỉ cần **nhất quán** và **được thống nhất trong nhóm**.
+Tui có một đồng nghiệp từng thêm chữ cái đầu tên của người dựng vào tên family – như `LEL_DoorDouble` để biết ai đã tạo. Người khác thì dùng mã ngành nghề, như `ST_SlabEdge` cho các phần kết cấu. Không có cách đúng hay sai tuyệt đối – chỉ cần **nhất quán** và **được thống nhất trong nhóm**.
 
 Rồi đến vật liệu, đến khung nhìn, đến bản vẽ. Tất cả đều là “ngôn ngữ” trong mô hình. Không ai muốn mở một khung nhìn tên là `Section 1` rồi phát hiện nó cắt qua tầng hầm – trong khi bạn đang tìm một mặt cắt tầng mái. Khi đặt tên đúng, bạn giúp đồng đội của mình hiểu mô hình như thể đang nghe bạn nói chuyện trực tiếp.
 
 Một lần nữa, chuyện mã hóa cũng giống vậy. Các tiêu chuẩn như CSI MasterFormat, Uniformat hay Omniclass không chỉ để làm đẹp – chúng là cách để mô hình giao tiếp được với phần mềm khác: phần mềm dự toán, phần mềm quản lý tài sản, hay thậm chí hệ thống vận hành tòa nhà sau này. Một cửa thoát hiểm được mã hóa là “08 11 13” trong MasterFormat sẽ lập tức được phần mềm hiểu đó là **Steel Doors** – không cần mô tả dài dòng.
 
-Tôi từng chứng kiến một dự án mà mỗi loại cửa được đặt tên tùy hứng: “cua1”, “main-door”, “bigdoorL”, “pocket door 02”. Tưởng nhỏ nhặt, nhưng đến khi xuất thống kê vật tư, nhóm dự toán mất gần một ngày chỉ để phân loại lại. Và đó là một ngày mà ai cũng phải trả giá bằng thời gian và sự mệt mỏi.
+Tui từng chứng kiến một dự án mà mỗi loại cửa được đặt tên tùy hứng: “cua1”, “main-door”, “bigdoorL”, “pocket door 02”. Tưởng nhỏ nhặt, nhưng đến khi xuất thống kê vật tư, nhóm dự toán mất gần một ngày chỉ để phân loại lại. Và đó là một ngày mà ai cũng phải trả giá bằng thời gian và sự mệt mỏi.
 
-Và cũng chính vì vậy, tôi luôn nhấn mạnh một điều trong tất cả các buổi họp:
+Và cũng chính vì vậy, tui luôn nhấn mạnh một điều trong tất cả các buổi họp:
 
 > **Tất cả các quy ước, dù nhỏ đến đâu, đều phải được ghi rõ trong Kế hoạch Thực hiện BIM.**
 

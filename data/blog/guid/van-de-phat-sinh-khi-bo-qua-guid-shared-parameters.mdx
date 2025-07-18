@@ -11,9 +11,9 @@ Mặc dù GUID của Shared Parameters hoạt động thầm lặng phía sau gi
 
 Bài viết này sẽ đi sâu vào các kịch bản rủi ro kỹ thuật cụ thể và tác động của chúng khi GUID không được quản lý hoặc hiểu đúng cách.
 
----
+<TOCInline toc={props.toc} exclude="" />
 
-### 1\. Xung Đột Dữ Liệu Ngầm và Kết Quả Không Lường Trước
+## 1\. Xung Đột Dữ Liệu Ngầm và Kết Quả Không Lường Trước
 
 Một trong những rủi ro lớn nhất khi bỏ qua GUID là khả năng xảy ra **xung đột dữ liệu ngầm**. Tình huống này phát sinh khi hai hoặc nhiều Shared Parameter có **cùng tên hiển thị** nhưng lại mang **GUID khác nhau**.
 
@@ -28,9 +28,7 @@ Trong một dự án hợp tác, Công ty A sử dụng Shared Parameter "FireRa
 
 **Tài liệu tham khảo:** [Autodesk University - Don't Be Scared of Shared Parameters: A Practical Guide](https://www.google.com/search?q=https://www.autodesk.com/autodesk-university/classes/Dont-Be-Scared-Shared-Parameters-Practical-Guide-2023) thường nhấn mạnh việc quản lý GUID để tránh trùng lặp ý nghĩa.
 
----
-
-### 2\. Gián Đoạn Quy Trình Tự Động Hóa và Scripting
+## 2\. Gián Đoạn Quy Trình Tự Động Hóa và Scripting
 
 Các giải pháp tự động hóa như script Dynamo, Python (RevitPythonShell, pyRevit) hoặc Add-ins viết bằng C\# thường dựa vào GUID để tương tác với Shared Parameters. Đây là phương pháp đáng tin cậy nhất để đảm bảo rằng script đang thao tác đúng tham số, bất kể tên hiển thị của nó.
 
@@ -43,9 +41,7 @@ Một script Dynamo được viết để tự động điền "Mã Phân Loại
 - **Dữ liệu không đồng bộ:** Các phần tử được xử lý trước khi thay đổi GUID sẽ có giá trị trong tham số `$C003...$`, trong khi các phần tử mới sẽ không có hoặc có trong tham số `$D004...$`. Điều này tạo ra sự không đồng bộ dữ liệu nghiêm trọng.
 - **Chi phí bảo trì cao:** Mỗi khi GUID của một tham số cốt lõi thay đổi, tất cả các script và add-in phụ thuộc vào nó đều cần được cập nhật và kiểm tra lại, tốn kém thời gian và công sức.
 
----
-
-### 3\. Thách Thức Trong Trao Đổi Dữ Liệu Liên Nền Tảng (IFC, COBie)
+## 3\. Thách Thức Trong Trao Đổi Dữ Liệu Liên Nền Tảng (IFC, COBie)
 
 GUID đóng vai trò quan trọng trong việc ánh xạ và duy trì tính nhất quán của dữ liệu khi trao đổi giữa Revit và các ứng dụng khác thông qua các định dạng như **IFC (Industry Foundation Classes)** hoặc **COBie (Construction Operations Building information exchange)**.
 
@@ -58,9 +54,7 @@ Dữ liệu COBie yêu cầu một tham số "AssetTag" để xác định tài 
 - **Dữ liệu mất mát:** Trong các quy trình xuất nhập phức tạp, dữ liệu gắn với GUID bị thay đổi có thể bị coi là "dữ liệu mới" hoặc bị bỏ qua hoàn toàn, dẫn đến mất mát thông tin quan trọng trong quá trình trao đổi.
 - **Kiểm định không thành công:** Các tiêu chuẩn trao đổi dữ liệu như IFC và COBie thường có các yêu cầu nghiêm ngặt về định danh duy nhất của thuộc tính. Việc thiếu hoặc sai GUID có thể khiến dữ liệu không vượt qua được các quy trình kiểm định chất lượng.
 
----
-
-### 4\. Quản Lý Thư Viện và Template Dự Án Kém Hiệu Quả
+## 4\. Quản Lý Thư Viện và Template Dự Án Kém Hiệu Quả
 
 Các công ty thường phát triển các thư viện Family và template dự án chuẩn để đảm bảo tính nhất quán. Shared Parameters là một phần không thể thiếu của các tài nguyên này.
 
@@ -73,9 +67,7 @@ Một Family mẫu "Cửa Đi" có Shared Parameter "Phòng Cháy" (GUID: `$F006
 - **FamilyType.Set("ParameterName") bị lỗi:** Các script hoặc công cụ tự động hóa được thiết kế để điền dữ liệu vào "Phòng Cháy" dựa trên tên có thể ghi vào tham số sai hoặc gây ra lỗi.
 - **Khó khăn trong nâng cấp:** Việc nâng cấp các Family hoặc template dự án trở nên phức tạp vì cần phải kiểm tra và hợp nhất các GUID tham số.
 
----
-
-### Túm lại
+## Túm lại
 
 GUID của Shared Parameters là một yếu tố kỹ thuật quan trọng, là cột mốc định danh duy nhất cho dữ liệu trong môi trường BIM. Việc bỏ qua hoặc quản lý lỏng lẻo các GUID này không chỉ gây ra các lỗi kỹ thuật trực tiếp mà còn dẫn đến sự không nhất quán dữ liệu, giảm hiệu quả tự động hóa, và cản trở khả năng hợp tác, trao đổi thông tin.
 

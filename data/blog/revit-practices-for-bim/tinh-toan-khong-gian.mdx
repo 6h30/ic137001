@@ -4,58 +4,70 @@ date: '2024-06-05T00:03:02Z'
 tags: ['bim', 'practices']
 draft: false
 authors: ['ductruong']
-summary: 'Mình đang ở trong một tòa nhà văn phòng nhỏ. Tất cả các không gian đã được đặt rồi, nhưng mình muốn kiểm tra lại xem có chỗ nào bị thiếu sót hay chồng lấn không.'
+summary: 'Tui đang ở trong một tòa nhà văn phòng nhỏ. Tất cả các không gian đã được đặt rồi, nhưng tui muốn kiểm tra lại xem có chỗ nào bị thiếu sót hay chồng lấn không.'
 ---
 
 Chúng ta đã đi qua nhiều bước để xây dựng một mô hình BIM chất lượng cao.
-Hôm nay, mình muốn chia sẻ một thiết lập nữa cực kỳ quan trọng mà nhiều người dùng Revit thường bỏ qua, nhưng nó lại là "chìa khóa" cho rất nhiều công việc sau này, đặc biệt là **phân tích năng lượng** và quản lý dữ liệu: đó là **tính toán không gian (Room Calculation)**.
+Hôm nay, tui muốn chia sẻ một thiết lập nữa cực kỳ quan trọng mà nhiều người dùng Revit thường bỏ qua, nhưng nó lại là "chìa khóa" cho rất nhiều công việc sau này, đó là **tính toán không gian (Room Calculation)**.
 
-Việc đặt và cấu hình các **không gian (Rooms)** một cách chính xác trong mô hình không chỉ giúp bạn quản lý dự án tốt hơn mà còn là nền tảng cho việc xuất dữ liệu đáng tin cậy. Mình có một thói quen (và cũng là lời khuyên cho bạn) là trước mỗi lần nộp bài, hãy **hiển thị tất cả các không gian trên bản vẽ** và kiểm tra chúng kỹ lưỡng cả trong mặt bằng lẫn mặt cắt. Đừng quên tận dụng **công cụ cảnh báo (warning tool)** của Revit để "soi" các vấn đề về không gian nhé!
+Việc đặt và cấu hình các **không gian (Rooms)** một cách chính xác trong mô hình không chỉ giúp bạn quản lý dự án tốt hơn mà còn là nền tảng cho việc xuất dữ liệu đáng tin cậy. Tui có một thói quen (và cũng là lời khuyên cho bạn) là trước mỗi lần nộp bài, hãy **hiển thị tất cả các không gian trên bản vẽ** và kiểm tra chúng kỹ lưỡng cả trong mặt bằng lẫn mặt cắt. Đừng quên tận dụng **công cụ cảnh báo (warning tool)** của Revit để "soi" các vấn đề về không gian nhé!
 
 À quên, một điều quan trọng: Các không gian này sẽ được xuất dưới dạng **hộp thể tích (volume boxes)** sang phần mềm phân tích năng lượng. Vì vậy, đảm bảo mỗi không gian được gắn với đúng cấp độ (level) là cực kỳ cần thiết. Rất tiếc, nếu bạn lỡ đặt sai một không gian ở một cấp độ nào đó, bạn sẽ không thể điều chỉnh được cấp độ đó đâu, mà phải... xóa đi và đặt lại từ đầu ở đúng mặt bằng tham chiếu mong muốn.
 
-### "Soi" Không Gian Trong Mặt Bằng: Tìm màu xanh "lạ"!
+<TOCInline toc={props.toc} exclude="" />
 
-Giờ thì, hãy cùng mình vào Revit để kiểm tra nhé! Mình đang ở trong một tòa nhà văn phòng nhỏ. Tất cả các không gian đã được đặt rồi, nhưng mình muốn kiểm tra lại xem có chỗ nào bị thiếu sót hay chồng lấn không.
+## "Soi" Không Gian Trong Mặt Bằng: Tìm màu xanh "lạ"!
 
-Để làm điều này, mình sẽ vào **Properties (Thuộc tính)**, chọn **Visibility Graphic Override (Ghi đè hiển thị đồ họa)**, nhấp **Edit**, và cuộn xuống mục **Room (Không gian)**. Mình sẽ tích chọn **Interior Fill (Tô đầy bên trong)** và **Reference (Tham chiếu)**. Nhấn **OK**.
+Giờ thì, hãy cùng tui vào Revit để kiểm tra nhé! Tui đang ở trong một tòa nhà văn phòng nhỏ. Tất cả các không gian đã được đặt rồi, nhưng tui muốn kiểm tra lại xem có chỗ nào bị thiếu sót hay chồng lấn không.
+
+Để làm điều này, tui sẽ vào **Properties (Thuộc tính)**, chọn **Visibility Graphic Override (Ghi đè hiển thị đồ họa)**, nhấp **Edit**, và cuộn xuống mục **Room (Không gian)**. Tui sẽ tích chọn **Interior Fill (Tô đầy bên trong)** và **Reference (Tham chiếu)**. Nhấn **OK**.
+
+![image](https://)
 
 Bây giờ bạn sẽ thấy các không gian được tô màu xanh lam. Màu xanh lam này thể hiện vùng tô bên trong (Interior Fill), và dấu chéo là điểm tham chiếu (Reference Point). Bạn sẽ nhận ra có nhiều sắc thái xanh lam khác nhau:
 
 - **Màu xanh lam nhạt:** Là một dấu hiệu tốt, nghĩa là không gian được định nghĩa đúng và không có vấn đề gì.
 - **Màu xanh lam đậm hơn một chút:** Đây chính là "tín hiệu đỏ" cho thấy có **các không gian bị chồng lấn (overlapping rooms)**!
 
-Ví dụ, mình có một không gian ở đây và một không gian khác cũng ở ngay vị trí đó. Khi Revit đã tính toán một không gian một lần, nó sẽ không tính toán lại cho không gian chồng lấn đó, nhưng bạn sẽ nhận được thông báo **"Redundant Room" (Không gian thừa)**. Đây chính là điều chúng ta muốn tránh!
+Ví dụ, tui có một không gian ở đây và một không gian khác cũng ở ngay vị trí đó. Khi Revit đã tính toán một không gian một lần, nó sẽ không tính toán lại cho không gian chồng lấn đó, nhưng bạn sẽ nhận được thông báo **"Redundant Room" (Không gian thừa)**. Đây chính là điều chúng ta muốn tránh!
 
-Ngoài ra, nếu bạn thấy **một số chỗ trống không có màu xanh**, điều đó có nghĩa là bạn đã quên đặt không gian ở đó. Rất dễ dàng để khắc phục: chỉ cần vào **Architecture (Kiến trúc)**, chọn **Room (Không gian)**, và đặt lại các không gian bị thiếu. Ví dụ, mình sẽ đặt lại phòng kỹ thuật và Nhà vệ sinh Nam ở đây.
+![image](https://)
 
-À, đôi khi, để tách các không gian mà không cần vẽ tường vật lý, bạn sẽ cần dùng công cụ **Room Separator (Đường phân tách không gian)**. Mình thường dùng nó để tạo các "bức tường ảo" giúp phân chia không gian chính xác hơn.
+Ngoài ra, nếu bạn thấy **một số chỗ trống không có màu xanh**, điều đó có nghĩa là bạn đã quên đặt không gian ở đó. Rất dễ dàng để khắc phục: chỉ cần vào **Architecture (Kiến trúc)**, chọn **Room (Không gian)**, và đặt lại các không gian bị thiếu. Ví dụ, tui sẽ đặt lại phòng kỹ thuật và Nhà vệ sinh Nam ở đây.
+
+À, đôi khi, để tách các không gian mà không cần vẽ tường vật lý, bạn sẽ cần dùng công cụ **Room Separator (Đường phân tách không gian)**. Tui thường dùng nó để tạo các "bức tường ảo" giúp phân chia không gian chính xác hơn.
 
 Khi mọi thứ đều có cùng một màu xanh (nhạt), không có chỗ trống hay màu xanh đậm, nghĩa là bạn đã hoàn thành việc kiểm tra không gian trong mặt bằng!
 
-### Kiểm tra Không Gian Trong Mặt Cắt: Chiều cao có khớp không?
+## Kiểm tra Không Gian Trong Mặt Cắt: Chiều cao có khớp không?
 
-Giờ thì, chúng ta sẽ chuyển sang kiểm tra trong mặt cắt. Mình sẽ mở một mặt cắt mà mình đã thiết lập sẵn.
+Giờ thì, chúng ta sẽ chuyển sang kiểm tra trong mặt cắt. Tui sẽ mở một mặt cắt mà tui đã thiết lập sẵn.
 
 Bạn có thể thấy rằng ở đây mọi thứ có vẻ hơi lộn xộn hơn một chút. Các không gian đang bị **chồng lấn về chiều cao**! Theo mặc định trong Revit, không gian thường được gắn với cùng một cấp độ với đáy và giới hạn trên của nó, sau đó bạn có thể điều chỉnh thêm bằng **giới hạn bù (offset limit)**.
 
-Điều quan trọng là khi bạn đặt không gian, hãy đảm bảo bạn thay đổi các cấu hình đó ngay từ đầu, hoặc bạn có thể điều chỉnh sau bằng cách chọn tất cả các không gian và thay đổi các tham số. Ví dụ, mình sẽ chọn không gian này và không gian kia, sau đó thay đổi **Upper Limit (Giới hạn trên)** để gắn chặt với Tầng 2 và đặt **Limit Offset (Bù giới hạn)** về 0.
+Điều quan trọng là khi bạn đặt không gian, hãy đảm bảo bạn thay đổi các cấu hình đó ngay từ đầu, hoặc bạn có thể điều chỉnh sau bằng cách chọn tất cả các không gian và thay đổi các tham số. Ví dụ, tui sẽ chọn không gian này và không gian kia, sau đó thay đổi **Upper Limit (Giới hạn trên)** để gắn chặt với Tầng 2 và đặt **Limit Offset (Bù giới hạn)** về 0.
 
-Bây giờ, bạn sẽ thấy không gian được gắn chặt với cấp độ của nó. Dù vẫn còn một chút chồng lấn với sàn, nhưng chúng ta sẽ xem xét nó sau. Tương tự, mình muốn các không gian này có chiều cao bằng với chiều cao của trần nhà. Mình có thể kéo thủ công để điều chỉnh, nhưng đôi khi có thể bị "dính" vào các liên kết khác. Cách tốt nhất để thật chính xác là thay đổi **Limit Offset** này theo cách thủ công.
+![image](https://)
 
-### Kích hoạt Tính toán Thể tích: Bước ngoặt cho phân tích năng lượng!
+Bây giờ, bạn sẽ thấy không gian được gắn chặt với cấp độ của nó. Dù vẫn còn một chút chồng lấn với sàn, nhưng chúng ta sẽ xem xét nó sau. Tương tự, tui muốn các không gian này có chiều cao bằng với chiều cao của trần nhà. Tui có thể kéo thủ công để điều chỉnh, nhưng đôi khi có thể bị "dính" vào các liên kết khác. Cách tốt nhất để thật chính xác là thay đổi **Limit Offset** này theo cách thủ công.
+
+## Kích hoạt Tính toán Thể tích: Bước ngoặt cho phân tích năng lượng!
 
 Đây là một bước cực kỳ quan trọng nếu bạn muốn tận dụng tối đa dữ liệu không gian cho các phân tích sau này, đặc biệt là **phân tích năng lượng**.
 
 Hãy vào **Architecture (Kiến trúc)**, chọn **Room & Area (Không gian & Diện tích)**, sau đó chọn **Area and Volume Computations (Tính toán Diện tích và Thể tích)**.
 
+![image](https://)
+
 Đây là thiết lập mà bạn nên xác định ngay từ đầu dự án, hoặc tốt nhất là **luôn giữ nó được kích hoạt trong mẫu (template) của bạn** nếu bạn chắc chắn sẽ thực hiện phân tích năng lượng.
 
 Khi bạn kích hoạt tính toán thể tích, một vài điều sẽ thay đổi:
 
-- Ví dụ, hai không gian chồng lấn mà mình đã nói ở trên, giờ đây một phần của nó sẽ không còn bị tính toán nữa, và bạn sẽ nhận được một cảnh báo. Tất cả các không gian chồng lấn sẽ được lưu trữ trong **vùng cảnh báo (warning area)**.
+- Ví dụ, hai không gian chồng lấn mà tui đã nói ở trên, giờ đây một phần của nó sẽ không còn bị tính toán nữa, và bạn sẽ nhận được một cảnh báo. Tất cả các không gian chồng lấn sẽ được lưu trữ trong **vùng cảnh báo (warning area)**.
 - Bạn có thể vào tab **Manage (Quản lý)** và chọn **Review Warnings (Xem lại cảnh báo)** để xem lại và "dọn dẹp" chúng. Việc này rất quan trọng để đảm bảo mô hình của bạn luôn sạch sẽ và ổn định, tránh các cảnh báo nghiêm trọng có thể ảnh hưởng đến chất lượng dự án.
+
+![image](https://)
 
 Như bạn thấy bây giờ, không gian sẽ tự động dừng lại ở trần nhà hoặc sàn nhà. Bằng cách này, thể tích không gian sẽ được xác định chính xác bởi sàn, trần và tường bao quanh. Điều này cực kỳ tiện lợi! Tuy nhiên, nếu bạn đặt chiều cao không gian thấp hơn chiều cao thực của trần hoặc mái, nó sẽ không đạt đến chiều cao đó, vì vậy hãy đảm bảo bạn luôn đặt chiều cao không gian ít nhất là cao hơn một chút so với chiều cao trần/mái thực tế để Revit có thể điều chỉnh đúng.
 
-Tóm lại, hãy luôn đảm bảo bạn "dọn dẹp" mọi thứ: tất cả các không gian đều được định nghĩa đúng, không có vùng trống hay vùng chồng lấn. Khi đã làm được điều này, mô hình của bạn sẽ sẵn sàng để xuất sang các nhà tư vấn cho việc phân tích năng lượng một cách chính xác và hiệu quả nhất!
+Tóm lại, hãy luôn đảm bảo bạn "dọn dẹp" mọi thứ: tất cả các không gian đều được định nghĩa đúng, không có vùng trống hay vùng chồng lấn. Khi đã làm được điều này, mô hình của bạn sẽ sẵn sàng để xuất sang các nhà tư vấn cho việc phân tích năng lượng một cách chính xác và hiệu quả nhất.

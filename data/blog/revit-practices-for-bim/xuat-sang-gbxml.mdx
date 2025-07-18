@@ -7,7 +7,7 @@ authors: ['ductruong']
 summary: 'Revit đã tích hợp sẵn các công cụ để bạn có thể cấu hình, kiểm soát và xuất dữ liệu sang định dạng gbXML một cách tiện lợi.'
 ---
 
-Chúng ta hãy cùng khám phá cách **Green Building XML (gbXML)** giúp chúng ta thiết kế những tòa nhà "xanh" hơn và tiết kiệm năng lượng hơn nhé!
+Cách **Green Building XML (gbXML)** giúp chúng ta thiết kế những tòa nhà "xanh" hơn và tiết kiệm năng lượng hơn.
 
 gbXML ra đời như một "người bạn" đặc biệt, giúp các thông tin về tòa nhà từ mô hình thiết kế (BIM) có thể "trò chuyện" một cách dễ dàng với các phần mềm phân tích kỹ thuật khác. Nhờ đó, kiến trúc sư, kỹ sư và những người làm mô hình có thể hợp tác hiệu quả hơn, cùng nhau tạo ra những công trình tiết kiệm năng lượng. Và Revit đã tích hợp sẵn các công cụ để bạn có thể cấu hình, kiểm soát và xuất dữ liệu sang định dạng gbXML một cách tiện lợi.
 
@@ -17,7 +17,7 @@ Vậy gbXML mang theo những thông tin gì? Bạn có thể hình dung nó gi�
 - **Bề mặt (Surfaces):** Đây chính là những "con đường" mà nhiệt đi qua để vào hoặc ra khỏi mỗi không gian. Đó có thể là bức tường giữa phòng khách và nhà bếp, hay bức tường hướng ra ngoài trời. gbXML sẽ lưu trữ thông tin về từng bề mặt này, bao gồm cả loại vật liệu tạo nên chúng nữa.
 - **Vùng (Zones):** Để tiện cho việc quản lý và phân tích, các không gian có thể được nhóm lại thành các "vùng" dựa trên những đặc điểm chung. Ví dụ, tất cả các phòng có cùng hướng nắng, cùng chức năng (như khu văn phòng) hoặc được cùng một hệ thống điều hòa phục vụ, có thể được gộp vào cùng một vùng.
 
-[image]("")
+![image]("http://")
 
 Để hình dung rõ hơn, hãy nhìn vào một hình minh họa. Bạn sẽ thấy các không gian được đánh số một, các bề mặt được đánh số hai – đó là những bức tường, sàn hay trần nhà màu đỏ, đi kèm với thông tin về vật liệu của chúng. Và số ba chính là các vùng, ví dụ như toàn bộ tầng một có thể nằm gọn trong một vùng lớn.
 
@@ -29,6 +29,8 @@ Bạn có thể tìm thấy công cụ vị trí này trong tab **'Manage'** ho�
 
 Tại đây, trong mục **Location**, bạn có thể chọn thành phố của mình, lấy thông tin từ internet hoặc chọn từ danh sách các thành phố có sẵn. Thậm chí, nếu bạn biết chính xác, bạn có thể tự nhập vĩ độ và kinh độ. Từ đó, Revit sẽ giúp bạn tìm trạm thời tiết gần nhất để lấy tất cả thông tin khí hậu cần thiết. Sau khi hoàn tất, chỉ cần nhấp **'OK'**.
 
+![image]("http://")
+
 Bây giờ thì chúng ta đã sẵn sàng để xuất dữ liệu rồi! Hãy nhớ rằng, bạn **luôn cần xuất từ chế độ xem 3D**. Tiếp theo, bạn vào tab **File**, chọn **Export**, rồi tìm đến **gbXML**.
 
 Revit sẽ đưa ra hai lựa chọn khác nhau cho bạn:
@@ -36,17 +38,19 @@ Revit sẽ đưa ra hai lựa chọn khác nhau cho bạn:
 - **Use Energy Settings (Sử dụng Cài đặt Năng lượng):** Tùy chọn này sẽ xuất **mô hình phân tích năng lượng** mà Revit đã tạo ra. Mô hình này bao gồm các không gian và bề mặt phân tích, thường được bộ phận cơ khí quản lý.
 - **Use Room/Space Volumes (Sử dụng Thể tích Phòng/Không gian):** Lựa chọn này sử dụng các thể tích được xác định trong mô hình tòa nhà dựa trên các phòng hoặc không gian của bạn. Nếu bạn muốn xuất một **mô hình kiến trúc**, đây chính là tùy chọn nên dùng.
 
+![image]("http://")
+
 Vì vậy, chúng ta hãy chọn **Room and Space Volume** và nhấp **'OK'**.
 
 Revit sẽ nhanh chóng tạo ra một bản xem trước mô hình của chúng ta. Bạn có thể thoải mái "điều hướng" trong chế độ xem 3D này như khi bạn đang làm việc trong phần mềm vậy.
 
-Ở phía bên phải màn hình, bạn sẽ thấy một vài cài đặt chung như **Building type (loại tòa nhà)**. Bạn vẫn có thể quay lại để thay đổi vị trí nếu cần. Bạn cũng có thể chọn vị trí của mặt đất. Trong mục **Export Category**, nếu bạn sử dụng phòng để tạo mô hình, hãy cứ để nó là "phòng". Nếu bạn sử dụng không gian, hãy chọn "không gian" nhé. Trong mô hình của tôi, tôi đã tạo cả hai để bạn có thể thấy chúng trông như thế nào.
+Ở phía bên phải màn hình, bạn sẽ thấy một vài cài đặt chung như **Building type (loại tòa nhà)**. Bạn vẫn có thể quay lại để thay đổi vị trí nếu cần. Bạn cũng có thể chọn vị trí của mặt đất. Trong mục **Export Category**, nếu bạn sử dụng phòng để tạo mô hình, hãy cứ để nó là "phòng". Nếu bạn sử dụng không gian, hãy chọn "không gian" nhé. Trong mô hình của tui, tui đã tạo cả hai để bạn có thể thấy chúng trông như thế nào.
 
 Bạn cũng sẽ thấy các thông tin khác và **giai đoạn dự án**. Hãy cẩn thận chọn giai đoạn mà bạn muốn xuất nhé.
 
-Điều thú vị nhất chính là phần **chi tiết (detail)**. Tôi sẽ mở cấp độ một. Như bạn thấy, chúng ta có tất cả các phòng ở đây với tên đã được đánh số. Chúng ta có cả cấp độ một và cấp độ hai. Và bạn thấy những ngôi nhà nhỏ xinh xắn với hình chữ nhật màu xanh lá cây – đó là tín hiệu tốt! Nhưng chúng ta cũng có một biểu tượng cảnh báo ở đây.
+Điều thú vị nhất chính là phần **chi tiết (detail)**. Tui sẽ mở cấp độ một. Như bạn thấy, chúng ta có tất cả các phòng ở đây với tên đã được đánh số. Chúng ta có cả cấp độ một và cấp độ hai. Và bạn thấy những ngôi nhà nhỏ xinh xắn với hình chữ nhật màu xanh lá cây – đó là tín hiệu tốt! Nhưng chúng ta cũng có một biểu tượng cảnh báo ở đây.
 
-Vậy thì, điều chúng ta muốn đạt được trước khi xuất là tất cả những biểu tượng cảnh báo đó phải biến mất. Nếu tôi chọn, ví dụ, **'Office 29'**, và nhấp vào **'Show related warnings'**, một lời giải thích sẽ hiện ra. Bạn sẽ hiểu rằng căn phòng đó chưa được ngăn cách bởi trần nhà, mái nhà hoặc bất kỳ yếu tố sàn nào, vì vậy bạn sẽ phải điều chỉnh điều đó. Bạn cần chỉnh sửa tất cả những lỗi này. Bạn sẽ phải quay lại mô hình. Tôi khuyến khích bạn **chụp ảnh màn hình** để bạn biết phòng nào đang gặp vấn đề và không phải quay lại đây liên tục. Bạn cũng có thể, nếu muốn định vị một phòng, làm nổi bật nó lên hoặc ẩn tất cả các phòng khác đi.
+Vậy thì, điều chúng ta muốn đạt được trước khi xuất là tất cả những biểu tượng cảnh báo đó phải biến mất. Nếu tui chọn, ví dụ, **'Office 29'**, và nhấp vào **'Show related warnings'**, một lời giải thích sẽ hiện ra. Bạn sẽ hiểu rằng căn phòng đó chưa được ngăn cách bởi trần nhà, mái nhà hoặc bất kỳ yếu tố sàn nào, vì vậy bạn sẽ phải điều chỉnh điều đó. Bạn cần chỉnh sửa tất cả những lỗi này. Bạn sẽ phải quay lại mô hình. Tui khuyến khích bạn **chụp ảnh màn hình** để bạn biết phòng nào đang gặp vấn đề và không phải quay lại đây liên tục. Bạn cũng có thể, nếu muốn định vị một phòng, làm nổi bật nó lên hoặc ẩn tất cả các phòng khác đi.
 
 Bây giờ, chúng ta hãy xem xét các **bề mặt phân tích (analytical surfaces)**. Ở đây, bạn có một cái nhìn khác về dự án của mình. Các phòng vẫn còn đó, vẫn được phân loại, và các cảnh báo cũng vậy. Sự khác biệt nhỏ sẽ là, nếu bạn mở một phòng, bạn sẽ thấy mọi yếu tố cấu thành nên căn phòng đó bên trong, và cả các lớp bên ngoài (lớp tường) nữa. Điều này rất quan trọng cho việc trao đổi nhiệt giữa các không gian. Tất nhiên, bạn cũng sẽ thấy các khe hở không khí, trần và sàn. Mỗi phòng sẽ có tất cả các bề mặt cấu tạo của nó.
 

@@ -7,6 +7,8 @@ draft: false
 summary: Shared Parameters là một công cụ mạnh mẽ để chuẩn hóa và quản lý dữ liệu trong các mô hình Revit, vượt ra ngoài giới hạn của một dự án hay Family đơn lẻ. Và cốt lõi của sự mạnh mẽ đó chính là **GUID** - yếu tố định danh duy nhất, đảm bảo tính chính xác và nhất quán của dữ liệu.
 ---
 
+<TOCInline toc={props.toc} exclude="" />
+
 ## Shared Parameters Là Gì và Tại Sao Chúng Ta Cần Đến Chúng Trong Revit?
 
 ### Các Loại Thông Số Trong Revit
@@ -31,7 +33,7 @@ Vậy vấn đề nằm ở đâu? Hãy tưởng tượng bạn cần một thô
 
 **Shared Parameter** là một loại thông số đặc biệt được định nghĩa trong một tệp tin văn bản bên ngoài (thường là file `.txt`). Điều này cho phép chúng được **chia sẻ và sử dụng một cách nhất quán** trên nhiều dự án, nhiều Family, và thậm chí là giữa các phần mềm khác nhau có khả năng tương tác với Revit.
 
-#### Lợi Ích Vượt Trội Của Shared Parameters:
+### Lợi Ích Vượt Trội Của Shared Parameters:
 
 - Đảm bảo rằng cùng một thông số (ví dụ: "Mã tài sản") sẽ có cùng định nghĩa, kiểu dữ liệu và ý nghĩa trên mọi mô hình, bất kể nó được sử dụng ở đâu.
 - Dễ dàng thêm vào bất kỳ dự án hoặc Family nào mà không cần phải định nghĩa lại từ đầu. Điều này tiết kiệm thời gian và giảm thiểu lỗi.
@@ -64,9 +66,7 @@ Bạn có thể thấy GUID xuất hiện trong tệp tin `.txt` của Shared Pa
 *PARAM	GUID_PARAM_2	f0e9d8c7-b6a5-4321-fedc-ba9876543210	LENGTH	0	Chiều dài thiết bị
 ```
 
----
-
-### Tổng Quan Về Cách Sử Dụng Shared Parameters Trong Giao Diện Người Dùng Revit
+## Tổng Quan Về Cách Sử Dụng Shared Parameters Trong Giao Diện Người Dùng Revit
 
 Trước khi đi sâu vào khía cạnh lập trình, hãy cùng xem cách Shared Parameters được quản lý và sử dụng thông qua giao diện người dùng (UI) của Revit:
 

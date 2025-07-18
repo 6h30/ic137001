@@ -8,27 +8,23 @@ summary: 'Khi làm việc với Revit API, một trong những tác vụ phổ b
 images: ['/static/images/twitter-card.png']
 ---
 
-## Hiểu và sử dụng `FilteredElementCollector` hiệu quả
-
 Khi làm việc với **Revit API**, một trong những tác vụ phổ biến và quan trọng nhất là **truy xuất các phần tử (Elements)** từ mô hình. Việc này thường được thực hiện thông qua lớp **`FilteredElementCollector`**. Tuy nhiên, nếu không được sử dụng đúng cách, việc truy vấn dữ liệu có thể trở nên chậm chạp, đặc biệt với các mô hình lớn, ảnh hưởng nghiêm trọng đến hiệu suất của Add-in. Bài viết này sẽ đi sâu vào cách tối ưu hóa các truy vấn bằng `FilteredElementCollector` để đảm bảo Add-in của bạn hoạt động nhanh chóng và hiệu quả.
 
----
+<TOCInline toc={props.toc} exclude="" />
 
-### Tại sao `FilteredElementCollector` lại quan trọng?
+## Tại sao `FilteredElementCollector` lại quan trọng?
 
 `FilteredElementCollector` là công cụ chính để tìm kiếm và lọc các `Element` trong một đối tượng `Document` của Revit. Nó cung cấp một loạt các phương thức lọc mạnh mẽ, cho phép bạn chỉ định chính xác loại `Element` hoặc các thuộc tính mà bạn muốn truy xuất.
 
 Tuy nhiên, việc không hiểu rõ cơ chế hoạt động của các bộ lọc có thể dẫn đến các truy vấn không hiệu quả, buộc Revit phải duyệt qua hàng ngàn `Element` không cần thiết, gây lãng phí tài nguyên và thời gian.
 
----
-
-### Các loại bộ lọc (`ElementFilter`) và độ hiệu quả
+## Các loại bộ lọc (`ElementFilter`) và độ hiệu quả
 
 Revit API cung cấp nhiều loại `ElementFilter` khác nhau, mỗi loại có một cơ chế hoạt động riêng và mức độ hiệu quả khác nhau. Hiểu rõ sự khác biệt này là chìa khóa để tối ưu hóa.
 
 Các bộ lọc được chia thành hai nhóm chính: **Quick Filters** (Bộ lọc nhanh) và **Slow Filters** (Bộ lọc chậm).
 
-#### Quick Filters (Bộ lọc nhanh)
+### Quick Filters (Bộ lọc nhanh)
 
 Đây là những bộ lọc hoạt động hiệu quả nhất vì chúng sử dụng dữ liệu đã được lập chỉ mục (indexed data) trong cơ sở dữ liệu của Revit. Khi bạn sử dụng Quick Filter, Revit không cần phải duyệt qua từng `Element` một để kiểm tra điều kiện.
 
@@ -66,7 +62,7 @@ Các bộ lọc được chia thành hai nhóm chính: **Quick Filters** (Bộ l
 
 **Nguyên tắc vàng:** Luôn cố gắng sử dụng **Quick Filters trước** để giảm thiểu số lượng `Element` mà Revit phải kiểm tra.
 
-#### Slow Filters (Bộ lọc chậm)
+### Slow Filters (Bộ lọc chậm)
 
 Các bộ lọc này đòi hỏi Revit phải kiểm tra từng `Element` một để xác định xem nó có đáp ứng điều kiện lọc hay không. Điều này làm cho chúng kém hiệu quả hơn đáng kể so với Quick Filters, đặc biệt trong các mô hình lớn.
 
@@ -101,13 +97,11 @@ Các bộ lọc này đòi hỏi Revit phải kiểm tra từng `Element` một 
 - **`FamilyInstanceFilter`**: Lọc các `FamilyInstance` của một `FamilySymbol` cụ thể.
 - **`StructuralInstanceUsageFilter`, `StructuralWallUsageFilter`, v.v.**
 
----
-
-### Chiến lược tối ưu hóa truy vấn với `FilteredElementCollector`
+## Chiến lược tối ưu hóa truy vấn với `FilteredElementCollector`
 
 Để đảm bảo các truy vấn của bạn nhanh và hiệu quả, hãy áp dụng các chiến lược sau:
 
-#### Ưu tiên Quick Filters
+### Ưu tiên Quick Filters
 
 Luôn bắt đầu truy vấn của bạn với một hoặc nhiều Quick Filters để giảm thiểu đáng kể số lượng `Element` mà các bộ lọc tiếp theo phải xử lý. Revit sẽ đánh giá các bộ lọc theo thứ tự bạn thêm vào `FilteredElementCollector`.
 
@@ -123,7 +117,7 @@ FilteredElementCollector collector = new FilteredElementCollector(doc)
                                      .WhereElementIsNotElementType(); // Sau đó mới là Slow Filter (nếu cần)
 ```
 
-#### Kết hợp các bộ lọc bằng `LogicalAndFilter` hoặc chuỗi phương thức
+### Kết hợp các bộ lọc bằng `LogicalAndFilter` hoặc chuỗi phương thức
 
 Khi cần áp dụng nhiều điều kiện, bạn có thể xâu chuỗi các phương thức lọc (`OfCategory().OfClass().WherePasses()`) hoặc sử dụng `LogicalAndFilter`. Revit thường tự động tối ưu hóa khi bạn xâu chuỗi các Quick Filters.
 
@@ -135,11 +129,11 @@ ICollection<Element> doorInstances = collector.OfClass(typeof(FamilyInstance)) /
                                             .ToElements();
 ```
 
-#### Tránh sử dụng `.ToElements()` quá sớm
+### Tránh sử dụng `.ToElements()` quá sớm
 
 `.ToElements()` sẽ thực thi truy vấn và tải tất cả các `Element` phù hợp vào bộ nhớ. Nếu bạn có nhiều bộ lọc hoặc thao tác tiếp theo, hãy cố gắng áp dụng tất cả các bộ lọc trước khi gọi `.ToElements()`.
 
-#### Chỉ lấy những gì bạn cần
+### Chỉ lấy những gì bạn cần
 
 - Sử dụng `WhereElementIsNotElementType()` nếu bạn chỉ muốn các thể hiện (instance) và `WhereElementIsElementType()` nếu bạn chỉ muốn các loại (type).
 
@@ -153,13 +147,11 @@ ICollection<Element> doorInstances = collector.OfClass(typeof(FamilyInstance)) /
   Wall firstWall = new FilteredElementCollector(doc).OfClass(typeof(Wall)).Cast<Wall>().FirstOrDefault();
   ```
 
-#### Cache các kết quả truy vấn nếu có thể
+### Cache các kết quả truy vấn nếu có thể
 
 Nếu bạn cần truy xuất cùng một tập hợp `Element` nhiều lần trong cùng một phiên chạy Add-in, hãy cân nhắc lưu trữ kết quả vào một biến `List<Element>` hoặc `Dictionary<ElementId, Element>` thay vì lặp lại truy vấn mỗi lần. Điều này sẽ tránh được việc Revit phải thực hiện lại quá trình lọc tốn kém.
 
----
-
-### Túm lại
+## Túm lại
 
 `FilteredElementCollector` là một công cụ cực kỳ linh hoạt và mạnh mẽ trong **Revit API**. Bằng cách hiểu rõ sự khác biệt giữa Quick Filters và Slow Filters và áp dụng các chiến lược tối ưu hóa, bạn có thể đảm bảo các Add-in của mình hoạt động hiệu quả, nhanh chóng ngay cả trên những mô hình Revit phức tạp và lớn. Hãy luôn đặt câu hỏi: "Làm thế nào để tui có thể giảm thiểu số lượng `Element` mà Revit phải xem xét?". Thực hành và thử nghiệm trên các mô hình thật sẽ giúp bạn nắm vững nghệ thuật tối ưu hóa này.
 

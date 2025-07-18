@@ -7,33 +7,35 @@ authors: ['ductruong']
 summary: 'Việc nối các cấu kiện không chỉ là vấn đề về mặt đồ họa mà còn là yếu tố then chốt để đảm bảo tính chính xác của dữ liệu BIM.'
 ---
 
-Sau khi đã bàn về việc mô hình hóa từng tầng để đảm bảo độ chính xác, hôm nay, mình muốn đi sâu vào một chi tiết nhỏ nhưng lại có ảnh hưởng lớn đến chất lượng mô hình của chúng ta trong Revit: đó là **cách chúng ta "kết nối (join)" các cấu kiện với nhau.**
+Sau khi đã bàn về việc mô hình hóa từng tầng để đảm bảo độ chính xác, hôm nay, tui muốn đi sâu vào một chi tiết nhỏ nhưng lại có ảnh hưởng lớn đến chất lượng mô hình của chúng ta trong Revit: đó là **cách chúng ta "kết nối (join)" các cấu kiện với nhau.**
 
 Bạn có bao giờ để ý khi vẽ một bức tường và một cái sàn mặc định trong Revit, chúng thường có xu hướng "chồng lấn" lên nhau không? Thoạt nhìn có vẻ không sao, nhưng nếu cứ để như vậy, điều gì sẽ xảy ra với các bảng thống kê vật liệu hay khối lượng của chúng ta?
 
-### Vấn đề "chồng lấn" và giải pháp
+<TOCInline toc={props.toc} exclude="" />
+
+## Vấn đề "chồng lấn" và giải pháp
 
 Hãy tưởng tượng một mặt cắt ngang qua công trình. Bạn sẽ thấy rõ bức tường đang xuyên qua sàn. Điều này có nghĩa là tại giao điểm đó, vật liệu (ví dụ: bê tông của tường và bê tông của sàn) sẽ bị **nhân đôi**! Điều này chắc chắn sẽ dẫn đến việc tính toán khối lượng sai lệch.
 
 May mắn, chúng ta có ba cách để giải quyết vấn đề này trong Revit:
 
-#### 1. "Gắn" Tường vào Sàn (Attach Top/Base)
+### 1. "Gắn" Tường vào Sàn (Attach Top/Base)
 
 Đây là cách đơn giản và nhanh chóng nhất. Bạn chỉ cần chọn bức tường, sử dụng chức năng **Attach Top/Base**, sau đó chọn sàn. Ngay lập tức, bức tường sẽ "gắn" chặt vào sàn, và chiều cao của nó sẽ tự động điều chỉnh sao cho khớp với bề mặt sàn. Rất tiện lợi!
 
-#### 2. "Nối" Hai Cấu Kiện (Join Elements)
+### 2. "Nối" Hai Cấu Kiện (Join Elements)
 
 Cách thứ hai là sử dụng công cụ **Join** trong tab **Modify**, phần **Geometry**. Bạn chọn **Join**, sau đó chọn tường và sàn. Bạn sẽ thấy chúng được nối liền mạch, thậm chí giao diện đồ họa cũng thay đổi, trông "sạch" hơn rất nhiều.
 
 Một điểm hay nữa là nếu bạn muốn thay đổi thứ tự nối (ví dụ, muốn tường "xuyên qua" sàn thay vì bị sàn cắt), bạn có thể dùng **Switch Join Order** để đảo ngược.
 
-#### 3. Điều Chỉnh Thủ Công (Manual Adjustment)
+### 3. Điều Chỉnh Thủ Công (Manual Adjustment)
 
 Cuối cùng là phương pháp "truyền thống" hơn: điều chỉnh thủ công. Bạn có thể chọn bức tường, sau đó vào **Modify Wall**, chọn **Detach Top/Base** và **Detach All** để đưa bức tường về hình dạng ban đầu.
 
 Tiếp theo, bạn chọn bức tường đó, vào phần thuộc tính (property) và điều chỉnh **top constraint** (ràng buộc trên cùng) bằng cách nhập giá trị **top offset** thủ công. Bạn cũng có thể chọn nhiều bức tường trên cùng một tầng và điều chỉnh hàng loạt.
 
-### Vậy, đâu là lựa chọn tốt nhất?
+## Vậy, đâu là lựa chọn tốt nhất?
 
 Mỗi phương pháp đều có ưu và nhược điểm riêng:
 
@@ -41,9 +43,11 @@ Mỗi phương pháp đều có ưu và nhược điểm riêng:
 
 - **Khi điều chỉnh thủ công:** Bạn có sự kiểm soát tuyệt đối. Khi đã chỉnh thủ công, bức tường sẽ "cố định" ở hình dạng đó, không lo bị "trở lại hình dạng ban đầu" một cách bất ngờ. Tuy nhiên, nhược điểm lớn là nếu độ dày của sàn thay đổi, bạn sẽ phải điều chỉnh chiều cao của bức tường một lần nữa bằng tay. Trong khi đó, nếu dùng **Attach/Join**, mọi thứ sẽ tự động cập nhật.
 
-### Tác động đến Bảng Thống Kê (Schedule) – Cái nhìn "tiền tỷ"
+## Tác động đến Bảng Thống Kê (Schedule) – Cái nhìn "tiền tỷ"
 
-Bây giờ, hãy xem điều này ảnh hưởng đến những con số cuối cùng như thế nào. Mình đã mở **Wall Schedule** (bảng thống kê tường) sau khi thực hiện việc nối/gắn.
+Bây giờ, hãy xem điều này ảnh hưởng đến những con số cuối cùng như thế nào. Tui đã mở **Wall Schedule** (bảng thống kê tường) sau khi thực hiện việc nối/gắn.
+
+![image](http://)
 
 So sánh với bảng thống kê trước đó (khi các bức tường còn chồng lấn), bạn có thể thấy rằng **khối lượng (volume)** của tường hiện tại đã được điều chỉnh và trở nên **chính xác hơn** rất nhiều.
 
