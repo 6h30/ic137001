@@ -8,11 +8,9 @@ summary: 'Trong Revit API, việc định danh các đối tượng một cách 
 images: ['/static/images/twitter-card.png']
 ---
 
-## Chìa khóa vàng cho định danh duy nhất và bền vững
-
 Trong **Revit API**, việc định danh các đối tượng một cách duy nhất và bền vững là vô cùng quan trọng. Mặc dù `ElementId` rất hữu ích cho các thao tác nội bộ trong một phiên làm việc hoặc một dự án, nó lại không ổn định khi mô hình thay đổi, sao chép hoặc chuyển đổi giữa các dự án. Đây chính là lúc **GUID (Globally Unique Identifier)** trở thành một công cụ không thể thiếu. Bài viết này sẽ đi sâu vào vai trò của **GUID** trong Revit API, cách sử dụng nó để định danh các đối tượng và dữ liệu một cách bền vững, cũng như các trường hợp ứng dụng thực tế.
 
----
+<TOCInline toc={props.toc} exclude="" />
 
 ### GUID là gì và tại sao nó quan trọng trong Revit API?
 
@@ -31,11 +29,9 @@ Trong Revit API, **GUID** đóng vai trò quan trọng trong việc định danh
 - **Tính bền vững (Persistence):** **GUID** của một Shared Parameter hoặc `UniqueId` của một `Element` sẽ không thay đổi khi bạn mở lại dự án, lưu sang phiên bản Revit khác, hoặc thậm chí sao chép phần tử sang dự án mới (với `UniqueId` của `Element`). Điều này làm cho chúng trở thành lựa chọn lý tưởng cho việc lưu trữ dữ liệu liên tục hoặc liên kết giữa các hệ thống.
 - **Độc lập với phiên bản:** Không giống như `ElementId` hay `BuiltInParameter` (trước `ForgeTypeId`), **GUID** không phụ thuộc vào ID nội bộ của một phiên bản Revit cụ thể.
 
----
+## Các ứng dụng thực tế của GUID trong Revit API
 
-### Các ứng dụng thực tế của GUID trong Revit API
-
-#### Truy cập Shared Parameters bằng GUID
+### Truy cập Shared Parameters bằng GUID
 
 Đây là ứng dụng phổ biến nhất và mạnh mẽ nhất của **GUID**. Thay vì tìm Shared Parameter bằng tên (có thể trùng hoặc bị đổi), việc sử dụng **GUID** là cách đáng tin cậy nhất.
 
@@ -104,7 +100,7 @@ public class GetSharedParameterByGuid : IExternalCommand
 
 **Lưu ý:** Bạn có thể dễ dàng tìm thấy **GUID** của một Shared Parameter bằng cách sử dụng **RevitLookup** trên một phần tử có Parameter đó.
 
-#### Sử dụng `UniqueId` để định danh Element bền vững
+### Sử dụng `UniqueId` để định danh Element bền vững
 
 Mỗi `Element` trong một tài liệu Revit đều có một thuộc tính `UniqueId` (kiểu `string`), đây là một định danh duy nhất và bền vững. Điều này rất hữu ích khi bạn cần lưu trữ tham chiếu đến một `Element` bên ngoài Revit, sau đó tìm lại nó.
 
@@ -130,7 +126,7 @@ else
 
 **Lưu ý:** `UniqueId` chỉ duy nhất trong một tài liệu Revit. Nếu bạn copy một `Element` sang một tài liệu mới, nó sẽ có một `UniqueId` mới. Tuy nhiên, nếu bạn sao lưu và phục hồi tài liệu, `UniqueId` vẫn được giữ nguyên.
 
-#### Định danh Add-in và Command
+### Định danh Add-in và Command
 
 Khi bạn tạo một `IExternalCommand` hoặc `IExternalApplication`, bạn cần gán cho nó một `GUID` duy nhất trong file `.addin`. Điều này giúp Revit phân biệt các Add-in khác nhau và ngăn ngừa xung đột.
 
@@ -159,7 +155,7 @@ Khi bạn tạo một `IExternalCommand` hoặc `IExternalApplication`, bạn c�
 
 Bạn có thể tạo **GUID** mới bằng cách sử dụng tính năng "Create GUID" trong Visual Studio (Tools -\> Create GUID) hoặc các công cụ tạo **GUID** trực tuyến.
 
-#### Lưu trữ dữ liệu mở rộng (Extensible Storage)
+### Lưu trữ dữ liệu mở rộng (Extensible Storage)
 
 **Extensible Storage** là một tính năng mạnh mẽ cho phép bạn đính kèm dữ liệu tùy chỉnh vào bất kỳ `Element` nào trong mô hình Revit, một cách bền vững. Các `Schema` và `Field` của dữ liệu này được định danh bằng **GUID**.
 
@@ -274,9 +270,7 @@ public Result ReadExtensibleStorage(ExternalCommandData commandData, ref string 
 
 **Lưu ý:** `SchemaBuilder.SetApplicationGUID` phải được gọi với **GUID** của Add-in đã đăng ký (từ file `.addin`).
 
----
-
-### Những lưu ý quan trọng khi sử dụng GUID
+## Những lưu ý quan trọng khi sử dụng GUID
 
 - Luôn sử dụng các công cụ tạo **GUID** chuyên dụng để đảm bảo tính duy nhất. Đừng cố gắng tự nghĩ ra **GUID**.
 - Đối với Shared Parameters và Extensible Storage, **GUID** của chúng là không thể thay đổi. Hãy lưu trữ chúng trong code của bạn (ví dụ: trong một lớp tĩnh `public static readonly Guid`) để dễ dàng truy cập và tái sử dụng.
@@ -289,10 +283,8 @@ public Result ReadExtensibleStorage(ExternalCommandData commandData, ref string 
 - **Khi nào không dùng GUID?**
   - Khi bạn chỉ cần tham chiếu một đối tượng trong phiên làm việc hiện tại hoặc một tập tin `.rvt` cụ thể mà không cần duy trì liên kết qua các bản sao hoặc dự án khác (thường dùng `ElementId`).
 
----
-
-### Túm lại
+## Túm lại
 
 **GUID** là một khái niệm mạnh mẽ và không thể thiếu trong phát triển **Revit API**, đặc biệt khi bạn cần giải quyết các bài toán về tính bền vững và khả năng tương tác dữ liệu. Nắm vững cách sử dụng **GUID** trong việc định danh Shared Parameters, `UniqueId` của `Element` và Extensible Storage sẽ mở ra những cánh cửa mới cho việc xây dựng các Add-in Revit mạnh mẽ, linh hoạt và có khả năng tích hợp cao với các hệ thống BIM khác.
 
-Bạn đã từng sử dụng **GUID** trong những trường hợp đặc biệt nào trong các dự án Revit API của mình? Hãy chia sẻ kinh nghiệm của bạn ở phần bình luận bên dưới nhé\!
+Bạn đã từng sử dụng **GUID** trong những trường hợp đặc biệt nào trong các dự án Revit API của mình? Hãy chia sẻ kinh nghiệm của bạn ở phần bình luận bên dưới nhé.

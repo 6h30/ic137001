@@ -9,7 +9,7 @@ const siteMetadata = {
   siteUrl: 'https://revit-api-blog.vercel.app',
   siteRepo: 'https://github.com/6h30/revit-api-blog',
   siteLogo: `${process.env.BASE_PATH || ''}/static/images/logo.png`,
-  socialBanner: `${process.env.BASE_PATH || ''}/static/images/twitter-card.png`,
+  socialBanner: `${process.env.BASE_PATH || ''}/static/images/logo.png`,
   mastodon: 'https://mastodon.social/@mastodonuser',
   email: 'address@yoursite.com',
   github: 'https://github.com',

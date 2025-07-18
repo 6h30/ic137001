@@ -4,16 +4,16 @@ date: '2025-06-10T15:32:14Z'
 lastmod: '2025-06-10'
 tags: ['revit-api', 'guid', 'guide']
 draft: false
-summary: Tập trung vào việc đọc trực tiếp tệp .txt của Shared Parameter để lấy GUID
+summary: Tập trung vào việc đọc trực tiếp tệp .txt của Shared Parameter để lấy GUID (cách 2)
 ---
-
-## Đọc GUID Trực Tiếp Từ Tệp Shared Parameter (Cách 2)
 
 Trong bài trước, chúng ta đã thảo luận về việc duyệt qua các định nghĩa Shared Parameter trong tệp Shared Parameter. Bây giờ, chúng ta sẽ đi sâu vào cách bạn có thể thực hiện điều này trong C\#, tập trung vào việc đọc trực tiếp tệp `.txt` của Shared Parameter để lấy GUID.
 
 Tệp Shared Parameter về bản chất là một tệp văn bản thuần túy (`.txt`) với một cấu trúc định dạng cụ thể. Mặc dù bạn hoàn toàn có thể mở tệp này bằng Notepad hoặc bất kỳ trình soạn thảo văn bản nào để xem nội dung, nhưng Revit API cung cấp một cách có cấu trúc và an toàn hơn để đọc và phân tích cú pháp tệp này. Điều này đảm bảo rằng bạn đang truy cập dữ liệu một cách chính xác theo cách mà Revit hiểu, thay vì phải tự mình phân tích cú pháp chuỗi.
 
-### Cấu Trúc Tệp Shared Parameter
+<TOCInline toc={props.toc} exclude="" />
+
+## Cấu Trúc Tệp Shared Parameter
 
 Tệp `.txt` của Shared Parameter tuân theo một định dạng nhất định, bao gồm các phần:
 
@@ -42,7 +42,7 @@ Ví dụ:
 
 Trong ví dụ trên, `12345678-ABCD-EFAB-CDEF-1234567890AB` và `CDEF1234-ABCD-EFAB-CDEF-1234567890AB` chính là các **GUID** của các Shared Parameter.
 
-### Phương Pháp Lập Trình Với Revit API (Khuyến Nghị)
+## Phương Pháp Lập Trình Với Revit API (Khuyến Nghị)
 
 Mặc dù bạn có thể tự mình đọc tệp `.txt` và phân tích cú pháp các dòng để trích xuất GUID, nhưng cách làm này không được khuyến khích (dễ xảy ra bug nếu không thực hiện tốt). Revit API cung cấp các đối tượng được xây dựng sẵn để xử lý tệp Shared Parameter, giúp việc trích xuất thông tin trở nên dễ dàng và đáng tin cậy hơn nhiều.
 
