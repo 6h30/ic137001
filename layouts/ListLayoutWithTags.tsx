@@ -10,6 +10,8 @@ import Link from '@/components/Link'
 import Tag from '@/components/Tag'
 import siteMetadata from '@/data/siteMetadata'
 import tagData from 'app/tag-data.json'
+import NewsletterForm from 'pliny/ui/NewsletterForm'
+import CustomNewsletterForm from '@/components/CustomNewsletterForm'
 
 interface PaginationProps {
   totalPages: number
@@ -83,28 +85,6 @@ export default function ListLayoutWithTags({ posts, title }: ListLayoutProps) {
   const tagCounts = tagData as Record<string, number>
   const sortedTags = Object.keys(tagCounts).sort((a, b) => tagCounts[b] - tagCounts[a])
 
-  // const filteredPosts =
-  //   selectedTags.length > 0
-  //     ? posts.filter((post) => post.tags?.some((tag) => selectedTags.includes(slug(tag))))
-  //     : posts
-
-  // const toggleTag = (tag: string) => {
-  //   const params = new URLSearchParams(searchParams.toString())
-  //   const current = params.get('tag')?.split(',').filter(Boolean) || []
-
-  //   const tagSlug = slug(tag)
-  //   const exists = current.includes(tagSlug)
-  //   const updated = exists ? current.filter((t) => t !== tagSlug) : [...current, tagSlug]
-
-  //   if (updated.length > 0) {
-  //     params.set('tag', updated.join(','))
-  //   } else {
-  //     params.delete('tag')
-  //   }
-  //   params.set('page', '1') // reset to first page
-  //   router.push(`${pathname}?${params.toString()}`)
-  // }
-
   const toggleTag = (tag: string) => {
     const params = new URLSearchParams(searchParams.toString())
     const currentTags = params.get('tag')?.split(',').filter(Boolean) || []
@@ -122,9 +102,6 @@ export default function ListLayoutWithTags({ posts, title }: ListLayoutProps) {
       params.delete('tag')
     }
 
-    // giữ nguyên selectedYear nếu có
-    // đã được giữ vì `params` bắt đầu từ `searchParams`
-
     params.set('page', '1') // reset trang về 1
     router.push(`${pathname}?${params.toString()}`)
   }
@@ -136,7 +113,7 @@ export default function ListLayoutWithTags({ posts, title }: ListLayoutProps) {
     const isSame = current === year
 
     if (isSame) {
-      params.delete('year') // bỏ lọc nếu nhấn lại cùng năm
+      params.delete('year')
     } else {
       params.set('year', year)
     }
@@ -180,6 +157,15 @@ export default function ListLayoutWithTags({ posts, title }: ListLayoutProps) {
     (currentPage - 1) * POSTS_PER_PAGE,
     currentPage * POSTS_PER_PAGE
   )
+
+  const handleClearFilters = () => {
+    const params = new URLSearchParams(searchParams.toString())
+    params.delete('tag')
+    params.delete('year')
+    params.set('page', '1') // reset trang về 1
+    router.push(`${pathname}?${params.toString()}`)
+  }
+
   return (
     <div>
       <div className="space-y-2 pt-6 pb-8 md:space-y-5">
@@ -201,10 +187,7 @@ export default function ListLayoutWithTags({ posts, title }: ListLayoutProps) {
               </div>
               {/* Xóa bộ lọc */}
               <div className="col-span-1 flex justify-self-end sm:col-start-3">
-                <button
-                  className="cursor-pointer text-sm uppercase"
-                  // onClick={handleClearFilters}
-                >
+                <button className="cursor-pointer text-sm uppercase" onClick={handleClearFilters}>
                   Xóa bộ lọc
                 </button>
               </div>
@@ -392,13 +375,8 @@ export default function ListLayoutWithTags({ posts, title }: ListLayoutProps) {
               </div>
             </div>
 
-            {/* danh sách bài viết */}
-            <div className="col-span-full grid grid-cols-2 self-start border-b border-current pb-1.5">
-              <div className="col-span-full flex gap-1 text-sm text-current uppercase">
-                <span>/</span>Bài viết mới nhất
-              </div>
-            </div>
-            <div className="col-span-full">
+            {/* Tags Section */}
+            {/* <div className="col-span-full">
               {selectedTags.length > 0 && (
                 <div className="mb-4 text-sm text-gray-600 dark:text-gray-300">
                   Đang lọc theo:{' '}
@@ -410,6 +388,26 @@ export default function ListLayoutWithTags({ posts, title }: ListLayoutProps) {
                       {tag}
                     </span>
                   ))}
+                </div>
+              )}
+            </div> */}
+
+            {/* Newsletter Section */}
+            <div className="col-span-full grid grid-cols-2 self-start border-b border-current pb-1.5">
+              <div className="col-span-full flex gap-1 text-sm text-current uppercase">
+                <span>/</span> Bản tin
+              </div>
+            </div>
+
+            {/* Newsletter Form */}
+            <div className="col-span-full space-y-4 border-b border-current pb-4">
+              <p className="text-sm text-gray-600 dark:text-gray-300">
+                Đăng ký nhận bài viết mới nhất qua email.
+              </p>
+
+              {siteMetadata.newsletter?.provider && (
+                <div className="rounded-lg border border-gray-300 p-4 dark:border-gray-600">
+                  <CustomNewsletterForm />
                 </div>
               )}
             </div>
@@ -440,7 +438,7 @@ export default function ListLayoutWithTags({ posts, title }: ListLayoutProps) {
                       <div className="space-y-2 xl:grid xl:grid-cols-4 xl:items-baseline xl:space-y-0">
                         <dl>
                           <dt className="sr-only">Published on</dt>
-                          <dd className="text-base leading-6 font-medium text-gray-500 dark:text-gray-400">
+                          <dd className="text-base leading-6 text-gray-500 dark:text-gray-400">
                             <time dateTime={post.date}>
                               {formatDate(post.date, siteMetadata.locale)}
                             </time>

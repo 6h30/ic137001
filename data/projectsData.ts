@@ -7,20 +7,22 @@ interface Project {
 
 const projectsData: Project[] = [
   {
-    title: 'A Search Engine',
-    description: `What if you could look up any information in the world? Webpages, images, videos
-    and more. Google has many features to help you find exactly what you're looking
-    for.`,
+    title: 'Callbike-client-app',
+    description: `Callbike-client-app cho phép đặt xe, kết nối hành khách với tài xế. `,
     imgSrc: '/static/images/google.png',
     href: 'https://www.google.com',
   },
   {
-    title: 'The Time Machine',
-    description: `Imagine being able to travel back in time or to the future. Simple turn the knob
-    to the desired date and press "Go". No more worrying about lost keys or
-    forgotten headphones with this simple yet affordable solution.`,
+    title: 'Callbike-serve-app',
+    description: `Hệ thống Callbike-serve-app cho phép quản lý các tài xế, hành khách, xe và các chuyến đi.`,
+    imgSrc: '/static/images/google.png',
+    href: 'https://www.google.com',
+  },
+  {
+    title: 'Scan_grabReceipt',
+    description: `Đọc và trích xuất thông tin từ hình ảnh biên lai của Grab.`,
     imgSrc: '/static/images/time-machine.jpg',
-    href: '/blog/the-time-machine',
+    href: '/blog/doc-bien-lai-grab',
   },
 ]
 
