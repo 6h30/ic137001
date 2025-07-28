@@ -1,10 +1,11 @@
 /** @type {import("pliny/config").PlinyConfig } */
 const siteMetadata = {
-  title: 'DcViet Blog',
+  title: 'dcviet Blog',
   author: 'DucTruong',
-  headerTitle: 'DcViet Blog',
-  description: 'Revit API và C#',
-  language: 'en-us',
+  headerTitle: 'dcviet Blog',
+  description: 'Viết về Bim, Revit API (C#) và .. gì đó',
+  // language: 'en-us',
+  language: 'vi-VN',
   theme: 'system', // system, dark or light
   siteUrl: 'https://revit-api-blog.vercel.app',
   siteRepo: 'https://github.com/6h30/revit-api-blog',

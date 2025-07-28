@@ -37,7 +37,7 @@ export default function CustomNewsletterForm() {
   return (
     <form onSubmit={handleSubmit} className="w-full max-w-md space-y-4">
       {submitted ? (
-        <p className="text-center text-green-600"> Cảm ơn bạn ! </p>
+        <p className="text-center text-green-600"> Check hộp thư đến nhé! </p>
       ) : (
         <>
           <label htmlFor="email" className="sr-only">

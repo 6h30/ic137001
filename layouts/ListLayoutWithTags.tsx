@@ -170,16 +170,16 @@ export default function ListLayoutWithTags({ posts, title }: ListLayoutProps) {
     <div>
       <div className="space-y-2 pt-6 pb-8 md:space-y-5">
         <h1 className="text-3xl leading-9 font-extrabold tracking-tight text-gray-900 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14 dark:text-gray-100">
-          Mới nhất
+          Blog này
         </h1>
         <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
           {siteMetadata.description}
         </p>
       </div>
 
-      <section className="font-koho relative col-span-12 mt-1 grid grid-cols-12 gap-y-7">
+      <section className="font-koho relative mt-1 grid grid-cols-12 gap-y-7 xl:col-span-12">
         {/* left */}
-        <div className="relative col-span-4 grid">
+        <div className="relative col-span-full grid xl:col-span-4">
           <div className="sticky top-28 col-span-full grid grid-cols-4 gap-y-4 self-start border-b">
             <div className="col-span-full grid grid-cols-2 self-start border-b border-current pb-1.5">
               <div className="col-span-1 flex gap-1 text-sm text-current uppercase">
@@ -400,7 +400,7 @@ export default function ListLayoutWithTags({ posts, title }: ListLayoutProps) {
             </div>
 
             {/* Newsletter Form */}
-            <div className="col-span-full space-y-4 border-b border-current pb-4">
+            <div className="col-span-2 space-y-4 pb-4 xl:col-span-full">
               <p className="text-sm text-gray-600 dark:text-gray-300">
                 Đăng ký nhận bài viết mới nhất qua email.
               </p>
@@ -415,16 +415,31 @@ export default function ListLayoutWithTags({ posts, title }: ListLayoutProps) {
         </div>
 
         {/* right */}
-        <div className="relative col-span-8 col-start-5 ml-10 grid h-full overflow-y-auto">
+        <div className="relative col-span-full grid h-full overflow-y-auto xl:col-span-8 xl:col-start-5 xl:ml-10">
           <div className="col-span-6 grid auto-rows-auto self-start">
             {/* header */}
             <div className="subgrid align-center grid grid-cols-4 self-start border-b-[0.5px] border-b-current pb-1.5">
-              <div className="flex items-center gap-1 text-sm text-current uppercase">
+              <div className="flex hidden items-center gap-1 text-sm text-current uppercase xl:block">
                 <span>/</span>Ngày
               </div>
 
-              <div className="col-start-2 flex items-center gap-1 text-sm text-current uppercase">
+              <div className="col-span-full flex items-center gap-1 text-sm text-current uppercase xl:col-start-2">
                 <span>/</span>Bài viết
+                <div className="normal-case">
+                  {selectedTags.length > 0 && (
+                    <div className="text-sm text-gray-600 dark:text-gray-300">
+                      _đang lọc theo:{' '}
+                      {selectedTags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="mr-2 px-3 text-xs uppercase italic dark:bg-gray-700"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
             {/* danh sách bài viết */}

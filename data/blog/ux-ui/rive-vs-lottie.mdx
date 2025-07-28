@@ -1,0 +1,36 @@
+---
+title: 'Rive vs Lottie: Cuộc chơi không đối đầu trực tiếp.'
+date: '2025-02-27T15:30:41Z'
+tags: ['ux/ui', 'viewpoint']
+draft: false
+authors: ['ductruong']
+summary: Rive đang mở ra một kỷ nguyên mới cho animation tương tác trên web.
+---
+
+Các website hiện đại càng ngày càng yêu cầu cao hơn, đặc biệt về mặt animation. Từ những trang web tĩnh đến trang web có hoạt ảnh, và đến **hoạt ảnh tương tác (linear animations to Rive’s state-driven graphics)**.
+
+Mình đang nhắc đến là **Rive**, đến thời điểm hiện tại Rive là anh lớn trong việc tạo các animation phức tạp, nó có cho riêng mình 1 cộng đồng rive khá mạnh, so sánh về kho animation tuy chưa bằng Lottie, ở đây không hẳn là đối đầu.
+
+![useRive-Lottie](https://images.spiderum.com/sp-images/5c753870f4c711efb2c67768c7daa072.png)
+
+<TOCInline toc={props.toc} exclude="" />
+
+## **Rive là gì ?**
+
+Cho bạn nào chưa biết thì trước kia Rive là Flare, sau sự sụp đổ của flash, (Flash website người thuộc thế hệ 8x, 9x chắc chắn sẽ biết) đặc biệt là dân dev. Thời huy hoàng, dân chúng gọi “Flash - Ông vua không ngai”, thống trị với những website động, game, và hoạt ảnh bắt mắt. Thời ngày ngày mày mò code ActionScript để làm banner hay game lỏ để thể hiện. Và từ khi Flash biến mất, có 1 khoảng thời gian trống về dynamic animation chất lượng cao. Hai anh em, Luigi và Guido đã "nắm đầu" thử thách này và bắt đầu phát triển Rive, để làm cho việc xây dựng hoạt hình trở nên đơn giản và thú vị trở lại. Tầm 5-6 năm gì đó. Họ còn để mã nguồn mở của flare thuở đầu trên Github, mã cho phép bạn tải các tệp Rive của mình vào ứng dụng hoặc trò chơi và cung cấp cho bạn toàn quyền kiểm soát các thuộc tính của tệp. à ờm thì bây giờ là cái rive editor đó.
+
+## **Đối đầu với Lottie**
+
+![vsLottie](https://images.spiderum.com/sp-images/21e9cfb0f4d411efb611d533fd8d6bcf.png)
+
+Theo như blog mới nhất của Rive, họ công khai so sánh nền tảng của họ với nền tảng Lottie luôn. Cho des hay dev câu trả lời "phân vân lựa chọn nền tảng". Rive tự nhận, họ đang giải quyết một vấn đề lớn hơn cho lĩnh vực đồ họa số: "We're on a mission to make hard-coded graphics history with a new general-purpose graphics format for all software, and Ul — and animation is just a part of the puzzle."
+
+Một phần của câu đố mà Rive nhắc đến có thể thấy rõ nhất, họ phát triển là thuật toán tối ưu để các kết xuất từ Rive (.riv file). Các tệp này nhỏ hơn và hiệu suất nhanh hơn. Theo Rive công bố thì Tệp Rive không nén sử dụng định dạng nhị phân được thiết kế đặc biệt cho thời gian chạy, dẫn đến kích thước tệp thường nhỏ hơn 10-15 lần so với các tệp Lottie tương đương.
+
+Ví dụ: Hoạt ảnh Lottie ở 240KB có thể được tạo lại trong Rive chỉ với 16KB.Để dễ hiểu thì so với Lottie, Lottie xuất tệp Lottie không nén (tệp .lottie) được định dạng là JSON. Nó linh hoạt nhưng cồng kềnh so với các tệp nhị phân được tối ưu hóa của Rive.
+
+## **Tương lai không xa**
+
+Rive còn mạnh dạn giải bài toán về những hoạt ảnh phức tạp hoặc tốn nhiều tài nguyên. Nó thật sự mang tính cách mạng. Họ phát triển GPU rendering thay cho việc kết xuất vector như Lottie, điều này đảm bảo hoạt ảnh chạy mượt mà ngay cả trên các thiết bị hạn chế bộ nhớ. Vấn đề này không chỉ cách mạng với Rive mà 2 ông lớn là Android và iOS cũng đang giải quyết bài toán GPU rendering, sắp ra mắt những công cụ riêng như Vulkan và Metal.
+
+Đơn cử, Lottie có cùng figma đưa ra plugin, tuy có sự đổi mới nhưng chưa giải được bài toán về nhu cầu tạo ra các hoạt ảnh phức tạp trên website, mặc dù có giúp đơn giản hóa việc đưa các animation từ thiết kế sang mã nguồn, nhưng với những hoạt ảnh đòi hỏi sự chi tiết cao hoặc hiệu suất tối ưu, Lottie vẫn còn hạn chế. Cuối cùng, gánh nặng vẫn đặt lên vai các dev để tối ưu code hoặc des để điều chỉnh thiết kế sao cho vừa đẹp mắt vừa khả thi về mặt kỹ thuật.

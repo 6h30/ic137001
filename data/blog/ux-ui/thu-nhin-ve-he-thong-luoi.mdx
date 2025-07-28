@@ -1,0 +1,48 @@
+---
+title: 'Thử nhìn về việc sử dụng hệ thống lưới trong thiết kế.'
+date: '2025-03-01T15:30:41Z'
+tags: ['ux/ui', 'viewpoint']
+draft: false
+authors: ['ductruong']
+summary: Không chỉ khách hàng, mà cả des và dev đều mong muốn có những sản phẩm đẹp, hiệu quả. Với khách hàng - thường thì họ không quan tâm...
+---
+
+Không chỉ khách hàng, mà cả des và dev đều mong muốn có những sản phẩm đẹp, hiệu quả. Với khách hàng - thường thì họ không quan tâm gì lắm, họ chỉ đơn giản đẹp và hiệu quả, còn có yếu tố này kia trong kỹ thuật thì họ là khách hàng khó tính đấy.
+
+Nói vậy thôi, khi khách hàng đòi hỏi sự chỉn chu trong thiết kế, thì đó là lúc hệ thống lưới trở thành điểm cộng lớn cho des và dev. Khi mới thử sức với thiết kế, mình cũng đã suy nghĩ, sáng tạo trước, lưới để sau, bởi lưới làm cảm thấy như bản thân bị bắt phải suy nghĩ theo khuôn khổ, sáng tạo rập khuôn, làm thiết kế bị nhạt, vô vị hay giống vô vàn trang web khác. Có 1 trang nào đó nhận xét: "Lưới - Bài học nằm lòng của các nhà thiết kế".
+
+![Cân bằng không đối xứng so với cân bằng đối xứng trong thiết kế web](https://images.spiderum.com/sp-images/d7721ca0f69311ef887cc95870fc6194.png)
+
+<TOCInline toc={props.toc} exclude="" />
+
+## **Có cần hệ thống lưới hay không ?**
+
+Tìm hiểu sâu hơn, mình bắt đầu đặt câu hỏi để có góc nhìn khác nhau về lý do nên sử dụng hệ thống lưới trong thiết kế, cũng như vì sao lại có các tiêu chuẩn như lưới 12 cột, 8 cột hay các layout có sẵn. (những cái này–định nghĩa, lý thuyết đầy trên internet bạn có thể dễ dàng tìm được). Và tò mò hơn, liệu một thiết kế sáng tạo, phá cách có cần đến hệ thống lưới không?
+
+![Z-pattern layout](https://images.spiderum.com/sp-images/280c9280f69411ef887cc95870fc6194.png)
+
+![F-pattern layout](https://images.spiderum.com/sp-images/372db5f0f69411ef876b1736c6ad171b.png)
+
+## **Thực hành thử**
+
+Mình đã thực nghiệm nhanh với 1 file design trên figma và đáp án cho mình là - Không, không những dùng 1 mà còn dùng rất nhiều hệ thống lưới, và không cứng nhắc khi sử dụng hệ thống lưới.
+Trước khi thực hiện, mình có tham khảo cách des thực hiện thiết kế web bằng figma trên Youtube, [video](https://www.youtube.com/watch?v=TucA7iGCLFY) của bạn đó.
+
+![Mẫu thiết kế tham khảo](https://images.spiderum.com/sp-images/80ea82e0f69411efaafdfd6b7e08d08e.png)
+
+Video về Interactive UX Tutorial, theo phong cách thiết kế hiện đại và tương lai (futuristic). Outcome trong 16p cool ngầu và cuốn hút phết. Dựa vào đó mình tìm 1 thiết kế trông tương tự (có uốn lượn, bo góc, phân lớp...) và thêm vài yếu tố cao hơn (bố cục phá vỡ lưới, không đối xứng) và đã thấy được 1 figma file về pokemon (Pixel Art Gaming Website, [link](https://www.figma.com/community/file/1263392803403938618).
+
+![File mẫu figma được chọn để thực hành](https://images.spiderum.com/sp-images/93d75450f69411efaef269c7f9c8708b.png)
+
+## **Kết quả**
+
+Ở góc độ dev, mình sẽ hiểu rằng ngay cả những thiết kế "không theo lưới" vẫn có một hệ thống sắp xếp hợp lý để dễ code. (grid và flexbox là 2 giải pháp để xử chúng). Trong mã mình dùng sử dụng linh hoạt grid và flexbox để tạo ra các modular grids, cho phép mình bo góc tùy chỉnh, sắp xếp hình ảnh, điều mà des chỉ đơn giản là kéo chuột.
+
+Ngoài ra tổ chức mã đồng nhất sẽ cho phép responsive 1 cách nhanh lẹ. Trong file figma, layer có thể hơi lộn xộn, nhưng k sao, nếu bạn quen với "cắt figma" nó là bình thường. Mình cắt nhanh trên tailwind play toàn bộ giao diện theo file figma đó,
+[link tailwind play](https://play.tailwindcss.com/tVBw29ICvf?size=642x1034),
+
+![Mẫu thiết kế tham khảo](https://images.spiderum.com/sp-images/f8e0ced0f69411efaef269c7f9c8708b.png)
+
+Sau đó mình dùng Angular để phát triển front-end.
+
+Cảm ơn bạn đã đọc đến đây và xem nhanh outcome của mình, Ở phần sau mình sẽ thử nghiệm với AI, dùng file thiết kế figma này với các plugin AI, hay công cụ AI khác để xem nó triển khai ra code như thế nào.

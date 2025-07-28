@@ -25,12 +25,13 @@ export default function Footer() {
             <Link href="/">{siteMetadata.title}</Link>
           </div>
           <div>{` • `}</div>
-          <div>{`© ${new Date().getFullYear()}`}</div>
+          {/* <div>{`© ${new Date().getFullYear()}`}</div> */}
+          <div>{`© 2023`}</div>
           <div>{` • `}</div>
           <Link href="https://www.portfolio-1.site">{siteMetadata.author}</Link>
         </div>
         <div className="mb-8 text-sm text-gray-500 dark:text-gray-400">
-          <Link href="https://github.com">Dcviet - Blog Forge API</Link>
+          <Link href="https://github.com">dcviet - Blog Forge API</Link>
         </div>
       </div>
     </footer>
