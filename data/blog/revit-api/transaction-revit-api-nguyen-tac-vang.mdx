@@ -178,8 +178,4 @@ using (TransactionGroup tg = new TransactionGroup(doc, "Nhóm các giao dịch t
 - **Xử lý lỗi:** Luôn bao bọc các thao tác thay đổi mô hình trong khối `try-catch` và gọi `RollBack()` trong khối `catch` để đảm bảo mô hình không bị hỏng nếu có lỗi.
 - **Khi nào thì không cần `Transaction`?** Khi bạn chỉ đọc dữ liệu từ mô hình mà không thay đổi gì, bạn không cần `Transaction`.
 
-## Túm lại
-
-`Transaction` là một khái niệm cơ bản nhưng cực kỳ quan trọng trong lập trình **Revit API**. Việc nắm vững cách sử dụng `Transaction` không chỉ giúp code của bạn hoạt động đúng cách mà còn đảm bảo tính ổn định và tin cậy cho mô hình Revit của người dùng. Hãy luôn xem `Transaction` như "nguyên tắc vàng" mỗi khi bạn có ý định thay đổi bất kỳ thứ gì trong mô hình BIM của mình.
-
 Bạn đã từng gặp phải những lỗi liên quan đến `Transaction` trong quá trình phát triển Add-in Revit chưa? Hãy chia sẻ kinh nghiệm của bạn ở phần bình luận nhé.

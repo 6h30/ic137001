@@ -66,9 +66,3 @@ Một Family mẫu "Cửa Đi" có Shared Parameter "Phòng Cháy" (GUID: `$F006
 - **Tham số trùng lặp:** Dự án sẽ chứa hai tham số "Phòng Cháy" nhưng với hai GUID khác nhau. Dữ liệu có thể được lưu trữ ở cả hai nơi một cách không nhất quán.
 - **FamilyType.Set("ParameterName") bị lỗi:** Các script hoặc công cụ tự động hóa được thiết kế để điền dữ liệu vào "Phòng Cháy" dựa trên tên có thể ghi vào tham số sai hoặc gây ra lỗi.
 - **Khó khăn trong nâng cấp:** Việc nâng cấp các Family hoặc template dự án trở nên phức tạp vì cần phải kiểm tra và hợp nhất các GUID tham số.
-
-## Túm lại
-
-GUID của Shared Parameters là một yếu tố kỹ thuật quan trọng, là cột mốc định danh duy nhất cho dữ liệu trong môi trường BIM. Việc bỏ qua hoặc quản lý lỏng lẻo các GUID này không chỉ gây ra các lỗi kỹ thuật trực tiếp mà còn dẫn đến sự không nhất quán dữ liệu, giảm hiệu quả tự động hóa, và cản trở khả năng hợp tác, trao đổi thông tin.
-
-Để đảm bảo tính bền vững và độ tin cậy của dữ liệu BIM trong các dự án quy mô lớn, việc hiểu rõ và có chiến lược quản lý GUID chặt chẽ là điều bắt buộc. Điều này bao gồm việc duy trì một thư viện Shared Parameter tập trung, sử dụng các công cụ kiểm tra (như RevitLookup) và áp dụng các phương pháp lập trình dựa trên GUID thay vì chỉ dựa vào tên tham số.

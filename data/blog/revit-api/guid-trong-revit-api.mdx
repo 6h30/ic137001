@@ -2,7 +2,7 @@
 title: 'GUID trong Revit API'
 date: '2025-04-26'
 lastmod: '2025-04-26'
-tags: ['revit-api', 'guid', 'guide', 'feature']
+tags: ['revit-api', 'guid', 'guide']
 draft: false
 summary: 'Trong Revit API, việc định danh các đối tượng một cách duy nhất và bền vững là vô cùng quan trọng'
 images: ['/static/images/twitter-card.png']
@@ -282,9 +282,5 @@ public Result ReadExtensibleStorage(ExternalCommandData commandData, ref string 
   - Đăng ký Add-in của bạn.
 - **Khi nào không dùng GUID?**
   - Khi bạn chỉ cần tham chiếu một đối tượng trong phiên làm việc hiện tại hoặc một tập tin `.rvt` cụ thể mà không cần duy trì liên kết qua các bản sao hoặc dự án khác (thường dùng `ElementId`).
-
-## Túm lại
-
-**GUID** là một khái niệm mạnh mẽ và không thể thiếu trong phát triển **Revit API**, đặc biệt khi bạn cần giải quyết các bài toán về tính bền vững và khả năng tương tác dữ liệu. Nắm vững cách sử dụng **GUID** trong việc định danh Shared Parameters, `UniqueId` của `Element` và Extensible Storage sẽ mở ra những cánh cửa mới cho việc xây dựng các Add-in Revit mạnh mẽ, linh hoạt và có khả năng tích hợp cao với các hệ thống BIM khác.
 
 Bạn đã từng sử dụng **GUID** trong những trường hợp đặc biệt nào trong các dự án Revit API của mình? Hãy chia sẻ kinh nghiệm của bạn ở phần bình luận bên dưới nhé.

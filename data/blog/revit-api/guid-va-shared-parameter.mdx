@@ -2,7 +2,7 @@
 title: 'GUID và Shared Parameters'
 date: '2025-04-28'
 lastmod: '2025-04-28'
-tags: ['revit-api', 'guid', 'guide', 'feature']
+tags: ['revit-api', 'guid', 'guide']
 draft: false
 summary: 'Trong BIM, việc đảm bảo tính nhất quán của dữ liệu trên nhiều dự án và Family là một thách thức không nhỏ.'
 images: ['/static/images/twitter-card.png']
@@ -257,9 +257,5 @@ public class CreateAndBindSharedParameter : IExternalCommand
 - **Sử dụng RevitLookup:** Đây là công cụ không thể thiếu để xác định **GUID** của Shared Parameters đã tồn tại trên các `Element` trong mô hình của bạn. Chỉ cần chọn một `Element`, chạy RevitLookup, tìm tham số đó, và bạn sẽ thấy `GUID` của nó.
 - **Tránh phụ thuộc vào tên tham số:** Như đã nhấn mạnh, tên hiển thị của Shared Parameter có thể thay đổi. Luôn dựa vào **GUID** khi lập trình để truy vấn hoặc thao tác với chúng.
 - **Chỉ tạo Shared Parameter nếu thực sự cần:** Nếu một tham số chỉ cần tồn tại trong một dự án và không cần được chia sẻ, hãy cân nhắc sử dụng Project Parameter để đơn giản hóa.
-
-## Túm lại
-
-**GUID** là yếu tố then chốt đằng sau sức mạnh và tính bền vững của **Shared Parameters** trong Revit. Nắm vững cách **GUID** định danh các tham số này và cách tương tác với chúng trong **Revit API** sẽ giúp bạn tạo ra các Add-in mạnh mẽ, đáng tin cậy, có khả năng quản lý dữ liệu BIM một cách nhất quán trên nhiều dự án và Family. Đây là một kỹ năng thiết yếu cho bất kỳ nhà phát triển Revit API nào muốn xây dựng các giải pháp tự động hóa và quản lý thông tin hiệu quả.
 
 Bạn đã từng sử dụng **GUID** và Shared Parameters để giải quyết vấn đề cụ thể nào trong dự án BIM của mình chưa? Hãy chia sẻ những thành công hoặc thách thức của bạn ở phần bình luận dưới đây nhé\.

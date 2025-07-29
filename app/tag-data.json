@@ -7,6 +7,8 @@
   "parameters": 1,
   "helper": 1,
   "transaction": 1,
+  "uxui": 2,
+  "viewpoint": 2,
   "filter": 1,
   "forgetypeid": 1,
   "bim": 31,
