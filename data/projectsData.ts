@@ -25,7 +25,7 @@ const projectsData: Project[] = [
   //   href: '/unlock',
   // },
   {
-    title: 'BIMleak.com - blog',
+    title: 'BIMleak.dev - blog',
     description: `Blog cung cấp thông tin mới nhất, hướng dẫn thực tiễn và tài nguyên hữu ích, giúp bạn tối ưu hóa quy trình thiết kế và xây dựng thông minh.`,
     imgSrc: '/static/images/time-machine.jpg',
     href: '/unlock',

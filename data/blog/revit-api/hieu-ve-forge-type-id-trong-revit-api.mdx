@@ -2,7 +2,7 @@
 title: 'Tận dụng `ForgeTypeId` để phát triển Add-in thông minh hơn'
 date: '2025-02-06'
 lastmod: '2025-02-06'
-tags: ['revit-api', 'forgetypeid', 'guide', 'feature']
+tags: ['revit-api', 'forgetypeid', 'guide']
 draft: false
 summary: 'Trong các phiên bản Revit API gần đây (đặc biệt là từ Revit 2021 trở đi), Autodesk đã giới thiệu một thay đổi quan trọng và mang tính chiến lược: sự ra đời của ForgeTypeId'
 images: ['/static/images/twitter-card.png']
@@ -128,9 +128,5 @@ TaskDialog.Show("Unit Conversion", $"10 feet = {lengthInMm} mm");
 - **Tích hợp tốt hơn với Forge:** Nếu bạn có kế hoạch phát triển các giải pháp tích hợp với Autodesk Forge (ví dụ: hiển thị dữ liệu Revit trên web, phân tích dữ liệu trên đám mây), `ForgeTypeId` sẽ tạo ra sự nhất quán về định danh dữ liệu.
 - **Code rõ ràng hơn (trong một số trường hợp):** Mặc dù chuỗi định danh có thể dài hơn, nhưng chúng thường mang tính mô tả cao hơn so với các giá trị số nguyên khó hiểu.
 - **Mở rộng khả năng:** `ForgeTypeId` là nền tảng cho các tính năng API mới liên quan đến quản lý dữ liệu và tương tác xuyên ứng dụng.
-
-## Túm lại
-
-Việc chuyển đổi sang sử dụng `ForgeTypeId` có thể đòi hỏi một chút thay đổi trong thói quen lập trình, nhưng lợi ích về tính ổn định, tương thích và khả năng mở rộng là rất lớn. Với sự ra đời của `ForgeTypeId`, Autodesk đang xây dựng một nền tảng API vững chắc hơn cho tương lai của BIM và hệ sinh thái Forge. Hãy bắt đầu tích hợp `ForgeTypeId` vào các dự án **Revit API** mới của bạn và dần dần cập nhật các Add-in hiện có để tận dụng tối đa những ưu điểm này.
 
 Bạn đã bắt đầu chuyển đổi sang `ForgeTypeId` trong các dự án của mình chưa? Bạn thấy những lợi ích hay thách thức nào khi sử dụng nó? Hãy chia sẻ kinh nghiệm của bạn ở phần bình luận nhé\!

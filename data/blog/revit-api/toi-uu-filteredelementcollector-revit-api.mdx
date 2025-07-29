@@ -2,7 +2,7 @@
 title: 'Tối ưu hóa truy vấn trong Revit API'
 date: '2025-02-26'
 lastmod: '2025-02-26'
-tags: ['revit-api', 'filter', 'guide', 'feature']
+tags: ['revit-api', 'filter', 'guide']
 draft: false
 summary: 'Khi làm việc với Revit API, một trong những tác vụ phổ biến và quan trọng nhất là truy xuất các phần tử (Elements) từ mô hình. Việc này thường được thực hiện thông qua lớp FilteredElementCollector'
 images: ['/static/images/twitter-card.png']
@@ -150,9 +150,5 @@ ICollection<Element> doorInstances = collector.OfClass(typeof(FamilyInstance)) /
 ### Cache các kết quả truy vấn nếu có thể
 
 Nếu bạn cần truy xuất cùng một tập hợp `Element` nhiều lần trong cùng một phiên chạy Add-in, hãy cân nhắc lưu trữ kết quả vào một biến `List<Element>` hoặc `Dictionary<ElementId, Element>` thay vì lặp lại truy vấn mỗi lần. Điều này sẽ tránh được việc Revit phải thực hiện lại quá trình lọc tốn kém.
-
-## Túm lại
-
-`FilteredElementCollector` là một công cụ cực kỳ linh hoạt và mạnh mẽ trong **Revit API**. Bằng cách hiểu rõ sự khác biệt giữa Quick Filters và Slow Filters và áp dụng các chiến lược tối ưu hóa, bạn có thể đảm bảo các Add-in của mình hoạt động hiệu quả, nhanh chóng ngay cả trên những mô hình Revit phức tạp và lớn. Hãy luôn đặt câu hỏi: "Làm thế nào để tui có thể giảm thiểu số lượng `Element` mà Revit phải xem xét?". Thực hành và thử nghiệm trên các mô hình thật sẽ giúp bạn nắm vững nghệ thuật tối ưu hóa này.
 
 Bạn đã từng gặp phải vấn đề về hiệu suất khi truy vấn dữ liệu trong Revit API chưa? Hãy chia sẻ kinh nghiệm của bạn ở phần bình luận dưới đây nhé\!

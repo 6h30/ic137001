@@ -31,7 +31,7 @@ export default function Footer() {
           <Link href="https://www.portfolio-1.site">{siteMetadata.author}</Link>
         </div>
         <div className="mb-8 text-sm text-gray-500 dark:text-gray-400">
-          <Link href="https://github.com">blog - www.bimleak.com</Link>
+          <Link href="https://github.com">blog - www.bimleak.dev</Link>
         </div>
       </div>
     </footer>

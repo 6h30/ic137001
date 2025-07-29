@@ -7,7 +7,11 @@ authors: ['ductruong']
 summary: 'Đây không chỉ là vấn đề về hiệu suất mà còn ảnh hưởng trực tiếp đến độ chính xác của thông tin trong mô hình - Tránh Mô Hình Hóa Đúp.'
 ---
 
-Những ai đã từng "nhúng tay" vào dự án BIM chắc chắn sẽ quen thuộc với một thử thách quen thuộc này: làm thế nào để tránh **mô hình hóa hai lần các cấu kiện kết cấu**, đặc biệt là những bức tường đa lớp phức tạp? Đây không chỉ là vấn đề về hiệu suất mà còn ảnh hưởng trực tiếp đến **độ chính xác** của thông tin trong mô hình. Bởi vì, nguyên tắc cốt lõi của BIM là: **mỗi cấu kiện chỉ nên được mô hình hóa một lần duy nhất**
+Những ai đã từng "đụng tay" vào dự án BIM chắc chắn sẽ quen thuộc với một thử thách quen thuộc này:
+
+> làm thế nào để tránh **mô hình hóa hai lần các cấu kiện kết cấu**, đặc biệt là những bức tường đa lớp phức tạp?
+
+Đây không chỉ là vấn đề về hiệu suất mà còn ảnh hưởng trực tiếp đến **độ chính xác** của thông tin trong mô hình. Bởi vì, nguyên tắc cốt lõi của BIM là: **mỗi cấu kiện chỉ nên được mô hình hóa một lần duy nhất**
 
 Thế nhưng, với một bức tường gồm nhiều lớp vật liệu (kết cấu, hoàn thiện), làm sao chúng ta đạt được điều đó mà vẫn đảm bảo sự phối hợp chặt chẽ với đội ngũ kết cấu? Tui đã thử nghiệm và đúc kết được một vài cách tiếp cận, và hôm nay tui muốn chia sẻ với các bạn để chúng ta cùng thảo luận, tìm ra phương án phù hợp nhất cho từng dự án và các bên liên quan.
 
@@ -70,6 +74,6 @@ Lợi ích của cách này là gì?
 
 ## Không có "đũa thần", nhưng vẫn có lựa chọn!
 
-Rõ ràng, không có một "giải pháp thần tốc" nào cho vấn đề này. Chúng ta vẫn đang sống trong một thế giới mà các bản vẽ 2D vẫn là một phần quan trọng của quy trình, vì vậy sẽ có một số liên kết mà chúng ta phải xử lý. Trừ khi chúng ta sử dụng một ít **vùng che (masking region)** (nhưng đó không phải là cách nhanh nhất), chúng ta sẽ cần tìm các giải pháp nhanh hơn và tốt hơn.
+Rõ ràng, không có một "giải pháp tối ưu" nào cho vấn đề này. Các bản vẽ 2D vẫn là một phần quan trọng của quy trình, vì vậy sẽ có một số liên kết mà chúng ta phải xử lý thủ công. Trừ khi chúng ta sử dụng một ít **vùng che (masking region)** (nhưng đó không phải là cách nhanh nhất).
 
 Điều quan trọng nhất là: **Khi bạn truyền mô hình của mình, nó phải chỉ chứa thông tin thuộc trách nhiệm của bạn.** Nhưng điều đó không ngăn cản bạn "làm lộn xộn" mọi thứ trong quá trình làm việc nội bộ của mình. Chỉ cần cẩn thận tạo các **chế độ xem đã lọc (filtered views)** để nhanh chóng xuất mô hình BIM của bạn mà không mất thời gian "dọn dẹp" thủ công.

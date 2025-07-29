@@ -2,7 +2,7 @@
 const siteMetadata = {
   title: 'dcviet Blog',
   author: 'DucTruong',
-  headerTitle: 'BIM leak -blog',
+  headerTitle: 'BIMleak.dev',
   description: 'Viết về Bim, Revit API (C#) và .. gì đó',
   // language: 'en-us',
   language: 'vi-VN',

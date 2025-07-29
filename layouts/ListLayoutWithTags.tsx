@@ -480,15 +480,11 @@ export default function ListLayoutWithTags({ posts, title }: ListLayoutProps) {
                               {post.summary}
                             </div>
                           </div>
-                          <div className="text-base leading-6 font-medium">
-                            <Link
-                              href={`/blog/${post.slug}`}
-                              className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
-                              aria-label={`Read more: "${post.title}"`}
-                            >
+                          <Link href={`/blog/${post.slug}`} passHref>
+                            <div className="text-primary-500 hover:bg-primary-200 hover:text-primary-600 dark:hover:text-primary-400 flex cursor-pointer justify-center rounded border text-base leading-6 font-medium">
                               Đọc thêm &rarr;
-                            </Link>
-                          </div>
+                            </div>
+                          </Link>
                         </div>
                       </div>
                     </article>
