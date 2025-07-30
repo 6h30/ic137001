@@ -37,7 +37,7 @@ const Tag = ({ text }: Props) => {
   return (
     <button
       onClick={handleClick}
-      className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400 mr-3 cursor-pointer text-sm font-medium uppercase"
+      className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400 mr-3 cursor-pointer text-xl uppercase"
     >
       {text.split(' ').join('-')}
     </button>

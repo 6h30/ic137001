@@ -1,9 +1,8 @@
 {
   "revit-api": 18,
-  "code": 3,
+  "code": 2,
   "guid": 11,
   "guide": 29,
-  "feature": 4,
   "parameters": 1,
   "helper": 1,
   "transaction": 1,
@@ -17,6 +16,5 @@
   "work": 1,
   "miicom": 1,
   "images": 1,
-  "markdown": 1,
-  "features": 1
+  "markdown": 1
 }

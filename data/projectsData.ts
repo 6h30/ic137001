@@ -31,19 +31,19 @@ const projectsData: Project[] = [
     href: '/unlock',
   },
   {
-    title: 'Phác thảo giao diện BIMleak.com - blog',
+    title: 'Phác thảo giao diện BIMleak.dev - blog',
     description: `Phát triển ý tưởng, phác thảo giao diện cho các giao diện, workflow, low-wireframe cho blog.`,
     imgSrc: '/static/images/time-machine.jpg',
     href: '/unlock',
   },
   {
-    title: 'Phát triển giao diện BIMleak.com - blog - 1',
+    title: 'Phát triển giao diện BIMleak.dev - blog',
     description: `Phát triển giao diện cho các trang hiển thị.`,
     imgSrc: '/static/images/time-machine.jpg',
     href: '/unlock',
   },
   {
-    title: 'Phát triển giao diện BIMleak.com - blog - 2',
+    title: 'Tối ưu giao diện BIMleak.dev - blog',
     description: `Tối ưu giao diện, responsive cho các thiết bị.`,
     imgSrc: '/static/images/time-machine.jpg',
     href: '/unlock',
@@ -73,7 +73,7 @@ const projectsData: Project[] = [
     href: '/unlock',
   },
   {
-    title: 'Thiết lập điều hướng cho BIMleak.com - blog',
+    title: 'Thiết lập điều hướng cho BIMleak.dev - blog',
     description: `Phát triển backend cho các trang hiển thị.`,
     imgSrc: '/static/images/time-machine.jpg',
     href: '/unlock',
@@ -91,8 +91,8 @@ const projectsData: Project[] = [
     href: '/unlock',
   },
   {
-    title: 'Thiết lập sử dụng tên miền và triển khai production.',
-    description: `Tích hợp tên miền và triển khai BIMleak.com lên internet.`,
+    title: 'Thiết lập tên miền và triển khai production.',
+    description: `Tích hợp tên miền và triển khai BIMleak.dev lên internet.`,
     imgSrc: '/static/images/time-machine.jpg',
     href: '/unlock',
   },

@@ -169,15 +169,19 @@ export default function ListLayoutWithTags({ posts, title }: ListLayoutProps) {
   return (
     <div>
       <div className="space-y-2 pt-6 pb-8 md:space-y-5">
-        <h1 className="text-3xl leading-9 font-extrabold tracking-tight text-gray-900 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14 dark:text-gray-100">
+        <h1
+          className="text-3xl leading-9 tracking-tight text-gray-900 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14 dark:text-gray-100"
+          style={{ fontFamily: 'var(--font-doto)' }}
+        >
           Blog này
         </h1>
+
         <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
           {siteMetadata.description}
         </p>
       </div>
 
-      <section className="font-koho relative mt-1 grid grid-cols-12 gap-y-7 xl:col-span-12">
+      <section className="relative mt-1 grid grid-cols-12 gap-y-7 xl:col-span-12">
         {/* left */}
         <div className="relative col-span-full grid xl:col-span-4">
           <div className="sticky top-28 col-span-full grid grid-cols-4 gap-y-4 self-start border-b">
@@ -432,9 +436,10 @@ export default function ListLayoutWithTags({ posts, title }: ListLayoutProps) {
                       {selectedTags.map((tag) => (
                         <span
                           key={tag}
-                          className="mr-2 px-3 text-xs uppercase italic dark:bg-gray-700"
+                          className="text-primary-500 mr-2 px-3 text-sm uppercase dark:bg-gray-700"
+                          style={{ fontFamily: 'var(--font-vt323)' }}
                         >
-                          {tag}
+                          #{tag}
                         </span>
                       ))}
                     </div>
@@ -470,7 +475,10 @@ export default function ListLayoutWithTags({ posts, title }: ListLayoutProps) {
                                   {post.title}
                                 </Link>
                               </h2>
-                              <div className="flex flex-wrap">
+                              <div
+                                className="flex flex-wrap"
+                                style={{ fontFamily: 'var(--font-vt323)' }}
+                              >
                                 {(post.tags || []).map((tag) => (
                                   <Tag key={tag} text={tag} />
                                 ))}
