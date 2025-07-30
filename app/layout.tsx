@@ -2,7 +2,8 @@ import 'css/tailwind.css'
 import 'pliny/search/algolia.css'
 import 'remark-github-blockquote-alert/alert.css'
 
-import { Space_Grotesk } from 'next/font/google'
+import { Anaheim, VT323, Inclusive_Sans, Space_Grotesk, Doto } from 'next/font/google'
+
 import { Analytics, AnalyticsConfig } from 'pliny/analytics'
 import { SearchProvider, SearchConfig } from 'pliny/search'
 import Header from '@/components/Header'
@@ -11,6 +12,34 @@ import Footer from '@/components/Footer'
 import siteMetadata from '@/data/siteMetadata'
 import { ThemeProviders } from './theme-providers'
 import { Metadata } from 'next'
+
+const anaheim = Anaheim({
+  subsets: ['latin'],
+  display: 'swap',
+  weight: '600',
+  variable: '--font-anaheim',
+})
+
+const vt323 = VT323({
+  subsets: ['latin'],
+  display: 'swap',
+  weight: '400',
+  variable: '--font-vt323',
+})
+
+const doto = Doto({
+  subsets: ['latin'],
+  display: 'swap',
+  weight: '800',
+  variable: '--font-doto',
+})
+
+const inclusive_sans = Inclusive_Sans({
+  subsets: ['latin'],
+  display: 'swap',
+  weight: '400',
+  variable: '--font-inclusive_sans',
+})
 
 const space_grotesk = Space_Grotesk({
   subsets: ['latin'],
@@ -61,11 +90,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const basePath = process.env.BASE_PATH || ''
-
   return (
     <html
       lang={siteMetadata.language}
-      className={`${space_grotesk.variable} scroll-smooth`}
+      className={`${anaheim.variable} ${vt323.variable} ${inclusive_sans.variable} ${space_grotesk.variable} ${doto.variable} scroll-smooth`}
       suppressHydrationWarning
     >
       <link
