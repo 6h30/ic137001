@@ -404,7 +404,7 @@ export default function ListLayoutWithTags({ posts, title }: ListLayoutProps) {
             </div>
 
             {/* Newsletter Form */}
-            <div className="col-span-2 space-y-4 pb-4 xl:col-span-full">
+            <div className="col-span-full space-y-4 pb-4 xl:col-span-full">
               <p className="text-sm text-gray-600 dark:text-gray-300">
                 Đăng ký nhận bài viết mới nhất qua email.
               </p>
