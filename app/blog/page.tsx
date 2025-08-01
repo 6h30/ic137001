@@ -13,7 +13,7 @@ export default function BlogPage() {
 
   return (
     <Suspense fallback={<div>Loading blog...</div>}>
-<AdBlock />
+      <AdBlock />
       <ListLayout posts={posts} title="Tất cả bài viết" />
     </Suspense>
   )
