@@ -6,11 +6,11 @@ export default function AdBlock() {
   useEffect(() => {
     try {
       // @ts-ignore
-      (window.adsbygoogle = window.adsbygoogle || []).push({});
+      ;(window.adsbygoogle = window.adsbygoogle || []).push({})
     } catch (e) {
-      console.error('Adsense error', e);
+      console.error('Adsense error', e)
     }
-  }, []);
+  }, [])
 
   return (
     <ins
@@ -21,5 +21,5 @@ export default function AdBlock() {
       data-ad-format="auto"
       data-full-width-responsive="true"
     />
-  );
+  )
 }
