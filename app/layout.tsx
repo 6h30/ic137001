@@ -1,52 +1,52 @@
-import 'css/tailwind.css'
-import 'pliny/search/algolia.css'
-import 'remark-github-blockquote-alert/alert.css'
+import 'css/tailwind.css';
+import 'pliny/search/algolia.css';
+import 'remark-github-blockquote-alert/alert.css';
 
-import { Anaheim, VT323, Inclusive_Sans, Space_Grotesk, Doto } from 'next/font/google'
+import { Anaheim, VT323, Inclusive_Sans, Space_Grotesk, Doto } from 'next/font/google';
 
-import { Analytics, AnalyticsConfig } from 'pliny/analytics'
-import { SearchProvider, SearchConfig } from 'pliny/search'
-import Header from '@/components/Header'
-import SectionContainer from '@/components/SectionContainer'
-import Footer from '@/components/Footer'
-import siteMetadata from '@/data/siteMetadata'
-import { ThemeProviders } from './theme-providers'
-import { Metadata } from 'next'
-import Script from 'next/script'
+import { Analytics, AnalyticsConfig } from 'pliny/analytics';
+import { SearchProvider, SearchConfig } from 'pliny/search';
+import Header from '@/components/Header';
+import SectionContainer from '@/components/SectionContainer';
+import Footer from '@/components/Footer';
+import siteMetadata from '@/data/siteMetadata';
+import { ThemeProviders } from './theme-providers';
+import { Metadata } from 'next';
+import Script from 'next/script';
 
 const anaheim = Anaheim({
   subsets: ['latin'],
   display: 'swap',
   weight: '600',
   variable: '--font-anaheim',
-})
+});
 
 const vt323 = VT323({
   subsets: ['latin'],
   display: 'swap',
   weight: '400',
   variable: '--font-vt323',
-})
+});
 
 const doto = Doto({
   subsets: ['latin'],
   display: 'swap',
   weight: '800',
   variable: '--font-doto',
-})
+});
 
 const inclusive_sans = Inclusive_Sans({
   subsets: ['latin'],
   display: 'swap',
   weight: '400',
   variable: '--font-inclusive_sans',
-})
+});
 
 const space_grotesk = Space_Grotesk({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-space-grotesk',
-})
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteMetadata.siteUrl),
@@ -87,10 +87,10 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     images: [siteMetadata.socialBanner],
   },
-}
+};
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const basePath = process.env.BASE_PATH || ''
+  const basePath = process.env.BASE_PATH || '';
   return (
     <html
       lang={siteMetadata.language}
@@ -127,14 +127,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
       <link rel="alternate" type="application/rss+xml" href={`${basePath}/feed.xml`} />
       <body className="bg-white pl-[calc(100vw-100%)] text-black antialiased dark:bg-gray-950 dark:text-white">
-
-  <Script
+        <Script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1341731351914043"
           crossOrigin="anonymous"
           strategy="afterInteractive"
         />
-      
+
         <ThemeProviders>
           <Analytics analyticsConfig={siteMetadata.analytics as AnalyticsConfig} />
           <SectionContainer>
@@ -147,5 +146,5 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </ThemeProviders>
       </body>
     </html>
-  )
+  );
 }
