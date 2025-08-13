@@ -1,23 +1,23 @@
 ---
-title: 'Đọc GUID Trực Tiếp Từ Tệp Shared Parameter'
-date: '2024-07-20T00:02:00Z'
+title: 'Thiết Kế Sơ Bộ'
+date: '2024-07-26T00:02:06Z'
 tags: ['bim', 'bep', 'guide']
 draft: false
 authors: ['ductruong']
-summary: 'Tập trung vào việc đọc trực tiếp tệp .txt của Shared Parameter để lấy GUID'
+summary: 'Mục tiêu là làm cho quá trình thiết kế tổng thể trở nên hiệu quả hơn, nhanh chóng hơn và tốt hơn.'
 ---
-
-## Thiết Kế Sơ Bộ: Biến Ý Tưởng Thành Hiện Thực Với BIM
 
 Khi chúng ta bước vào giai đoạn **thiết kế sơ bộ (schematic design)**, câu hỏi lớn đặt ra là: Liệu những ý tưởng ban đầu và dữ liệu đã được tạo ra trong giai đoạn **thiết kế ý tưởng (conceptual design)** có thể được tận dụng hiệu quả tại đây không? Đây là lúc chúng ta cần xem xét khả năng "chuyển hóa" những phác thảo thô thành một mô hình chi tiết hơn, tạo nền tảng vững chắc cho các giai đoạn sau.
 
-### Tận Dụng Dữ Liệu Từ Giai Đoạn Ý Tưởng
+<TOCInline toc={props.toc} exclude="" />
+
+## Tận Dụng Dữ Liệu Từ Giai Đoạn Ý Tưởng
 
 Hãy hình dung thế này: Nếu bạn đã có một **mô hình 3D** sơ bộ từ giai đoạn thiết kế ý tưởng, tại sao không tiếp tục phát triển nó? Hoặc nếu chỉ là những **bản phác thảo trên giấy** hoặc các bản vẽ từ **CAD hai chiều**, liệu chúng ta có thể đưa những thông tin đó vào, làm nền tảng để xây dựng mô hình BIM chi tiết hơn?
 
 Mục tiêu là làm cho quá trình thiết kế tổng thể trở nên **hiệu quả hơn, nhanh chóng hơn** và **tốt hơn**. Nếu câu trả lời là "có" cho việc tận dụng lại dữ liệu, chúng ta cần ghi lại rõ ràng những thông tin nào cần được chuyển tiếp và cách thức để đảm bảo các tài nguyên đó sẵn sàng cho giai đoạn thiết kế sơ bộ này.
 
-### Phối Hợp Với Các Nhóm Dự Án và Nhà Thầu
+## Phối Hợp Với Các Nhóm Dự Án và Nhà Thầu
 
 Không chỉ riêng nhóm thiết kế, mà các **nhóm dự án** khác cũng cần được hưởng lợi từ thông tin BIM ở giai đoạn này. Chẳng hạn, liệu các **ước tính viên** hoặc **nhà thầu chính** có thể lấy thông tin từ mô hình thiết kế sơ bộ để đưa ra ước tính chi phí chính xác cho dự án không? Đây thường là một yêu cầu cấp thiết.
 
@@ -25,12 +25,10 @@ Nếu họ có thể, thì thật tuyệt vời! Chúng ta cần xác định r�
 
 Ngược lại, nếu câu trả lời là "không" – tức là họ không thể lấy thông tin đầy đủ cho việc ước tính – thì điều này cũng cần được làm rõ. Chúng ta phải xác định những thông tin nào mà họ **có thể** nhận được để họ vẫn có thể thực hiện phần việc của mình một cách hiệu quả nhất.
 
-### Chuyển Tiếp Thông Tin Cho Các Giai Đoạn Sau
+## Chuyển Tiếp Thông Tin Cho Các Giai Đoạn Sau
 
 Trong hầu hết các trường hợp, **BIM chắc chắn sẽ được sử dụng trong thiết kế sơ bộ**. Vì vậy, một câu hỏi quan trọng khác là: Thông tin nào từ giai đoạn thiết kế sơ bộ sẽ được chuyển tiếp sang các giai đoạn tiếp theo, đặc biệt là **phát triển thiết kế (design development)**?
 
 Việc ghi lại chi tiết những thông tin này sẽ đảm bảo rằng chúng ta có thể tận dụng tối đa dữ liệu đã có, tránh lãng phí thời gian và công sức vào việc tạo lại thông tin không cần thiết. Sự liền mạch trong dòng thông tin BIM từ giai đoạn này sang giai đoạn khác là chìa khóa để tối ưu hóa toàn bộ dự án.
-
----
 
 Bạn nghĩ rằng việc tận dụng thông tin từ các giai đoạn đầu của dự án có vai trò quan trọng như thế nào đối với hiệu quả tổng thể của một dự án BIM?

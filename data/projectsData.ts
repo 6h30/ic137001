@@ -74,7 +74,7 @@ const projectsData: Project[] = [
   },
   {
     title: 'Thiết lập điều hướng cho BIMleak.dev - blog',
-    description: `Phát triển backend cho các trang hiển thị.`,
+    description: `Phát triển điều hướng cho các trang hiển thị.`,
     imgSrc: '/static/images/time-machine.jpg',
     href: '/unlock',
   },

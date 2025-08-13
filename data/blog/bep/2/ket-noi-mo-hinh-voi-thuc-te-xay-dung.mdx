@@ -1,21 +1,23 @@
 ---
 title: 'Kết Nối Mô Hình Với Thực Tế Xây Dựng'
-date: '2024-07-20T00:02:09Z'
+date: '2024-07-29T00:02:09Z'
 tags: ['bim', 'bep', 'guide']
 draft: false
 authors: ['ductruong']
-summary: 'Tập trung vào việc đọc trực tiếp tệp .txt của Shared Parameter để lấy GUID'
+summary: 'Việc tích hợp BIM từ thiết kế đến thi công mang lại những lợi ích đáng kể, nhưng cũng đòi hỏi sự phối hợp chặt chẽ và kế hoạch rõ ràng.'
 ---
 
 Giai đoạn **thi công (construction)** và **thiết kế (design)** là hai mặt của cùng một đồng xu trong dự án xây dựng. Việc tích hợp **BIM** vào hai giai đoạn này là chìa khóa để đạt được hiệu quả tối đa. Chúng ta cần xem xét kỹ lưỡng các câu hỏi quan trọng để đảm bảo sự liền mạch và chính xác.
 
-### 1. Mô Hình BIM Cấp Độ Chế Tạo (Fabrication-level BIM)
+<TOCInline toc={props.toc} exclude="" />
+
+## 1. Mô Hình BIM Cấp Độ Chế Tạo (Fabrication-level BIM)
 
 Câu hỏi đầu tiên là liệu **mô hình BIM cấp độ chế tạo (fabrication-level BIM)** có được tạo ra không và ai sẽ là người chịu trách nhiệm? Mô hình này cung cấp mức độ chi tiết cực cao, đủ để các nhà sản xuất có thể trực tiếp chế tạo từ đó.
 
 Thông thường, các **kỹ sư** làm việc cho các **nhà sản xuất** sẽ là người cung cấp mô hình này. Tuy nhiên, điều này cần được ghi rõ ràng trong **Kế hoạch thực hiện BIM (BIM Execution Plan)** để mọi bên liên quan đều nắm rõ trách nhiệm, đảm bảo mô hình chế tạo được bàn giao như một phần của sản phẩm cuối cùng.
 
-### 2. Ước Tính Chi Phí Từ Mô Hình Thiết Kế
+## 2. Ước Tính Chi Phí Từ Mô Hình Thiết Kế
 
 Tiếp theo, liệu **ước tính chi phí (estimates)** có được tạo ra trực tiếp từ **mô hình thiết kế (design model)** không? Mức độ tin cậy vào ước tính này phụ thuộc trực tiếp vào **mức độ chi tiết (level of detail)** của mô hình.
 
@@ -24,20 +26,18 @@ Tiếp theo, liệu **ước tính chi phí (estimates)** có được tạo ra 
 
 Do đó, chúng ta cần ghi lại rõ ràng mọi yếu tố trong mô hình với mức độ chi tiết đã được thiết kế. Điều này giúp tăng cường sự tin cậy vào ước tính, bởi vì chúng ta biết chính xác những gì đã được mô hình hóa và có thể trích xuất dữ liệu một cách đáng tin cậy.
 
-### 3. Quản Lý Sửa Đổi và Điều Phối Cuộc Họp
+## 3. Quản Lý Sửa Đổi và Điều Phối Cuộc Họp
 
 Điều gì sẽ xảy ra nếu có **sửa đổi (revisions)**? Liệu **nhóm dự án** đã tạo ra yếu tố đó trong mô hình có phải là người thực hiện sửa đổi không? Trong hầu hết các trường hợp, câu trả lời là "có", và điều này cần được ghi vào Kế hoạch thực hiện BIM.
 
 Chúng ta cũng cần xác định rõ ràng **ai sẽ điều hành các cuộc họp phối hợp (coordination meetings)**. Đó có phải là **nhóm thiết kế**, **các nhà thầu** của bạn, hay cả hai bên sẽ cùng tham gia? Việc phân công rõ ràng sẽ đảm bảo các cuộc họp diễn ra hiệu quả và mọi vấn đề phối hợp được giải quyết kịp thời. Điều này cũng cần được tài liệu hóa trong Kế hoạch thực hiện BIM.
 
-### 4. Ai Là Người Viết Kế Hoạch Thực Hiện BIM?
+## 4. Ai Là Người Viết Kế Hoạch Thực Hiện BIM?
 
 Cuối cùng, và có lẽ là câu hỏi đầu tiên cần đặt ra: **Ai thực sự viết Kế hoạch thực hiện BIM?**
 
 Thông thường, **kiến trúc sư** sẽ là người soạn thảo Kế hoạch thực hiện BIM ở phía thiết kế. Đồng thời, **các nhà thầu** thường sẽ có một Kế hoạch thực hiện BIM riêng cho **nhà thầu chính** và tất cả **nhà thầu phụ** của họ. Điều này có nghĩa là một dự án có thể có hai Kế hoạch thực hiện BIM song song.
 
 Trong nhiều trường hợp, không có gì lạ khi Kế hoạch thực hiện BIM của bên thiết kế và Kế hoạch của bên nhà thầu được **kết hợp lại** thành một **Kế hoạch thực hiện BIM tổng thể (master BIM execution plan)** duy nhất cho toàn bộ dự án. Điều này tạo ra một tài liệu toàn diện, đảm bảo sự phối hợp chặt chẽ giữa tất cả các bên liên quan từ giai đoạn thiết kế đến thi công.
-
----
 
 Việc tích hợp BIM từ thiết kế đến thi công mang lại những lợi ích đáng kể, nhưng cũng đòi hỏi sự phối hợp chặt chẽ và kế hoạch rõ ràng. Theo bạn, lợi ích lớn nhất của việc có một Kế hoạch thực hiện BIM tổng thể là gì?
