@@ -18,7 +18,7 @@ const siteMetadata = {
   // twitter: 'https://twitter.com/Twitter',
   facebook: 'https://facebook.com',
   youtube: 'https://youtube.com/@VietTranduc-r7x',
-  linkedin: 'https://www.linkedin.com/in/viet-tran-duc-a34303274/',
+  linkedin: 'https://www.behance.net/dcviet',
   threads: 'https://www.threads.net',
   instagram: 'https://www.instagram.com',
   medium: 'https://medium.com',

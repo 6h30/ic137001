@@ -3,7 +3,7 @@
   "short_name": "",
   "icons": [
     {
-      "src": "/favicon-32x32.png",
+      "src": "/apple-touch-icon.png",
       "sizes": "96x96",
       "type": "image/png"
     }

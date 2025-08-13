@@ -91,7 +91,7 @@ export default function PostLayout({
                               className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
                             >
                               {author.linkedin
-                                .replace('https://www.linkedin.com/', '@')
+                                .replace('https://www.behance.net/', '@')
                                 .replace('https://x.com/', '@')}
                             </Link>
                           )}
