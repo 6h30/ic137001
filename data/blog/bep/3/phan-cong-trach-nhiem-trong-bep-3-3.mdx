@@ -1,0 +1,40 @@
+---
+title: 'Phân Công Trách Nhiệm trong Kế hoạch BIM'
+date: '2024-08-15T00:03:03Z'
+tags: ['bim', 'document', 'bep']
+draft: false
+author: 'ductruong'
+summary: 'Xác định rõ ai 'sở hữu' đối tượng nào và cái gì sẽ được mô hình hóa bởi đội ngũ nào, đảm bảo sự phối hợp nhịp nhàng và hiệu quả cho dự án.'
+---
+
+Để xác định **mức độ phát triển** (level of development) trong một **kế hoạch thực hiện BIM** (BIM execution plan), tôi luôn sử dụng một **bảng** đơn giản nhưng hiệu quả. Bảng này có các **giai đoạn dự án** ở hàng trên cùng và **các yếu tố cần được mô hình hóa** ở cột bên trái.
+
+Mỗi ô trong bảng sẽ cung cấp hai thông tin quan trọng:
+
+1. **Bên chịu trách nhiệm** (Responsible Party - RP) cho yếu tố đó ở giai đoạn đó của dự án.
+2. **Mức độ phát triển** (LOD) tương ứng.
+
+Hãy cùng xem một ví dụ cụ thể để hiểu rõ hơn.
+
+<TOCInline toc={props.toc} exclude="" />
+
+## Hành trình của Lưới Kết cấu
+
+- **Giai đoạn Thiết kế Sơ bộ (Schematic Design):** Ở giai đoạn này, các kiến trúc sư (**DA** - Design Architects) vẫn đang kiểm soát lưới kết cấu. Vì vậy, trong ô tương ứng, chúng ta sẽ điền **DA** cho bên chịu trách nhiệm. Mức độ phát triển của lưới kết cấu lúc này chỉ là **LOD 200**, cho biết vị trí gần đúng.
+- **Giai đoạn Phát triển Thiết kế (Design Development):** Các kiến trúc sư có thể đã sẵn sàng chuyển giao lưới kết cấu cho các kỹ sư kết cấu. Ai là người phụ trách kết cấu? Đó là **Steel Brothers Engineering**, với chữ viết tắt là **SB**. Bên chịu trách nhiệm bây giờ sẽ là **SB**. Mức độ chi tiết vẫn có thể thay đổi, nên chúng ta giữ ở **LOD 200**.
+- **Giai đoạn Tài liệu Xây dựng (Construction Document):** Kỹ sư kết cấu (**SB**) vẫn kiểm soát lưới, nhưng lúc này, họ đã biết vị trí chính xác của nó. Do đó, mức độ phát triển sẽ được nâng lên **LOD 300**, thể hiện **hình học chính xác**.
+
+Khi đã điền đầy đủ thông tin cho các giai đoạn thiết kế, chúng ta có thể để trống phần **chế tạo** (fabrication) hoặc điền tên **nhà thầu chính** (general contractor) nếu cần.
+
+## Xử lý những tình huống phức tạp: Móng và Tường chắn
+
+**Kế hoạch thực hiện BIM** đặc biệt hữu ích khi xử lý các yếu tố như **móng** (footings) và **tường chắn** (retaining walls). Ban đầu, kiến trúc sư có thể vẽ chúng trong bản thiết kế của mình. Nhưng khi đến lúc đặt **thép cây** (rebar) vào, trách nhiệm này phải được chuyển giao cho kỹ sư kết cấu.
+
+Bảng này giúp chúng ta quyết định rõ ràng **ai là cá nhân chịu trách nhiệm** cho những đối tượng đó ở từng giai đoạn. Chẳng hạn, chúng ta có thể bắt đầu với kiến trúc sư (**DA**) và sau đó chuyển giao cho kỹ sư kết cấu (**SB**).
+
+Đôi khi, một tình huống khác có thể xảy ra: kiến trúc sư có một bộ móng, và kỹ sư kết cấu cũng có một bộ móng riêng, mỗi cái ở một **mức độ chi tiết** khác nhau. Trong trường hợp này, bạn có thể điền cả hai bên chịu trách nhiệm và hai mức độ chi tiết khác nhau. Tuy nhiên, để tránh nhầm lẫn, tốt nhất là sử dụng cột **Ghi chú** để làm rõ:
+
+- Ai đang mô hình hóa **đối tượng ghi nhận thực tế** (object of record) – tức là mô hình sẽ được bàn giao cho chủ sở hữu sau này.
+- Ai kiểm soát cái gì trong bộ tài liệu nào.
+
+Tóm lại, bảng này là một công cụ thiết yếu trong toàn bộ **quy trình BIM**. Nó giúp xác định rõ ai "sở hữu" đối tượng nào và cái gì sẽ được mô hình hóa bởi đội ngũ nào, đảm bảo sự phối hợp nhịp nhàng và hiệu quả cho dự án.

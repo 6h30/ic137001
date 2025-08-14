@@ -1,0 +1,30 @@
+---
+title: 'Quyết định ai tạo nội dung'
+date: '2024-08-13T00:03:01Z'
+tags: ['bim', 'document', 'bep']
+draft: false
+author: 'ductruong'
+summary: 'Có bao giờ bạn tự hỏi, trong một dự án BIM, ai chịu trách nhiệm cho việc tạo ra từng mô hình cụ thể không?'
+---
+
+Có bao giờ bạn tự hỏi, trong một dự án BIM, ai chịu trách nhiệm cho việc tạo ra từng mô hình cụ thể không? Câu trả lời nằm ở **Phần Sáu** của **kế hoạch thực hiện BIM** (BIM execution plan) của chúng ta: **Sử dụng và Yêu cầu Mô hình Thiết kế**. Đây là nơi chúng ta định nghĩa cách thức mỗi **mô hình BIM** sẽ được tạo, **mức độ phát triển (LOD)** chung của chúng, và quan trọng nhất, ai sẽ là người chịu trách nhiệm.
+
+## Khởi đầu với danh sách mô hình và các bên liên quan
+
+Để bắt đầu quy trình này, chúng ta cần liệt kê tất cả các loại mô hình sẽ được sử dụng. Nếu một phần của dự án chỉ dành cho **trực quan hóa**, chúng ta sẽ có **trực quan hóa** là một trong những **ứng dụng BIM**. Nếu một công ty tập trung vào tất cả các bản vẽ kiến trúc, chúng ta sẽ có một hạng mục **kiến trúc**. **MEP** là viết tắt của **Cơ khí, Điện và Nước**, và đó cũng là một hạng mục riêng. Ngoài ra, tôi cũng đã bổ sung các hạng mục **Kết cấu** và **Phối hợp**.
+
+Bên cạnh mỗi hạng mục, chúng ta có các **bên chịu trách nhiệm**. Đây là các công ty sẽ tạo ra mô hình cho mục đích đó. Chẳng hạn, **Unique Expressions** đang phụ trách trực quan hóa, **Design Architects** lo phần kiến trúc, và **MEP Designs** làm công việc MEP.
+
+## Chỉnh sửa và tinh chỉnh
+
+Đây là một tài liệu sống động, có nghĩa là chúng ta có thể sửa đổi nó để phù hợp với nhu cầu của dự án. Ví dụ, ban đầu bảng có các cột **Phần mềm**, **Phiên bản** và **Định dạng tệp cộng tác dự kiến**. Tôi thấy các cột "Phiên bản" và "Định dạng tệp" không thực sự cần thiết, nên tôi sẽ xóa chúng. Chỉ cần tô sáng và xóa các cột đó là xong.
+
+Thay vì cột "Phần mềm", tôi sẽ thay đổi nó thành "Viết tắt". Mục tiêu của tôi là tạo một chữ viết tắt cho mỗi bên chịu trách nhiệm. Những chữ viết tắt này sau đó sẽ được dùng để gán trách nhiệm cụ thể cho từng thành phần trong mô hình BIM. Tôi sẽ tạo ra:
+
+- **UE** cho Unique Expressions
+- **DA** cho Design Architects
+- **MD** cho MEP Designs
+- **SB** cho Steel Brothers
+- **GC** cho GC BIM Enablers
+
+Khi thông tin này đã được điền vào tài liệu, chúng ta đã sẵn sàng để khám phá các yêu cầu còn lại về sử dụng và yêu cầu mô hình BIM. Đây là cách chúng ta đảm bảo mọi thứ đều được phân công rõ ràng, đặt nền móng cho sự phối hợp hiệu quả.
