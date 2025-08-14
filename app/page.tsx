@@ -8,7 +8,7 @@ export default async function Page() {
   const posts = allCoreContent(sortedPosts)
 
   return (
-    <Suspense fallback={<div>Loading blog list...</div>}>
+    <Suspense fallback={<div>Đang tải các bài viết...</div>}>
       <ListLayout posts={posts} title="Tất cả bài viết" />
     </Suspense>
   )
