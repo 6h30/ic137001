@@ -13,12 +13,14 @@ import PostBanner from '@/layouts/PostBanner'
 import { Metadata } from 'next'
 import siteMetadata from '@/data/siteMetadata'
 import { notFound } from 'next/navigation'
+import PostLayout_dotdev from '@/layouts/PostLayout_dotdev'
 
 const defaultLayout = 'PostLayout'
 const layouts = {
   PostSimple,
   PostLayout,
   PostBanner,
+  PostLayout_dotdev,
 }
 
 export async function generateMetadata(props: {
