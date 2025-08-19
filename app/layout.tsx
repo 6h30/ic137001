@@ -135,13 +135,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           crossOrigin="anonymous"
           strategy="afterInteractive"
         /> */}
-        {/* <Script
+        <Script
           id="adsense-script"
           strategy="afterInteractive"
           src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-${PUBLISHER_ID}`}
           crossOrigin="anonymous"
-        /> */}
-        {process.env.NODE_ENV === 'production' && <AdSenseAutoAds />}
+        />
+        {/* {process.env.NODE_ENV === 'production' && <AdSenseAutoAds />} */}
 
         <ThemeProviders>
           <Analytics analyticsConfig={siteMetadata.analytics as AnalyticsConfig} />
