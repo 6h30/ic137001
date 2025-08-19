@@ -14,8 +14,9 @@ import { ThemeProviders } from './theme-providers'
 import { Metadata } from 'next'
 import Script from 'next/script'
 
-import { PUBLISHER_ID } from '@/components/config'
+// import { PUBLISHER_ID } from '@/components/config'
 
+const PUBLISHER_ID = 'ca-pub-1341731351914043'
 const anaheim = Anaheim({
   subsets: ['latin'],
   display: 'swap',
