@@ -26,14 +26,14 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 
 const ContentSecurityPolicy = `
   default-src 'self';
-  script-src 'self' 'unsafe-inline' https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://analytics.umami.is;
-  script-src-elem 'self' 'unsafe-inline' https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://analytics.umami.is;
+  script-src 'self' 'unsafe-inline' https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://analytics.umami.is;
+  script-src-elem 'self' 'unsafe-inline' https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://analytics.umami.is;
   style-src 'self' 'unsafe-inline';
   img-src 'self' https: data:;
   font-src 'self';
-  connect-src 'self' *.opendns.com gateway.id.swg.umbrella.com *.sse.cisco.com *.ciscosecureaccess.cn https://ep1.adtrafficquality.google https://pagead2.googlesyndication.com https://*.google.com https://*.googlesyndication.com https://tpc.googlesyndication.com;
+  connect-src 'self' https://ep1.adtrafficquality.google https://pagead2.googlesyndication.com https://*.google.com https://*.googlesyndication.com https://tpc.googlesyndication.com;
   media-src 'self';
-  frame-src 'self' *.opendns.com gateway.id.swg.umbrella.com *.sse.cisco.com *.ciscosecureaccess.cn https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://*.googlesyndication.com https://tpc.googlesyndication.com;
+  frame-src 'self' https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://*.googlesyndication.com https://tpc.googlesyndication.com;
   manifest-src 'self' https://firebase-dcviet-bloggit-1753678546493.cluster-6dx7corvpngoivimwvvljgokdw.cloudworkstations.dev;
   object-src 'none';
   base-uri 'self';
@@ -49,7 +49,7 @@ const securityHeaders = [
   // https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
   {
     key: 'Content-Security-Policy',
-    value: ContentSecurityPolicy.replace(/\n/g, ' ').trim(),
+    value: ContentSecurityPolicy,
   },
   // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy
   {

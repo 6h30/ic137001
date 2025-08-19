@@ -8,26 +8,25 @@ export const AdSenseAutoAds = () => {
 
   return (
     <>
-      <Script
+      {/* <script
         strategy="afterInteractive"
         src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${PUBLISHER_ID}`}
         crossOrigin="anonymous"
         nonce={nonce}
-      />
-      <Script
+      /> */}
+      <script
         id="AdSense-auto"
-        strategy="afterInteractive"
         nonce={nonce}
         dangerouslySetInnerHTML={{
           __html: `
-            if (!window.adsbygoogle_loaded) {
-              (adsbygoogle = window.adsbygoogle || []).push({
-                google_ad_client: "${PUBLISHER_ID}",
-                enable_page_level_ads: true
-              });
-              window.adsbygoogle_loaded = true;
-            }
-          `,
+          if (!window.adsbygoogle_loaded) {
+            (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "${PUBLISHER_ID}",
+              enable_page_level_ads: true
+            });
+            window.adsbygoogle_loaded = true;
+          }
+        `,
         }}
       />
     </>
