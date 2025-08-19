@@ -8,12 +8,18 @@ export const AdSenseAutoAds = () => {
 
   return (
     <>
-      {/* <script
+      {/* <Script
         strategy="afterInteractive"
         src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${PUBLISHER_ID}`}
         crossOrigin="anonymous"
         nonce={nonce}
       /> */}
+      <script
+        src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${PUBLISHER_ID}`}
+        crossOrigin="anonymous"
+        nonce={nonce}
+        async
+      />
       <script
         id="AdSense-auto"
         nonce={nonce}

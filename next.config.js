@@ -29,12 +29,12 @@ const ContentSecurityPolicy = `
   script-src 'self' 'unsafe-inline' https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://analytics.umami.is;
   script-src-elem 'self' 'unsafe-inline' https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://analytics.umami.is;
   style-src 'self' 'unsafe-inline';
-  img-src 'self' https: data:;
-  font-src 'self';
-  connect-src 'self' https://ep1.adtrafficquality.google https://pagead2.googlesyndication.com https://*.google.com https://*.googlesyndication.com https://tpc.googlesyndication.com;
+  img-src 'self' data: https://*.google.com https://*.googlesyndication.com https://*.gstatic.com;
+  font-src 'self' https://fonts.gstatic.com;
+  connect-src 'self' https://ep1.adtrafficquality.google https://ep2.adtrafficquality.google https://pagead2.googlesyndication.com https://www.google.com https://*.googlesyndication.com https://tpc.googlesyndication.com https://analytics.umami.is;
   media-src 'self';
-  frame-src 'self' https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://*.googlesyndication.com https://tpc.googlesyndication.com;
-  manifest-src 'self' https://firebase-dcviet-bloggit-1753678546493.cluster-6dx7corvpngoivimwvvljgokdw.cloudworkstations.dev;
+  frame-src 'self' https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://*.googlesyndication.com https://tpc.googlesyndication.com https://ep2.adtrafficquality.google https://www.google.com;
+  manifest-src 'self';
   object-src 'none';
   base-uri 'self';
   form-action 'self';
