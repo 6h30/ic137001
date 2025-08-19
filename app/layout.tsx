@@ -13,6 +13,7 @@ import siteMetadata from '@/data/siteMetadata'
 import { ThemeProviders } from './theme-providers'
 import { Metadata } from 'next'
 import Script from 'next/script'
+import { AdSenseAutoAds } from '@/components/AutoAds'
 
 const anaheim = Anaheim({
   subsets: ['latin'],
@@ -47,6 +48,8 @@ const space_grotesk = Space_Grotesk({
   display: 'swap',
   variable: '--font-space-grotesk',
 })
+
+const PUBLISHER_ID = 'pub-1341731351914043'
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteMetadata.siteUrl),
@@ -126,12 +129,20 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <meta name="google-adsense-account" content="ca-pub-1341731351914043"></meta>
       <link rel="alternate" type="application/rss+xml" href={`${basePath}/feed.xml`} />
       <body className="bg-white pl-[calc(100vw-100%)] text-black antialiased dark:bg-gray-950 dark:text-white">
-        <Script
+        {/* <Script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1341731351914043"
           crossOrigin="anonymous"
           strategy="afterInteractive"
-        />
+        /> */}
+        {/* <Script
+          id="adsense-script"
+          strategy="afterInteractive"
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-${PUBLISHER_ID}`}
+          crossOrigin="anonymous"
+        /> */}
+        {process.env.NODE_ENV === 'production' && <AdSenseAutoAds />}
+
         <ThemeProviders>
           <Analytics analyticsConfig={siteMetadata.analytics as AnalyticsConfig} />
           <SectionContainer>

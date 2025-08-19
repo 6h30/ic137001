@@ -4,6 +4,7 @@ date: '2025-06-26'
 tags: ['revit-api', 'code']
 draft: false
 summary: Ba phương pháp chính để lưu trữ UniqueId của một element, cấu hình ứng dụng (file JSON), cơ sở dữ liệu (SQLite), và Extensible Storage (trong chính file Revit).
+layout: PostLayout
 ---
 
 Khi phát triển các ứng dụng BIM bằng Revit API C#, một trong những thử thách then chốt là làm sao để duy trì mối liên kết bền vững với các element trong mô hình Revit qua nhiều phiên làm việc. Như chúng ta đã biết, `ElementId` của Revit không ổn định, thay đổi sau mỗi lần mở lại dự án. Giải pháp đáng tin cậy nhất chính là sử dụng **`UniqueId`** – một định danh toàn cục và bền vững cho mỗi element. Nhưng làm cách nào để lưu trữ và truy xuất `UniqueId` này một cách hiệu quả trong ứng dụng của bạn?

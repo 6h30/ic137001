@@ -12,6 +12,7 @@ import Image from '@/components/Image'
 import Tag from '@/components/Tag'
 import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
+import { AdUnit } from '@/components/AdUnit'
 
 const editUrl = (path) => `${siteMetadata.siteRepo}/blob/main/data/${path}`
 const discussUrl = (path) =>
@@ -71,11 +72,13 @@ export default function PostLayout({
                 <PageTitle>{title}</PageTitle>
               </div>
             </div>
+
+            <AdUnit slot="7863436668" format="horizontal" className="mx-auto mb-8 max-w-4xl" />
           </header>
           <div className="grid-rows-[auto_1fr] divide-y divide-gray-200 pb-8 xl:grid xl:grid-cols-4 xl:gap-x-6 xl:divide-y-0 dark:divide-gray-700">
             <section className="relative mt-1 hidden grid-cols-12 gap-y-7 xl:col-span-12 xl:grid">
               {/* left */}
-              <div className="relative col-span-full grid xl:col-span-4">
+              <div className="relative col-span-full grid xl:col-span-4 xl:pr-10">
                 {/*  dữ liệu bài viêt */}
                 <div className="sticky top-28 col-span-full grid grid-cols-4 gap-y-4 self-start">
                   <div className="col-span-full grid grid-cols-2 self-start border-b border-current pb-1.5">
@@ -261,7 +264,7 @@ export default function PostLayout({
               </div>
 
               {/* right */}
-              <div className="relative col-span-full grid h-full overflow-y-auto xl:col-span-8 xl:col-start-5 xl:ml-10">
+              <div className="relative col-span-full grid h-full overflow-y-auto xl:col-span-8 xl:col-start-5">
                 <div className="col-span-6 grid auto-rows-auto self-start">
                   {/* header */}
                   <div className="subgrid align-center grid grid-cols-4 self-start border-b-[0.5px] border-b-current pb-1.5">
@@ -272,7 +275,7 @@ export default function PostLayout({
                   </div>
                   {/* danh sách bài viết */}
                   <ul className="divide-y divide-gray-200 dark:divide-gray-700">
-                    <div className="prose dark:prose-invert max-w-none pt-5 pb-8">{children}</div>
+                    <div className="prose dark:prose-invert pt-5 pb-8">{children}</div>
                     {siteMetadata.comments && (
                       <div
                         className="pt-6 pb-6 text-center text-gray-700 dark:text-gray-300"
