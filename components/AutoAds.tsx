@@ -14,12 +14,12 @@ export const AdSenseAutoAds = () => {
         crossOrigin="anonymous"
         nonce={nonce}
       /> */}
-      <script
+      {/* <script
         src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${PUBLISHER_ID}`}
         crossOrigin="anonymous"
         nonce={nonce}
         async
-      />
+      /> */}
       <script
         id="AdSense-auto"
         nonce={nonce}
