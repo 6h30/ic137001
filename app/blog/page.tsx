@@ -3,7 +3,7 @@ import { allBlogs } from 'contentlayer/generated'
 import { genPageMetadata } from 'app/seo'
 import { Suspense } from 'react'
 import ListLayout from '@/layouts/ListLayoutWithTags'
-import AdBlock from '@/components/AdBlock'
+// import AdBlock from '@/components/AdBlock'
 
 export const metadata = genPageMetadata({ title: 'Blog' })
 
@@ -13,7 +13,7 @@ export default function BlogPage() {
 
   return (
     <Suspense fallback={<div>Loading blog...</div>}>
-      <AdBlock />
+      {/* <AdBlock /> */}
       <ListLayout posts={posts} title="Tất cả bài viết" />
     </Suspense>
   )

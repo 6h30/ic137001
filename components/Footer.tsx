@@ -1,6 +1,8 @@
 import Link from './Link'
 import siteMetadata from '@/data/siteMetadata'
 import SocialIcon from '@/components/social-icons'
+import { AdSenseAutoAds } from '@/components/AutoAds'
+import { AdUnit } from './AdUnit'
 
 export default function Footer() {
   return (
@@ -21,6 +23,10 @@ export default function Footer() {
             {`${siteMetadata.author}`}
           </Link> */}
         </div>
+      </div>
+      {process.env.NODE_ENV === 'production' && <AdSenseAutoAds />}
+      <div className="mt-4 flex w-full text-center">
+        <AdUnit slot="7863436668" format="auto" className="mx-auto block max-w-[728px]" />
       </div>
     </footer>
   )

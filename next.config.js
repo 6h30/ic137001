@@ -1,26 +1,55 @@
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const { withContentlayer } = require('next-contentlayer2')
 
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
 
+// const { withContentlayer } = require('next-contentlayer2')
+
+// const withBundleAnalyzer = require('@next/bundle-analyzer')({
+//   enabled: process.env.ANALYZE === 'true',
+// })
+
 // You might need to insert additional domains in script-src if you are using external services
+// const ContentSecurityPolicy = `
+//   default-src 'self';
+//   script-src 'self' 'unsafe-eval' 'unsafe-inline' giscus.app analytics.umami.is;
+//   style-src 'self' 'unsafe-inline';
+//   img-src * blob: data:;
+//   media-src *.s3.amazonaws.com;
+//   connect-src *;
+//   font-src 'self';
+//   frame-src giscus.app
+// `
+
 const ContentSecurityPolicy = `
   default-src 'self';
-  script-src 'self' 'unsafe-eval' 'unsafe-inline' giscus.app analytics.umami.is;
+  script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net;
+  script-src-elem 'self' 'unsafe-inline' https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net;
   style-src 'self' 'unsafe-inline';
-  img-src * blob: data:;
-  media-src *.s3.amazonaws.com;
-  connect-src *;
+  img-src 'self' https: data:;
   font-src 'self';
-  frame-src giscus.app
+  connect-src 'self';
+  media-src 'self';
+  frame-src 'self' https://tpc.googlesyndication.com;
+  manifest-src 'self' https://firebase-dcviet-bloggit-1753678546493.cluster-6dx7corvpngoivimwvvljgokdw.cloudworkstations.dev;
+  object-src 'none';
+  base-uri 'self';
+  form-action 'self';
+  upgrade-insecure-requests;
 `
+  .replace(/\n/g, ' ')
+  .trim()
+
+// value: ContentSecurityPolicy.replace(/\n/g, ''),
 
 const securityHeaders = [
   // https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
   {
     key: 'Content-Security-Policy',
-    value: ContentSecurityPolicy.replace(/\n/g, ''),
+    value: ContentSecurityPolicy,
   },
   // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy
   {
@@ -84,7 +113,8 @@ module.exports = () => {
     async headers() {
       return [
         {
-          source: '/(.*)',
+          // source: '/(.*)',
+          source: '/:path*',
           headers: securityHeaders,
         },
       ]
