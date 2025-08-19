@@ -26,14 +26,14 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 
 const ContentSecurityPolicy = `
   default-src 'self';
-  script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net;
-  script-src-elem 'self' 'unsafe-inline' https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net;
+  script-src 'self' 'unsafe-inline' https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://analytics.umami.is;
+  script-src-elem 'self' 'unsafe-inline' https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://analytics.umami.is;
   style-src 'self' 'unsafe-inline';
   img-src 'self' https: data:;
   font-src 'self';
-  connect-src 'self';
+  connect-src 'self' *.opendns.com gateway.id.swg.umbrella.com *.sse.cisco.com *.ciscosecureaccess.cn https://ep1.adtrafficquality.google https://pagead2.googlesyndication.com https://*.google.com https://*.googlesyndication.com;
   media-src 'self';
-  frame-src 'self' https://tpc.googlesyndication.com;
+  frame-src 'self' *.opendns.com gateway.id.swg.umbrella.com *.sse.cisco.com *.ciscosecureaccess.cn https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://*.googlesyndication.com;
   manifest-src 'self' https://firebase-dcviet-bloggit-1753678546493.cluster-6dx7corvpngoivimwvvljgokdw.cloudworkstations.dev;
   object-src 'none';
   base-uri 'self';
