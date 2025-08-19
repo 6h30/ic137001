@@ -13,7 +13,8 @@ import siteMetadata from '@/data/siteMetadata'
 import { ThemeProviders } from './theme-providers'
 import { Metadata } from 'next'
 import Script from 'next/script'
-import { AdSenseAutoAds } from '@/components/AutoAds'
+
+import { PUBLISHER_ID } from '@/components/config'
 
 const anaheim = Anaheim({
   subsets: ['latin'],
@@ -48,8 +49,6 @@ const space_grotesk = Space_Grotesk({
   display: 'swap',
   variable: '--font-space-grotesk',
 })
-
-const PUBLISHER_ID = 'pub-1341731351914043'
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteMetadata.siteUrl),
@@ -138,7 +137,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Script
           id="adsense-script"
           strategy="afterInteractive"
-          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-${PUBLISHER_ID}`}
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${PUBLISHER_ID}`}
           crossOrigin="anonymous"
         />
         {/* {process.env.NODE_ENV === 'production' && <AdSenseAutoAds />} */}
