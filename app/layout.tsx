@@ -129,6 +129,35 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <meta name="google-adsense-account" content="ca-pub-1341731351914043"></meta>
       <link rel="alternate" type="application/rss+xml" href={`${basePath}/feed.xml`} />
       <body className="bg-white pl-[calc(100vw-100%)] text-black antialiased dark:bg-gray-950 dark:text-white">
+        {/* Google Tag Manager Consent Settings */}
+        <Script
+          id="gtm-consent"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+
+            // Set default consent for specific regions (e.g., GDPR regions)
+            gtag('consent', 'default', {
+              'ad_storage': 'denied',
+              'ad_user_data': 'denied',
+              'ad_personalization': 'denied',
+              'analytics_storage': 'denied',
+              'regions': ['EU', 'GB'] // Replace with your required ISO 3166-2 region codes, e.g., ["EU", "GB", "CA"]
+            });
+
+            // Set default consent for all other regions
+            gtag('consent', 'default', {
+              'ad_storage': 'granted',
+              'ad_user_data': 'granted',
+              'ad_personalization': 'granted',
+              'analytics_storage': 'granted'
+            });
+          `,
+          }}
+        />
+
         {/* <Script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1341731351914043"
@@ -143,6 +172,24 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
         {/* {process.env.NODE_ENV === 'production' && <AdSenseAutoAds />} */}
 
+        {/* Google Tag Manager Script */}
+        <Script
+          id="gtm-script"
+          strategy="afterInteractive"
+          src="https://www.googletagmanager.com/gtag/js?id=G-1K90Z2HQWZ"
+        />
+        <Script
+          id="gtm-init"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-1K90Z2HQWZ');
+          `,
+          }}
+        />
         <ThemeProviders>
           <Analytics analyticsConfig={siteMetadata.analytics as AnalyticsConfig} />
           <SectionContainer>
