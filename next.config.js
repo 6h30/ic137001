@@ -26,12 +26,12 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 
 const ContentSecurityPolicy = `
   default-src 'self';
-  script-src 'self' 'unsafe-inline' https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://analytics.umami.is;
-  script-src-elem 'self' 'unsafe-inline' https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://analytics.umami.is;
+  script-src 'self' 'unsafe-inline' https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://analytics.umami.is https://www.googletagmanager.com;
+  script-src-elem 'self' 'unsafe-inline' https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://analytics.umami.is https://www.googletagmanager.com;
   style-src 'self' 'unsafe-inline';
   img-src 'self' data: https://*.google.com https://*.googlesyndication.com https://*.gstatic.com;
   font-src 'self' https://fonts.gstatic.com;
-  connect-src 'self' https://ep1.adtrafficquality.google https://ep2.adtrafficquality.google https://pagead2.googlesyndication.com https://www.google.com https://*.googlesyndication.com https://tpc.googlesyndication.com https://analytics.umami.is;
+  connect-src 'self' https://ep1.adtrafficquality.google https://ep2.adtrafficquality.google https://pagead2.googlesyndication.com https://www.google.com https://*.googlesyndication.com https://tpc.googlesyndication.com https://analytics.umami.is https://*.google-analytics.com https://www.googletagmanager.com;
   media-src 'self';
   frame-src 'self' https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://*.googlesyndication.com https://tpc.googlesyndication.com https://ep2.adtrafficquality.google https://www.google.com;
   manifest-src 'self';
