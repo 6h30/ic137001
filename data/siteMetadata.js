@@ -1,6 +1,6 @@
 /** @type {import("pliny/config").PlinyConfig } */
 const siteMetadata = {
-  title: 'dcviet Blog',
+  title: 'bimleak Blog',
   author: 'DucTruong',
   headerTitle: 'BIMleak.dev',
   description: 'Viết về Bim, Revit API (C#) và .. gì đó',
