@@ -206,26 +206,22 @@ export default function ListLayoutWithTags({ posts, title }: ListLayoutProps) {
                 >
                   {/* Chevron Icon */}
                   <svg
-                    className={`h-1.5 w-2.5 text-current transition-transform duration-200 ${isYearCollapsed ? 'rotate-0' : 'rotate-180'}`}
-                    width="10"
-                    height="7"
-                    viewBox="0 0 10 7"
+                    className={`h-5 w-5 text-current transition-transform duration-200 ${isYearCollapsed ? 'rotate-0' : 'rotate-180'}`}
+                    viewBox="0 0 24 24"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
                       fillRule="evenodd"
                       clipRule="evenodd"
-                      d="M9.83728 0.885375C9.62032 0.668417 9.26857 0.668417 9.05161 0.885375L5 4.93698L0.948392 0.885374C0.731435 0.668416 0.379676 0.668416 0.162719 0.885374C-0.0542402 1.10233 -0.0542403 1.45409 0.162719 1.67105L4.60716 6.11549C4.82412 6.33245 5.17588 6.33245 5.39284 6.11549L9.83728 1.67105C10.0542 1.45409 10.0542 1.10233 9.83728 0.885375Z"
+                      d="M7 8H5v2h2v2h2v2h2v2h2v-2h2v-2h2v-2h2V8h-2v2h-2v2h-2v2h-2v-2H9v-2H7V8z"
                       fill="currentColor"
                     ></path>
                   </svg>
                   {/* Folder Icon */}
                   <svg
-                    className="h-4 w-4 text-current"
-                    width="12"
-                    height="10"
-                    viewBox="0 0 12 10"
+                    className="h-5 w-5 text-current"
+                    viewBox="0 0 24 24"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                   >
@@ -233,7 +229,7 @@ export default function ListLayoutWithTags({ posts, title }: ListLayoutProps) {
                     <path
                       fillRule="evenodd"
                       clipRule="evenodd"
-                      d="M7 0H1V1H0V2V3V9H1V10H11V9H12V3H11V2H8V1H7V0ZM11 3V9H1V3H7H8H11ZM7 1V2H1V1H7Z"
+                      d="M4 4h8v2h10v14H2V4h2zm16 4H10V6H4v12h16V8z"
                       fill="currentColor"
                     ></path>
                   </svg>
@@ -256,8 +252,8 @@ export default function ListLayoutWithTags({ posts, title }: ListLayoutProps) {
                       >
                         {/* SVG Checkbox Icon */}
                         <svg
-                          className="dark:text-primary-400 h-4 w-4"
-                          viewBox="0 0 10 9"
+                          className="dark:text-primary-400 h-5 w-5"
+                          viewBox="0 0 24 24"
                           fill="none"
                           xmlns="http://www.w3.org/2000/svg"
                         >
@@ -267,8 +263,8 @@ export default function ListLayoutWithTags({ posts, title }: ListLayoutProps) {
                             clipRule="evenodd"
                             d={
                               isChecked
-                                ? 'M1 1L-3.49691e-07 1L-4.37113e-08 8L1 8L1 9L9 9L9 8L10 8L10 1L9 1L9 -3.93402e-07L1 -4.37114e-08L1 1ZM1 1L9 1L9 8L1 8L1 1ZM7 2L8 2L8 3L7 3L7 2ZM6 4L6 3L7 3L7 4L6 4ZM5 5L5 4L6 4L6 5L5 5ZM4 6L4 5L5 5L5 6L4 6ZM3 6L4 6L4 7L3 7L3 6ZM3 6L2 6L2 5L3 5L3 6Z'
-                                : 'M1 1L-3.49691e-07 1L-4.37113e-08 8L1 8L1 9L9 9L9 8L10 8L10 1L9 1L9 -3.93402e-07L1 -4.37114e-08L1 1ZM1 1L9 1L9 8L1 8L1 1Z'
+                                ? 'M5 3H3v18h18V3H5zm0 2h14v14H5V5zm4 7H7v2h2v2h2v-2h2v-2h2v-2h2V8h-2v2h-2v2h-2v2H9v-2z '
+                                : 'M3 3h18v18H3V3zm16 16V5H5v14h14z'
                             }
                             fill="currentColor"
                           ></path>
@@ -309,10 +305,8 @@ export default function ListLayoutWithTags({ posts, title }: ListLayoutProps) {
 
                   {/* Folder Icon */}
                   <svg
-                    className="h-4 w-4 text-current"
-                    width="12"
-                    height="10"
-                    viewBox="0 0 12 10"
+                    className="h-5 w-5 text-current"
+                    viewBox="0 0 24 24"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                   >
@@ -320,10 +314,11 @@ export default function ListLayoutWithTags({ posts, title }: ListLayoutProps) {
                     <path
                       fillRule="evenodd"
                       clipRule="evenodd"
-                      d="M7 0H1V1H0V2V3V9H1V10H11V9H12V3H11V2H8V1H7V0ZM11 3V9H1V3H7H8H11ZM7 1V2H1V1H7Z"
+                      d="M4 4h8v2h10v14H2V4h2zm16 4H10V6H4v12h16V8z"
                       fill="currentColor"
                     ></path>
                   </svg>
+
                   <span className="text-sm">Chủ đề</span>
                 </button>
                 {/* Collapsible Content */}
@@ -490,7 +485,19 @@ export default function ListLayoutWithTags({ posts, title }: ListLayoutProps) {
                           </div>
                           <Link href={`/blog/${post.slug}`} passHref>
                             <div className="text-primary-500 hover:bg-primary-200 hover:text-primary-600 dark:hover:text-primary-400 flex cursor-pointer justify-center rounded border text-base leading-6 font-medium">
-                              Đọc thêm &rarr;
+                              Đọc thêm{' '}
+                              <svg
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24"
+                                className="h-6 w-6"
+                              >
+                                {' '}
+                                <path
+                                  d="M4 11v2h12v2h2v-2h2v-2h-2V9h-2v2H4zm10-4h2v2h-2V7zm0 0h-2V5h2v2zm0 10h2v-2h-2v2zm0 0h-2v2h2v-2z"
+                                  fill="currentColor"
+                                />{' '}
+                              </svg>
                             </div>
                           </Link>
                         </div>
