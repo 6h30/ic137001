@@ -4,20 +4,20 @@ import siteMetadata from '@/data/siteMetadata'
 import { useRef, useEffect } from 'react'
 
 const pixelSize = 8
-const gap = 6 // khoảng hở giữa các pixel
+const gap = 5 // khoảng hở giữa các pixel
 
 // ma trận bitmap cho chữ BIMLEAK
 const letters: number[][] = [
   // B (5x7)
-  [1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1],
+  [1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0],
   // I (3x7)
-  [1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1],
+  [1, 1, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1],
   // M (5x7)
   [1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1],
-  // L (4x7)
-  [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1],
-  // E (5x7)
-  [1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1],
+  // L (3x7)
+  [1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 1],
+  // E (4x7)
+  [1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1],
   // A (5x7)
   [0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1],
   // K (5x7)
@@ -25,7 +25,7 @@ const letters: number[][] = [
 ]
 
 // chiều rộng từng chữ (theo font Doto)
-const letterWidths = [5, 5, 5, 5, 5, 5, 5]
+const letterWidths = [5, 3, 5, 3, 4, 5, 5]
 const letterHeight = 5
 
 function drawBimleak(step: number, ctx: CanvasRenderingContext2D, color: string) {
