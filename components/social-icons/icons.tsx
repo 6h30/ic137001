@@ -32,10 +32,10 @@ export function Linkedin(svgProps: SVGProps<SVGSVGElement>) {
 
 export function Mail(svgProps: SVGProps<SVGSVGElement>) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" {...svgProps}>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" {...svgProps}>
       <title>Mail</title>
       <path
-        d="M22 4H2v16h20V4zM4 18V6h16v12H4zM8 8H6v2h2v2h2v2h4v-2h2v-2h2V8h-2v2h-2v2h-4v-2H8V8z"
+        d="M28 6H4a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h24a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2Zm-2.2 2L16 14.78L6.2 8ZM4 24V8.91l11.43 7.91a1 1 0 0 0 1.14 0L28 8.91V24Z"
         fill="currentColor"
       ></path>
     </svg>

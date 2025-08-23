@@ -102,6 +102,12 @@ const projectsData: Project[] = [
     imgSrc: '/static/images/time-machine.jpg',
     href: '/unlock',
   },
+  {
+    title: 'Hướng dẫn đăng kí, tích hợp quảng cáo từ Google adsense, monetag vào trang',
+    description: `Hướng dẫn đăng kí và thiết lập quảng cáo từ Google adsense, monetag vào trang BIMleak.dev.`,
+    imgSrc: '/static/images/time-machine.jpg',
+    href: '/unlock',
+  },
 ]
 
 export default projectsData
