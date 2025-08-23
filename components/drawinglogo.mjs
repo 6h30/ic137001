@@ -1,5 +1,5 @@
 let x = 1
-// let rgb = 255
+let rgb = 255
 let opacity = 1
 
 export function drawBimleak(startCoordX, startCoordY, ctx) {
@@ -230,8 +230,8 @@ export function drawBimleak(startCoordX, startCoordY, ctx) {
       break
   }
   ctx.closePath()
-  // ctx.fillStyle = `rgba(${rgb}, ${rgb}, ${rgb}, ${opacity})`
-  ctx.fillStyle = `rgba(255, 215, 0, ${opacity})`
+  ctx.fillStyle = `rgba(${rgb}, ${rgb}, ${rgb}, ${opacity})`
+  // ctx.fillStyle = `rgba(255, 215, 0, ${opacity})`
   opacity /= 1.05
   ctx.fill()
   x++
