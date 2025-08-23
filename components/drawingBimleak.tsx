@@ -1,11 +1,11 @@
 'use client'
 
+import siteMetadata from '@/data/siteMetadata'
 import { useRef, useEffect } from 'react'
 
-const pixelSize = 8
+const pixelSize = 4
 
 // ma trận bitmap cho chữ BIMLEAK
-// 1 = pixel vàng, 0 = trống
 const letters: number[][] = [
   // B
   [1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 0],
@@ -23,11 +23,11 @@ const letters: number[][] = [
   [1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1],
 ]
 
-// chiều rộng mỗi chữ (sẽ khác nhau)
+// chiều rộng mỗi chữ
 const letterWidths = [4, 3, 5, 3, 3, 3, 3]
 
-function drawBimleak(step: number, ctx: CanvasRenderingContext2D) {
-  ctx.fillStyle = 'yellow'
+function drawBimleak(step: number, ctx: CanvasRenderingContext2D, color: string) {
+  ctx.fillStyle = color
 
   let pixelIndex = 0
   let xOffset = 10
@@ -48,8 +48,7 @@ function drawBimleak(step: number, ctx: CanvasRenderingContext2D) {
         }
       }
     }
-
-    xOffset += width * pixelSize + 8 // khoảng cách giữa các chữ
+    xOffset += width * pixelSize + pixelSize * 2
   }
 
   return true
@@ -64,13 +63,16 @@ export default function LogoBimleak() {
     const ctx = canvas.getContext('2d')
     if (!ctx) return
 
-    // nền đen
-    ctx.fillStyle = 'black'
-    ctx.fillRect(0, 0, canvas.width, canvas.height)
+    // phát hiện theme
+    const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const color = isDark ? 'white' : 'black'
+
+    // clear nền về transparent
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
 
     let step = 1
     const interval = setInterval(() => {
-      const done = drawBimleak(step, ctx)
+      const done = drawBimleak(step, ctx, color)
       if (done) {
         clearInterval(interval)
       }
@@ -81,9 +83,11 @@ export default function LogoBimleak() {
   }, [])
 
   return (
-    <section className="flex h-full w-full flex-col items-center justify-center">
-      <canvas id="logo" width={500} height={120} ref={canvasRef} className="bg-black" />
-      <div className="mt-2 text-center text-base text-gray-200 uppercase opacity-70">bimleak</div>
+    <section className="flex h-full w-full flex-col items-start justify-center">
+      <canvas id="logo" width={500} height={120} ref={canvasRef} className="bg-transparent" />
+      <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
+        {siteMetadata.description}
+      </p>
     </section>
   )
 }
