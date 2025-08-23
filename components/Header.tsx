@@ -8,6 +8,8 @@ import MobileNav from './MobileNav'
 import ThemeSwitch from './ThemeSwitch'
 import SearchButton from './SearchButton'
 import { AdUnit } from './AdUnit'
+import LogoCanvas from './drawingLogo'
+import LogoBimleak from './drawingBimleak'
 
 const Header = () => {
   let headerClass = 'flex flex-col'
@@ -21,7 +23,11 @@ const Header = () => {
         <div className="flex w-full items-center justify-between bg-white py-10 dark:bg-gray-950">
           <Link href="/" aria-label={siteMetadata.headerTitle}>
             <div className="flex items-center justify-between">
-              <div className="mr-3">{/* <Logo /> */}</div>
+              <div className="mr-3">
+                {/* <Logo /> */}
+                {/* <LogoCanvas /> */}
+              </div>
+
               {typeof siteMetadata.headerTitle === 'string' ? (
                 <div className="hidden h-6 text-2xl font-semibold sm:block">
                   {siteMetadata.headerTitle}
@@ -54,6 +60,9 @@ const Header = () => {
       <div className="mt-4 flex w-full text-center">
         <AdUnit slot="7863436668" format="auto" className="mx-auto block max-w-[728px]" />
       </div>
+
+      <LogoCanvas />
+      <LogoBimleak />
     </>
   )
 }

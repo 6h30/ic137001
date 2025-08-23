@@ -206,18 +206,19 @@ export default function ListLayoutWithTags({ posts, title }: ListLayoutProps) {
                 >
                   {/* Chevron Icon */}
                   <svg
-                    className={`h-5 w-5 text-current transition-transform duration-200 ${isYearCollapsed ? 'rotate-0' : 'rotate-180'}`}
-                    viewBox="0 0 24 24"
+                    className={`h-6 w-6 text-current transition-transform duration-200 ${isYearCollapsed ? 'rotate-0' : 'rotate-180'}`}
+                    viewBox="0 0 32 32"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
                       fillRule="evenodd"
                       clipRule="evenodd"
-                      d="M7 8H5v2h2v2h2v2h2v2h2v-2h2v-2h2v-2h2V8h-2v2h-2v2h-2v2h-2v-2H9v-2H7V8z"
+                      d="m16 28l-7-7l1.4-1.4l5.6 5.6l5.6-5.6L23 21z"
                       fill="currentColor"
                     ></path>
                   </svg>
+
                   {/* Folder Icon */}
                   <svg
                     className="h-5 w-5 text-current"
@@ -229,10 +230,11 @@ export default function ListLayoutWithTags({ posts, title }: ListLayoutProps) {
                     <path
                       fillRule="evenodd"
                       clipRule="evenodd"
-                      d="M4 4h8v2h10v14H2V4h2zm16 4H10V6H4v12h16V8z"
+                      d="M2 6C2 4.75736 3.00736 3.75 4.25 3.75H8.5C9.2082 3.75 9.87508 4.08344 10.3 4.65L11.65 6.45C11.7916 6.63885 12.0139 6.75 12.25 6.75H19.75C20.9926 6.75 22 7.75736 22 9V18C22 19.2426 20.9926 20.25 19.75 20.25H4.25C3.00736 20.25 2 19.2426 2 18V6ZM4.25 5.25C3.83579 5.25 3.5 5.58579 3.5 6V18C3.5 18.4142 3.83579 18.75 4.25 18.75H19.75C20.1642 18.75 20.5 18.4142 20.5 18V9C20.5 8.58579 20.1642 8.25 19.75 8.25H12.25C11.5418 8.25 10.8749 7.91656 10.45 7.35L9.1 5.55C8.95836 5.36115 8.73607 5.25 8.5 5.25H4.25Z"
                       fill="currentColor"
                     ></path>
                   </svg>
+
                   <span className="text-sm">Năm</span>
                 </button>
 
@@ -252,8 +254,8 @@ export default function ListLayoutWithTags({ posts, title }: ListLayoutProps) {
                       >
                         {/* SVG Checkbox Icon */}
                         <svg
-                          className="dark:text-primary-400 h-5 w-5"
-                          viewBox="0 0 24 24"
+                          className="dark:text-primary-400 h-6 w-6"
+                          viewBox="0 0 32 32"
                           fill="none"
                           xmlns="http://www.w3.org/2000/svg"
                         >
@@ -263,8 +265,8 @@ export default function ListLayoutWithTags({ posts, title }: ListLayoutProps) {
                             clipRule="evenodd"
                             d={
                               isChecked
-                                ? 'M5 3H3v18h18V3H5zm0 2h14v14H5V5zm4 7H7v2h2v2h2v-2h2v-2h2v-2h2V8h-2v2h-2v2h-2v2H9v-2z '
-                                : 'M3 3h18v18H3V3zm16 16V5H5v14h14z'
+                                ? 'm14 21.5l-5-4.96L10.59 15L14 18.35L21.41 11L23 12.58l-9 8.92z'
+                                : 'M26 4H6a2 2 0 0 0-2 2v20a2 2 0 0 0 2 2h20a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2ZM6 26V6h20v20Z'
                             }
                             fill="currentColor"
                           ></path>
@@ -288,17 +290,15 @@ export default function ListLayoutWithTags({ posts, title }: ListLayoutProps) {
                 >
                   {/* Chevron Icon for Chủ đề */}
                   <svg
-                    className={`h-1.5 w-2.5 text-current transition-transform duration-200 ${isCategoryCollapsed ? 'rotate-0' : 'rotate-180'}`}
-                    width="10"
-                    height="7"
-                    viewBox="0 0 10 7"
+                    className={`h-6 w-6 text-current transition-transform duration-200 ${isYearCollapsed ? 'rotate-0' : 'rotate-180'}`}
+                    viewBox="0 0 32 32"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
                       fillRule="evenodd"
                       clipRule="evenodd"
-                      d="M9.83728 0.885375C9.62032 0.668417 9.26857 0.668417 9.05161 0.885375L5 4.93698L0.948392 0.885374C0.731435 0.668416 0.379676 0.668416 0.162719 0.885374C-0.0542402 1.10233 -0.0542403 1.45409 0.162719 1.67105L4.60716 6.11549C4.82412 6.33245 5.17588 6.33245 5.39284 6.11549L9.83728 1.67105C10.0542 1.45409 10.0542 1.10233 9.83728 0.885375Z"
+                      d="m16 28l-7-7l1.4-1.4l5.6 5.6l5.6-5.6L23 21z"
                       fill="currentColor"
                     ></path>
                   </svg>
@@ -314,7 +314,7 @@ export default function ListLayoutWithTags({ posts, title }: ListLayoutProps) {
                     <path
                       fillRule="evenodd"
                       clipRule="evenodd"
-                      d="M4 4h8v2h10v14H2V4h2zm16 4H10V6H4v12h16V8z"
+                      d="M2 6C2 4.75736 3.00736 3.75 4.25 3.75H8.5C9.2082 3.75 9.87508 4.08344 10.3 4.65L11.65 6.45C11.7916 6.63885 12.0139 6.75 12.25 6.75H19.75C20.9926 6.75 22 7.75736 22 9V18C22 19.2426 20.9926 20.25 19.75 20.25H4.25C3.00736 20.25 2 19.2426 2 18V6ZM4.25 5.25C3.83579 5.25 3.5 5.58579 3.5 6V18C3.5 18.4142 3.83579 18.75 4.25 18.75H19.75C20.1642 18.75 20.5 18.4142 20.5 18V9C20.5 8.58579 20.1642 8.25 19.75 8.25H12.25C11.5418 8.25 10.8749 7.91656 10.45 7.35L9.1 5.55C8.95836 5.36115 8.73607 5.25 8.5 5.25H4.25Z"
                       fill="currentColor"
                     ></path>
                   </svg>
@@ -489,12 +489,12 @@ export default function ListLayoutWithTags({ posts, title }: ListLayoutProps) {
                               <svg
                                 fill="none"
                                 xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 24 24"
+                                viewBox="0 0 32 32"
                                 className="h-6 w-6"
                               >
                                 {' '}
                                 <path
-                                  d="M4 11v2h12v2h2v-2h2v-2h-2V9h-2v2H4zm10-4h2v2h-2V7zm0 0h-2V5h2v2zm0 10h2v-2h-2v2zm0 0h-2v2h2v-2z"
+                                  d="m18 6l-1.43 1.393L24.15 15H4v2h20.15l-7.58 7.573L18 26l10-10L18 6z"
                                   fill="currentColor"
                                 />{' '}
                               </svg>
