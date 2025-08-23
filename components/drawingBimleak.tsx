@@ -3,28 +3,41 @@
 import siteMetadata from '@/data/siteMetadata'
 import { useRef, useEffect } from 'react'
 
-const pixelSize = 16
+const pixelSize = 12
 
-// ma trận bitmap cho chữ BIMLEAK
+// ma trận bitmap cho chữ BIMLEAK (font Doto 5x7)
 const letters: number[][] = [
-  // B
-  [1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 0],
-  // I
-  [1, 1, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1],
-  // M
-  [1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1],
-  // L
-  [1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 1],
-  // E
-  [1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1],
-  // A
-  [0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1],
-  // K
-  [1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1],
+  // B (5x7)
+  [
+    1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1,
+    1, 1, 0,
+  ],
+  // I (3x7)
+  [1, 1, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1],
+  // M (5x7)
+  [
+    1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0,
+    0, 0, 1,
+  ],
+  // L (4x7)
+  [1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1],
+  // E (4x7)
+  [1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1],
+  // A (5x7)
+  [
+    0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0,
+    0, 0, 1,
+  ],
+  // K (5x7)
+  [
+    1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0,
+    0, 0, 1,
+  ],
 ]
 
-// chiều rộng mỗi chữ
-const letterWidths = [4, 3, 5, 3, 3, 3, 3]
+// chiều rộng từng chữ (theo font Doto)
+const letterWidths = [5, 3, 5, 4, 4, 5, 5]
+const letterHeight = 7
 
 function drawBimleak(step: number, ctx: CanvasRenderingContext2D, color: string) {
   ctx.fillStyle = color
@@ -35,14 +48,18 @@ function drawBimleak(step: number, ctx: CanvasRenderingContext2D, color: string)
   for (let l = 0; l < letters.length; l++) {
     const grid = letters[l]
     const width = letterWidths[l]
-    const height = 5
+    const height = letterHeight
 
     for (let y = 0; y < height; y++) {
       for (let x = 0; x < width; x++) {
         if (grid[y * width + x] === 1) {
           pixelIndex++
           if (pixelIndex === step) {
-            ctx.fillRect(xOffset + x * pixelSize, 20 + y * pixelSize, pixelSize, pixelSize)
+            // căn giữa theo canvas.height (ví dụ 100px)
+            const totalLetterHeight = height * pixelSize
+            const yOffset = (100 - totalLetterHeight) / 2
+
+            ctx.fillRect(xOffset + x * pixelSize, yOffset + y * pixelSize, pixelSize, pixelSize)
             return false
           }
         }
@@ -86,7 +103,7 @@ export default function LogoBimleak() {
     <section className="flex h-full w-full flex-col items-start justify-center">
       <canvas
         id="logo"
-        width={300}
+        width={500}
         height={100}
         ref={canvasRef}
         className="bg-transparent"
