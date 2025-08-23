@@ -3,7 +3,7 @@
 import siteMetadata from '@/data/siteMetadata'
 import { useRef, useEffect } from 'react'
 
-const pixelSize = 4
+const pixelSize = 16
 
 // ma trận bitmap cho chữ BIMLEAK
 const letters: number[][] = [
@@ -84,7 +84,14 @@ export default function LogoBimleak() {
 
   return (
     <section className="flex h-full w-full flex-col items-start justify-center">
-      <canvas id="logo" width={500} height={120} ref={canvasRef} className="bg-transparent" />
+      <canvas
+        id="logo"
+        width={300}
+        height={100}
+        ref={canvasRef}
+        className="bg-transparent"
+        style={{ imageRendering: 'pixelated' }}
+      />
       <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
         {siteMetadata.description}
       </p>
