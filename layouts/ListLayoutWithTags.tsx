@@ -12,6 +12,7 @@ import siteMetadata from '@/data/siteMetadata'
 import tagData from 'app/tag-data.json'
 import NewsletterForm from 'pliny/ui/NewsletterForm'
 import CustomNewsletterForm from '@/components/CustomNewsletterForm'
+import LogoBimleak from '@/components/drawingBimleak'
 
 interface PaginationProps {
   totalPages: number
@@ -169,16 +170,16 @@ export default function ListLayoutWithTags({ posts, title }: ListLayoutProps) {
   return (
     <div>
       <div className="space-y-2 pt-6 pb-8 md:space-y-5">
-        <h1
+        {/* <h1
           className="text-3xl leading-9 tracking-tight text-gray-900 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14 dark:text-gray-100"
           style={{ fontFamily: 'var(--font-doto)' }}
         >
           Blog này
-        </h1>
-
-        <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
+        </h1> */}
+        <LogoBimleak />
+        {/* <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
           {siteMetadata.description}
-        </p>
+        </p> */}
       </div>
 
       <section className="relative mt-1 grid grid-cols-12 gap-y-7 xl:col-span-12">
@@ -260,16 +261,18 @@ export default function ListLayoutWithTags({ posts, title }: ListLayoutProps) {
                           xmlns="http://www.w3.org/2000/svg"
                         >
                           <title>Checkbox icon</title>
+                          {/* Ô vuông */}
                           <path
-                            fillRule="evenodd"
-                            clipRule="evenodd"
-                            d={
-                              isChecked
-                                ? 'm14 21.5l-5-4.96L10.59 15L14 18.35L21.41 11L23 12.58l-9 8.92z'
-                                : 'M26 4H6a2 2 0 0 0-2 2v20a2 2 0 0 0 2 2h20a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2ZM6 26V6h20v20Z'
-                            }
+                            d="M26 4H6a2 2 0 0 0-2 2v20a2 2 0 0 0 2 2h20a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2ZM6 26V6h20v20Z"
                             fill="currentColor"
-                          ></path>
+                          />
+                          {/* Dấu tick chỉ hiện khi checked */}
+                          {isChecked && (
+                            <path
+                              d="m14 21.5l-5-4.96L10.59 15L14 18.35L21.41 11L23 12.58l-9 8.92z"
+                              fill="currentColor"
+                            />
+                          )}
                         </svg>
 
                         {/* Year text */}
@@ -290,7 +293,7 @@ export default function ListLayoutWithTags({ posts, title }: ListLayoutProps) {
                 >
                   {/* Chevron Icon for Chủ đề */}
                   <svg
-                    className={`h-6 w-6 text-current transition-transform duration-200 ${isYearCollapsed ? 'rotate-0' : 'rotate-180'}`}
+                    className={`h-6 w-6 text-current transition-transform duration-200 ${isCategoryCollapsed ? 'rotate-0' : 'rotate-180'}`}
                     viewBox="0 0 32 32"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
@@ -339,7 +342,7 @@ export default function ListLayoutWithTags({ posts, title }: ListLayoutProps) {
                         }`}
                       >
                         {/* SVG Checkbox Icon */}
-                        <svg
+                        {/* <svg
                           className="dark:text-primary-400 h-4 w-4"
                           viewBox="0 0 10 9"
                           fill="none"
@@ -356,6 +359,27 @@ export default function ListLayoutWithTags({ posts, title }: ListLayoutProps) {
                             }
                             fill="currentColor"
                           ></path>
+                        </svg> */}
+
+                        <svg
+                          className="dark:text-primary-400 h-6 w-6"
+                          viewBox="0 0 32 32"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <title>Checkbox icon</title>
+                          {/* Ô vuông */}
+                          <path
+                            d="M26 4H6a2 2 0 0 0-2 2v20a2 2 0 0 0 2 2h20a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2ZM6 26V6h20v20Z"
+                            fill="currentColor"
+                          />
+                          {/* Dấu tick chỉ hiện khi checked */}
+                          {isChecked && (
+                            <path
+                              d="m14 21.5l-5-4.96L10.59 15L14 18.35L21.41 11L23 12.58l-9 8.92z"
+                              fill="currentColor"
+                            />
+                          )}
                         </svg>
 
                         {/* Tag text */}
