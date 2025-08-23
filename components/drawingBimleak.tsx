@@ -1,15 +1,37 @@
 'use client'
 
 import siteMetadata from '@/data/siteMetadata'
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, useState } from 'react'
 
-const pixelSize = 8
-const gap = 5 // khoảng hở giữa các pixel
+function useResponsivePixel() {
+  const [config, setConfig] = useState({ pixelSize: 8, gap: 5 })
 
-// ma trận bitmap cho chữ BIMLEAK
+  useEffect(() => {
+    function updateConfig() {
+      const width = window.innerWidth
+      if (width < 640) {
+        // Mobile
+        setConfig({ pixelSize: 5, gap: 3 })
+      } else if (width < 1024) {
+        // Tablet
+        setConfig({ pixelSize: 7, gap: 4 })
+      } else {
+        // Desktop
+        setConfig({ pixelSize: 10, gap: 5 })
+      }
+    }
+    updateConfig()
+    window.addEventListener('resize', updateConfig)
+    return () => window.removeEventListener('resize', updateConfig)
+  }, [])
+
+  return config
+}
+
+// chữ bitmap giữ nguyên như bạn đưa
 const letters: number[][] = [
-  // B (5x7)
-  [1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0],
+  // B (4x7)
+  [1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0],
   // I (3x7)
   [1, 1, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1],
   // M (5x7)
@@ -24,11 +46,16 @@ const letters: number[][] = [
   [1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1],
 ]
 
-// chiều rộng từng chữ (theo font Doto)
-const letterWidths = [5, 3, 5, 3, 4, 5, 5]
+const letterWidths = [4, 3, 5, 3, 4, 5, 5]
 const letterHeight = 5
 
-function drawBimleak(step: number, ctx: CanvasRenderingContext2D, color: string) {
+function drawBimleak(
+  step: number,
+  ctx: CanvasRenderingContext2D,
+  color: string,
+  pixelSize: number,
+  gap: number
+) {
   ctx.fillStyle = color
 
   let pixelIndex = 0
@@ -45,9 +72,8 @@ function drawBimleak(step: number, ctx: CanvasRenderingContext2D, color: string)
           pixelIndex++
           if (pixelIndex === step) {
             const totalLetterHeight = height * (pixelSize + gap)
-            const yOffset = (100 - totalLetterHeight) / 2
+            const yOffset = (ctx.canvas.height - totalLetterHeight) / 2
 
-            // thêm gap vào vị trí pixel
             ctx.fillRect(
               xOffset + x * (pixelSize + gap),
               yOffset + y * (pixelSize + gap),
@@ -59,7 +85,7 @@ function drawBimleak(step: number, ctx: CanvasRenderingContext2D, color: string)
         }
       }
     }
-    xOffset += width * (pixelSize + gap) + pixelSize * 2 // thêm khoảng hở giữa các chữ
+    xOffset += width * (pixelSize + gap) + pixelSize * 2
   }
 
   return true
@@ -67,6 +93,7 @@ function drawBimleak(step: number, ctx: CanvasRenderingContext2D, color: string)
 
 export default function LogoBimleak() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
+  const { pixelSize, gap } = useResponsivePixel()
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -74,32 +101,37 @@ export default function LogoBimleak() {
     const ctx = canvas.getContext('2d')
     if (!ctx) return
 
-    const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-    const color = isDark ? 'white' : 'black'
+    const mq = window.matchMedia('(prefers-color-scheme: dark)')
+
+    // set width, height theo container
+    canvas.width = canvas.clientWidth
+    canvas.height = 120
+
+    // const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+    // const color = isDark ? 'white' : 'black'
+
+    const color = mq.matches ? 'white' : 'black'
 
     ctx.clearRect(0, 0, canvas.width, canvas.height)
 
     let step = 1
     const interval = setInterval(() => {
-      const done = drawBimleak(step, ctx, color)
+      const done = drawBimleak(step, ctx, color, pixelSize, gap)
       if (done) clearInterval(interval)
       step++
     }, 20)
 
     return () => clearInterval(interval)
-  }, [])
+  }, [pixelSize, gap])
 
   return (
-    <section className="flex h-full w-full flex-col items-start justify-center">
+    <section className="flex w-full flex-col items-start justify-center">
       <canvas
-        id="logo"
-        width={700}
-        height={100}
         ref={canvasRef}
-        className="bg-transparent"
-        style={{ imageRendering: 'pixelated' }}
+        className="w-full max-w-[500px] bg-transparent"
+        style={{ imageRendering: 'pixelated', height: '120px' }}
       />
-      <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
+      <p className="text-base leading-7 text-gray-500 sm:text-lg dark:text-gray-400">
         {siteMetadata.description}
       </p>
     </section>
