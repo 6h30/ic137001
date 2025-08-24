@@ -30,8 +30,8 @@ function useResponsivePixel() {
 
 // chữ bitmap giữ nguyên như bạn đưa
 const letters: number[][] = [
-  // B (4x7)
-  [1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0],
+  // B (5x7)
+  [1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0],
   // I (3x7)
   [1, 1, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1],
   // M (5x7)
@@ -46,7 +46,7 @@ const letters: number[][] = [
   [1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1],
 ]
 
-const letterWidths = [4, 3, 5, 3, 4, 4, 5]
+const letterWidths = [5, 3, 5, 3, 4, 4, 5]
 const letterHeight = 5
 
 function drawBimleak(
