@@ -1,8 +1,7 @@
 backend:
   name: github
-  repo:  'https://github.com/6h30/ic137001',  # đổi thành repo của bạn
+  repo:  '6h30/ic137001',  # đổi thành repo của bạn
   branch: fire-dev                       # nhánh chính bạn dùng
-  base_url: https://bimleak.dev
 
 media_folder: "public/static/images" # nơi lưu ảnh
 public_folder: "/static/images"      # đường dẫn public ảnh
