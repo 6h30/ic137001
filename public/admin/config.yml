@@ -2,7 +2,8 @@ backend:
   name: github
   repo: '6h30/ic137001'
   branch: fire-dev     
-  auth_type: 'oauth'                
+  auth_type: 'oauth'    
+  base_url: 'https://bimleak.dev'             
 
 media_folder: "public/static/images" 
 public_folder: "/static/images"      
