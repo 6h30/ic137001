@@ -26,8 +26,9 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 
 const ContentSecurityPolicy = `
   default-src 'self';
-  script-src 'self' 'unsafe-inline' https://unpkg.com https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://analytics.umami.is https://www.googletagmanager.com https://fpyf8.com https://vaimucuvikuwu.net https://e2ertt.com giscus.app;
-  script-src-elem 'self' 'unsafe-inline' https://unpkg.com https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://analytics.umami.is https://www.googletagmanager.com https://fpyf8.com https://vaimucuvikuwu.net https://e2ertt.com giscus.app;
+  script-src 'self' 'unsafe-inline' https://unpkg.com https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://analytics.umami.is https://www.googletagmanager.com https://fpyf8.com https://vaimucuvikuwu.net https://e2ertt.com giscus.app blob:;
+  script-src-elem 'self' 'unsafe-inline' https://unpkg.com https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://analytics.umami.is https://www.googletagmanager.com https://fpyf8.com https://vaimucuvikuwu.net https://e2ertt.com giscus.app blob:;
+  worker-src 'self' blob:;
   style-src 'self' 'unsafe-inline';
   img-src 'self' blob: data: https://*.google.com https://*.googlesyndication.com https://*.gstatic.com https://ep1.adtrafficquality.google https://images.spiderum.com https://lh3.googleusercontent.com;
   font-src 'self' https://fonts.gstatic.com;
