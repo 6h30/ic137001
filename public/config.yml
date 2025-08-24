@@ -1,10 +1,10 @@
 backend:
   name: github
-  repo:  '6h30/ic137001',  # đổi thành repo của bạn
-  branch: fire-dev                       # nhánh chính bạn dùng
+  repo: '6h30/ic137001'
+  branch: fire-dev                     
 
-media_folder: "public/static/images" # nơi lưu ảnh
-public_folder: "/static/images"      # đường dẫn public ảnh
+media_folder: "public/static/images" 
+public_folder: "/static/images"      
 
 collections:
   - name: "blog"            # tên collection
