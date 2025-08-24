@@ -1,0 +1,31 @@
+backend:
+  name: github
+  repo:  'https://github.com/6h30/ic137001',  # đổi thành repo của bạn
+  branch: fire-dev                       # nhánh chính bạn dùng
+
+media_folder: "public/static/images" # nơi lưu ảnh
+public_folder: "/static/images"      # đường dẫn public ảnh
+
+collections:
+  - name: "blog"            # tên collection
+    label: "Blog Posts"     # hiện trong CMS
+    folder: "data/blog"  # thư mục chứa file
+    create: true
+    slug: "{{slug}}"
+    format: "frontmatter"   # hỗ trợ frontmatter + body
+    extension: "mdx"
+    fields:
+      - { name: "title", label: "Title", widget: "string" }
+      - { name: "date", label: "Date", widget: "datetime" }
+      - { name: "tags", label: "Tags", widget: "list", default: [] }
+      - { name: "draft", label: "Draft", widget: "boolean", default: false }
+      - { name: "authors", label: "Authors", widget: "list", default: [] }
+      - { name: "layout", label: "Layout", widget: "string", default: "PostLayout" }
+      - { name: "summary", label: "Summary", widget: "text" }
+      - label: "Appendix"
+        name: "appendix"
+        widget: "list"
+        fields:
+          - { name: "title", label: "Title", widget: "string" }
+          - { name: "url", label: "URL", widget: "string" }
+      - { name: "body", label: "Body", widget: "markdown" }

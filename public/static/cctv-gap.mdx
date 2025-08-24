@@ -1,0 +1,66 @@
+<canvas id="cctvCanvas"></canvas>
+<script>
+const canvas = document.getElementById("cctvCanvas");
+const ctx = canvas.getContext("2d");
+canvas.width = 320;
+canvas.height = 240;
+
+const pixelSize = 10; // kích thước pixel thật
+const gap = 2; // khoảng hở giữa các pixel
+const cellSize = pixelSize + gap; // khoảng cách ô (pixel + gap)
+
+// HEAD bitmap
+const headBase = [
+[0,0,0,1,1,1,1,1,1,1,0,0,0,0],
+[0,0,1,0,0,0,0,0,0,1,1,0,0,0],
+[0,0,1,0,0,0,0,0,1,0,1,1,1,0],
+[0,0,1,0,0,0,0,0,1,0,1,0,1,0],
+[0,0,1,0,0,0,0,0,1,0,1,1,1,0],
+[0,0,1,0,0,0,0,0,0,1,1,0,0,0],
+[0,0,0,1,1,1,1,1,1,1,0,0,0,0],
+];
+
+// BASE cố định
+const base = [
+[0,0,0,0,0,0,1,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,1,0,0,0,0,0,0,0],
+[1,1,0,0,0,1,1,0,0,0,0,0,0,0],
+[1,1,1,1,1,1,0,0,0,0,0,0,0,0],
+[1,1,0,0,0,0,0,0,0,0,0,0,0,0],
+];
+
+// Vẽ bitmap có gap
+function drawBitmapVector(bitmap, offsetX, offsetY, tilt = 0){
+for(let y=0; y<bitmap.length; y++){
+for(let x=0; x<bitmap[y].length; x++){
+if(bitmap[y][x]===1){
+const yShift = Math.round(tilt * (x - bitmap[y].length/2));
+ctx.fillStyle = "black";
+ctx.fillRect(
+offsetX + x*cellSize,
+offsetY + (y+yShift)\*cellSize,
+pixelSize,
+pixelSize
+);
+}
+}
+}
+}
+
+let tilt = 0;
+canvas.addEventListener("mousemove", e=>{
+const rect = canvas.getBoundingClientRect();
+const mouseY = e.clientY - rect.top;
+const ratio = mouseY / canvas.height;
+tilt = (ratio - 0.5) \* 1.0;
+});
+
+function animate(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+drawBitmapVector(headBase, 80, 20, tilt);
+drawBitmapVector(base, 80, 20 + headBase.length\*cellSize, 0);
+requestAnimationFrame(animate);
+}
+animate();
+
+</script>
