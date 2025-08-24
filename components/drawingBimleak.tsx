@@ -40,13 +40,13 @@ const letters: number[][] = [
   [1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 1],
   // E (4x7)
   [1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1],
-  // A (5x7)
-  [0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1],
+  // A (4x7)
+  [0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 1],
   // K (5x7)
   [1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1],
 ]
 
-const letterWidths = [4, 3, 5, 3, 4, 5, 5]
+const letterWidths = [4, 3, 5, 3, 4, 4, 5]
 const letterHeight = 5
 
 function drawBimleak(
@@ -128,7 +128,7 @@ export default function LogoBimleak() {
     <section className="flex w-full flex-col items-start justify-center">
       <canvas
         ref={canvasRef}
-        className="w-full max-w-[500px] bg-transparent"
+        className="w-full bg-transparent"
         style={{ imageRendering: 'pixelated', height: '120px' }}
       />
       <p className="text-base leading-7 text-gray-500 sm:text-lg dark:text-gray-400">
