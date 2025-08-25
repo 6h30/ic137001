@@ -1,8 +1,8 @@
 backend:
-   name: github
-   repo: '6h30/ic137001'
-   branch: fire-dev     
-   base_url: 'https://decap.omdstudio.art'                    
+  name: github
+  repo: '6h30/ic137001'
+  branch: fire-dev         
+  base_url: 'https://decap.omdstudio.art'             
 
 media_folder: "public/static/images" 
 public_folder: "/static/images"      
@@ -17,11 +17,26 @@ collections:
     extension: "mdx"
     fields:
       - { name: "title", label: "Title", widget: "string" }
+      - { name: "slug", label: "Slug", widget: "string", hint: "Nhập slug không dấu, ví dụ: bai-viet-khong-dau" }
       - { name: "date", label: "Date", widget: "datetime" }
       - { name: "tags", label: "Tags", widget: "list", default: [] }
       - { name: "draft", label: "Draft", widget: "boolean", default: false }
-      - { name: "authors", label: "Authors", widget: "list", default: [] }
-      - { name: "layout", label: "Layout", widget: "string", default: "PostLayout" }
+      - name: "authors"
+        label: "Authors"
+        widget: "select"
+        multiple: true # Cho phép chọn nhiều tác giả
+        options: # Danh sách tác giả cố định
+          - { label: "ductruong", value: "ductruong" }
+          - { label: "namtran", value: "namtran" }
+          - { label: "viettran", value: "viettran" }
+        default: [] 
+      - name: "layout"
+        label: "Layout"
+        widget: "select"
+        options:
+          - { label: "Post Layout", value: "PostLayout" }
+          - { label: "Simple Layout", value: "PostSimple" }
+        default: "PostLayout"
       - { name: "summary", label: "Summary", widget: "text" }
       - label: "Appendix"
         name: "appendix"
