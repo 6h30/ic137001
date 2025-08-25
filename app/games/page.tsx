@@ -109,7 +109,7 @@ export default function Game() {
           <h3 className={styles.h3}>sử dụng HTML5,</h3>
           <h3 className={styles.h3}>
             ...bởi{' '}
-            <Link href="https://codepen.io/FRADAR" target="_blank" className={styles.h3}>
+            <Link href="https://codepen.io" target="_blank" className={styles.h3}>
               dcviet
             </Link>
           </h3>
