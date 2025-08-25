@@ -6,7 +6,7 @@ const siteMetadata = {
   description: 'Viết về Bim, Revit API (C#) và .. gì đó',
   // language: 'en-us',
   language: 'vi-VN',
-  theme: 'system', // system, dark or light
+  theme: 'light', // system, dark or light
   siteUrl: 'https://bimleak.dev',
   siteRepo: 'https://github.com/6h30/ic137001',
   siteLogo: `${process.env.BASE_PATH || ''}/static/images/logo.png`,
