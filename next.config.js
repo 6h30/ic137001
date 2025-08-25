@@ -23,6 +23,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 //   font-src 'self';
 //   frame-src giscus.app
 // `
+// img-src 'self' blob: data: https://*.google.com https://*.googlesyndication.com https://*.gstatic.com https://ep1.adtrafficquality.google https://images.spiderum.com https://lh3.googleusercontent.com https://avatars.githubusercontent.com;
 
 const ContentSecurityPolicy = `
   default-src 'self';
@@ -30,7 +31,7 @@ const ContentSecurityPolicy = `
   script-src-elem 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://unpkg.com https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google https://analytics.umami.is https://www.googletagmanager.com https://fpyf8.com https://vaimucuvikuwu.net https://e2ertt.com giscus.app https://api.github.com blob:;
   worker-src 'self' blob:;
   style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-  img-src 'self' blob: data: https://*.google.com https://*.googlesyndication.com https://*.gstatic.com https://ep1.adtrafficquality.google https://images.spiderum.com https://lh3.googleusercontent.com https://avatars.githubusercontent.com;
+  img-src * blob: data:;
   font-src 'self' https://fonts.gstatic.com https://i.imgur.com;
   connect-src 'self' 'unsafe-eval' https://unpkg.com https://cdn.jsdelivr.net https://ep1.adtrafficquality.google https://ep2.adtrafficquality.google https://pagead2.googlesyndication.com https://www.google.com https://*.googlesyndication.com https://tpc.googlesyndication.com https://analytics.umami.is https://*.google-analytics.com https://www.googletagmanager.com https://fpyf8.com https://vaimucuvikuwu.net https://e2ertt.com giscus.app https://api.github.com;
   media-src 'self' *.s3.amazonaws.com;;
