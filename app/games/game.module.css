@@ -52,7 +52,9 @@
 }
 
 .gameOverMenu {
-  visibility: hidden;
+  /* visibility: hidden; */
+  position: absolute;
+  z-index: 10;
 }
 
 .h1 {
