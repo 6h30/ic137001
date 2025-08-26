@@ -17,6 +17,7 @@ export default function Game() {
     setIsGameOver(false)
     setScore(0)
     setIsFirstRun(false)
+
     const canvas = canvasRef.current
     if (canvas) {
       const ctx = canvas.getContext('2d')
@@ -28,7 +29,7 @@ export default function Game() {
         })
       }
     }
-  }, [setScore, setIsGameOver, setIsFirstRun]) // Include state setters as dependencies
+  }, [setScore, setIsGameOver, setIsFirstRun])
 
   const reset = useCallback(() => {
     setIsGameOver(false)
@@ -45,22 +46,10 @@ export default function Game() {
         })
       }
     }
-  }, [setScore, setIsGameOver, setIsFirstRun]) // Include state setters as dependencies
+  }, [setScore, setIsGameOver, setIsFirstRun])
 
   useEffect(() => {
-    // Initialize game on mount
-    const canvas = canvasRef.current
-    if (canvas) {
-      const ctx = canvas.getContext('2d')
-      if (ctx) {
-        initGame(canvas, ctx, {
-          onScoreUpdate: setScore,
-          onGameOver: () => setIsGameOver(true),
-          onFirstRunUpdate: setIsFirstRun,
-        })
-      }
-    }
-
+    // Set up keyboard event listeners only
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'ArrowLeft') {
         setPlayerDirection('left', true)
@@ -89,7 +78,7 @@ export default function Game() {
       document.removeEventListener('keydown', handleKeyDown)
       document.removeEventListener('keyup', handleKeyUp)
     }
-  }, [isFirstRun, isGameOver, init, reset]) // Include necessary dependencies
+  }, [isFirstRun, isGameOver, init, reset])
 
   const shareLinks = getShareLinks(score)
 

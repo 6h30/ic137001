@@ -4,10 +4,17 @@
 //     onGameOver: () => void;
 //   }
 
-interface GameCallbacks {
+// interface GameCallbacks {
+//   onScoreUpdate: (score: number) => void
+//   onGameOver: () => void
+//   onFirstRunUpdate: (isFirstRun: boolean) => void // Thêm callback cho isFirstRun
+// }
+
+// Thêm interface cho callbacks
+export interface GameCallbacks {
   onScoreUpdate: (score: number) => void
   onGameOver: () => void
-  onFirstRunUpdate: (isFirstRun: boolean) => void // Thêm callback cho isFirstRun
+  onFirstRunUpdate: (isFirstRun: boolean) => void
 }
 
 const width = 422
@@ -398,6 +405,20 @@ export function initGame(
     }
   }
 
+  // function gameOver() {
+  //   platforms.forEach((p) => {
+  //     p.y -= 12
+  //   })
+
+  //   if (player.y > height / 2 && flag === 0) {
+  //     player.y -= 8
+  //     player.vy = 0
+  //   } else if (player.y < height / 2) flag = 1
+  //   else if (player.y + player.height > height) {
+  //     callbacks.onGameOver()
+  //   }
+  // }
+
   function gameOver() {
     platforms.forEach((p) => {
       p.y -= 12
@@ -451,6 +472,7 @@ export function resetGame(
   }
 
   callbacks.onFirstRunUpdate(false) // Đảm bảo isFirstRun là false sau khi reset
+
   initGame(canvas, ctx, callbacks)
 }
 

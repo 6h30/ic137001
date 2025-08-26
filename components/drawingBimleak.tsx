@@ -28,7 +28,7 @@ function useResponsivePixel() {
   return config
 }
 
-// chữ bitmap giữ nguyên như bạn đưa
+// chữ bitmap
 const letters: number[][] = [
   // B (5x7)
   [1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0],
