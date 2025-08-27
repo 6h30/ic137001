@@ -1,0 +1,60 @@
+---
+title: Cổng thông tin web Autodesk Construction Cloud
+date: 2025-07-27T03:00:17.628Z
+tags: ['bim-manager']
+draft: false
+authors: ['ductruong']
+layout: PostLayout
+summary: Khám phá cổng thông tin web Autodesk Construction Cloud.
+appendix: []
+---
+
+Như chúng ta đã thấy trong vài video trước, một trong những lợi ích lớn nhất của việc sử dụng BIM Collaborate Pro là nó cho phép bạn truy cập vào tính năng chia sẻ công việc dựa trên đám mây khi làm việc trong Revit hoặc các chức năng tương tự trong Civil 3D và Plant 3D. Tuy nhiên, BIM Collaborate Pro còn có nhiều điều hơn thế. Và một tính năng thực sự mạnh mẽ khác là cổng thông tin web trực tuyến và đặc biệt là **trình xem tài liệu** được tích hợp trong cổng thông tin này.
+
+Trình xem này hỗ trợ hàng trăm định dạng tệp, và điều tôi muốn làm bây giờ là đăng nhập bạn với tư cách là một trong những người dùng dự án của tôi và chỉ cho bạn một số chức năng cơ bản của trình xem web này. Để làm theo, bạn cần có quyền truy cập vào ít nhất một dự án BIM Collaborate và cần có ít nhất quyền **truy cập xem (view access)** đối với dự án đó. Nếu bạn có quyền truy cập cấp cao hơn, bạn sẽ có quyền truy cập vào nhiều chức năng hơn, nhưng bạn cần ít nhất quyền truy cập xem để có thể sử dụng trình xem.
+
+<TOCInline toc={props.toc} exclude="" />
+
+## Hướng dẫn sử dụng và điều hướng
+
+Để bắt đầu, bạn hãy mở một trình duyệt web. Cách dễ nhất để truy cập vào tài khoản của bạn là gõ **acc.autodesk.com**. Trang này sẽ đưa bạn đến trang chính, và nếu bạn chưa đăng nhập, nó sẽ yêu cầu bạn đăng nhập trước. Tôi sẽ đăng nhập bằng tài khoản của một người dùng là thành viên của nhóm dự án mở rộng của tôi. Tên anh ấy là Shad, và tôi sẽ nhập tên người dùng rồi mật khẩu của anh ấy.
+
+Như bạn có thể thấy, nó đưa chúng ta đến danh sách các dự án mà Shad có quyền truy cập, là hai dự án: **RET** và **Nadia’s Garden**. Hãy cùng xem Shad có thể làm gì trong mỗi dự án này.
+
+Tôi sẽ nhấp vào **RET** trước, và nó sẽ tải dự án. Nó sẽ đưa tôi đến mô-đun **Docs** trong Autodesk Construction Cloud và liệt kê một loạt các thư mục ở phía bên phải. Bạn có thể thấy chúng ta có **Project Files** và sau đó là **Architecture**. Trong thư mục Architecture, có một tệp duy nhất.
+
+## Trình xem tệp và các tính năng
+
+Tôi muốn bạn để ý đến phần đuôi tệp. Tệp này có đuôi là **.rvt**, hay nói cách khác, đây là một tệp Revit. Shad là thành viên của nhóm kỹ sư xây dựng dân dụng, anh ấy không có phần mềm Revit trên máy tính, cũng không có giấy phép Revit. Tuy nhiên, vì chúng ta đã cấp cho anh ấy quyền truy cập vào thư mục này, anh ấy có thể nhấp trực tiếp vào tệp này, và thay vì khởi chạy phần mềm Revit trên máy tính để bàn, nó sẽ tải tệp Revit này trực tiếp trên trình duyệt web.
+
+Đây không phải là tệp Revit trực tiếp (live Revit file). Đây là một **phiên bản đã được xuất bản (published version)** của tệp. Đây là phiên bản cuối cùng đã được lưu và xuất bản từ nhóm kiến trúc, nhưng giờ đây Shad hoặc bất kỳ ai có quyền truy cập đều có thể xem tệp này, di chuyển, truy vấn thông tin, đo đạc, thực hiện các ghi chú và đánh dấu, v.v.
+
+Việc điều hướng khá đơn giản. Có một biểu tượng bàn tay nhỏ, chúng ta có thể kéo để căn chỉnh lại màn hình. Bạn có thể lăn chuột để phóng to, hoặc lăn ngược lại để thu nhỏ. Bạn sẽ thấy một bản đồ nhỏ xuất hiện với vùng màu đỏ hiển thị khu vực bạn đang phóng to. Bạn có thể kéo vùng màu đỏ đó đến các vị trí khác để thay đổi khu vực bạn đang xem.
+
+Dưới đây là một thanh công cụ nhỏ, có một menu mở rộng với một số điều khiển phóng to bổ sung. Nút ở giữa này là **phóng to vừa màn hình (zoom to fit)** với phím tắt là **F**. Ngoài ra còn có công cụ **Đo lường (Measure)**, và một số công cụ khác như **Cài đặt (Settings)** và **Thuộc tính (Properties)**.
+
+## Khả năng truy vấn thông tin
+
+Tôi muốn bạn thấy sức mạnh của công cụ Thuộc tính, vì khi bạn phóng to trong tệp, bạn không chỉ có thể nhìn xung quanh, mà còn có thể làm nổi bật các đối tượng bằng **Con trỏ (Pointer)**. Sau khi làm nổi bật một đối tượng, bạn có thể nhấp để chọn nó, và một cửa sổ nổi nhỏ sẽ hiển thị thông tin về đối tượng đó.
+
+Ví dụ, nó sẽ cho tôi biết thông tin về vách ngăn này, hoặc có thể là thiết bị vệ sinh này, hoặc cánh cửa này. Bạn sẽ thấy thông tin về các đối tượng này giống hệt như khi bạn đang trong tệp Revit và nhấp trực tiếp vào chúng, nhưng ở đây không cần phần mềm Revit. Chúng ta chỉ đơn giản làm điều này trong một trình xem trên trình duyệt web.
+
+## Các công cụ khác và khả năng tương thích
+
+Ở phía bên trái là các biểu tượng, và một trong số đó là khu vực **Tấm bản vẽ & Góc nhìn (Sheets & Views)**. Khi tôi mở rộng nó, bạn sẽ thấy rằng ngoài bản vẽ mặt bằng chúng ta đang xem, chúng ta còn có quyền truy cập vào một số tấm bản vẽ khác nữa. Có bản vẽ mặt đứng, các bảng thống kê, một trang bìa, và một bản vẽ mặt bằng công trường.
+
+Trong tất cả các bản vẽ này, bạn có thanh công cụ ở phía bên phải với một số **công cụ Đánh dấu (Markup)**. Công cụ đầu tiên cho phép bạn sử dụng bút chì để vẽ các đánh dấu tự do. Bạn có thể dùng bút dạ để làm nổi bật các khu vực trên màn hình. Bạn có thể thay đổi màu sắc của bút hoặc bút dạ. Bạn có thể vẽ các hình đa giác, chú thích, đám mây, thêm văn bản và các hình dạng tiêu chuẩn khác như hình tròn và hình chữ nhật. Ngoài ra còn có nút **Hoàn tác (Undo)** và **Làm lại (Redo)**.
+
+Cuối cùng, trên thanh công cụ, có một vài nút khác. Tôi sẽ quay lại **Góc nhìn Mặt bằng (Floor Plan View)**. Ở góc nhìn này, bạn sẽ thấy hai nút khác. Tôi sẽ chỉ cho bạn công cụ **Vị trí 2D (2D Location)** trong một video sau, nhưng nút này sẽ cho phép tôi chuyển sang **góc nhìn 3D**. Bạn có thể thấy nó đã thay đổi trên màn hình, và bây giờ nếu tôi kéo chuột, tôi có thể xoay nó trong không gian 3D. Điều thú vị là nó vẫn là một bản vẽ mặt bằng, nhưng tôi có thể xoay nó ở dạng 3D.
+
+Tôi sẽ thoát khỏi trình xem. Điều đó đưa chúng ta trở lại danh sách dự án. Và đó là tất cả bên trong một tệp Revit. Nhưng tôi muốn cho bạn thấy rằng trình xem này hỗ trợ nhiều định dạng tệp khác.
+
+## Hỗ trợ đa định dạng tệp
+
+Tôi sẽ chuyển dự án. Tôi có thể làm điều đó với menu thả xuống ở đầu màn hình. Tôi sẽ chuyển sang dự án **Nadia’s Garden**. Khi tôi đến đây, bạn sẽ thấy một cấu trúc thư mục khác. Tôi đang ở trong thư mục **Civil Design**, và nó chứa một số tệp **DWG**, tức là tệp AutoCAD. Tôi có thể nhấp vào một trong số chúng, và nó hoạt động tương tự. Tệp này được thu nhỏ khá xa, nhưng tôi có thể bắt đầu phóng to. Tôi có thể mở Thuộc tính, nhấp vào một đối tượng, và nó sẽ cho tôi biết các thuộc tính về đối tượng mà tôi đã nhấp vào.
+
+Có một tệp tốt hơn một chút ở đây, **site layout**. Ở đây, bạn có thể thấy một góc nhìn thú vị hơn, và một lần nữa, chúng ta có thể chọn các đường nét riêng lẻ và xem thuộc tính, thực hiện các đánh dấu, v.v. Đây là một tệp AutoCAD so với tệp Revit, nhưng bạn có thể thấy chúng ta có nhiều chức năng tương tự.
+
+Bây giờ, tôi muốn cho bạn xem một định dạng tệp nữa. Tôi sẽ vào thư mục **Shared**, và sau đó là thư mục **Architecture**. Tôi có một tệp **PDF** ở đây, và khi tôi nhấp vào nó, nó cũng sẽ mở trong trình xem. Mặc dù đây là một tệp PDF, tôi thực sự có thể chạm vào các đối tượng riêng lẻ bên trong tệp PDF này. Nó đang xử lý tệp PDF giống như cách nó xử lý tệp Revit hoặc tệp DWG. Nó cho phép tôi truy cập vào các đối tượng riêng lẻ và bất kỳ thuộc tính nào chúng có, cho phép tôi đánh dấu chúng, v.v.
+
+Nếu bạn có quyền truy cập vào một hoặc nhiều dự án trong Autodesk Construction Cloud, tôi khuyên bạn nên dành một chút thời gian nhấp vào từng tệp bạn tìm thấy ở đây. Trình xem này hỗ trợ hàng chục định dạng tệp khác nhau, vì vậy hãy thử nó trên càng nhiều tệp khác nhau càng tốt. Tôi nghĩ bạn sẽ thấy rằng trình xem này là một cách rất mạnh mẽ để khám phá một dự án mà không cần phải có phần mềm, hoặc để chia sẻ tệp từ một dự án với những người bên ngoài không nhất thiết phải có phần mềm đó.
