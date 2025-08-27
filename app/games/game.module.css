@@ -1,5 +1,5 @@
 /* app/games/game.module.css */
-@import url('https://fonts.googleapis.com/css?family=Gloria+Hallelujah');
+@import url('https://fonts.googleapis.com/css2?family=Mynerve&display=swap');
 
 .container {
   height: 552px;
@@ -32,7 +32,7 @@
   padding: 0;
   line-height: 47px;
   margin: 0 0 0 5px;
-  font-family: 'Gloria Hallelujah', cursive;
+  font-family: 'Mynerve', cursive;
 }
 
 .sprite {
@@ -48,7 +48,7 @@
   top: 0;
   left: 0;
   z-index: 2;
-  font-family: 'Gloria Hallelujah', cursive;
+  font-family: 'Mynerve', cursive;
 }
 
 .gameOverMenu {
@@ -89,17 +89,17 @@
   left: 50%;
   bottom: 50px;
   margin-left: -53px;
-  font-family: 'Gloria Hallelujah', cursive;
+  font-family: 'Mynerve', cursive;
 }
 
 .buttonTweet {
-  composes: button;
+  /* composes: button; */
   bottom: 100px;
   background-position: 0 -90px;
 }
 
 .buttonFb {
-  composes: button;
+  /* composes: button; */
   bottom: 150px;
   background-position: 0 -60px;
 }
@@ -110,7 +110,7 @@
   bottom: 0;
   margin: 0;
   color: green;
-  font-family: 'Gloria Hallelujah', cursive;
+  font-family: 'Mynerve', cursive;
 }
 
 .key {
@@ -122,11 +122,11 @@
 }
 
 .keyLeft {
-  composes: key;
+  /* composes: key; */
   background-position: -92px -621px;
 }
 
 .keyRight {
-  composes: key;
+  /* composes: key; */
   background-position: -92px -641px;
 }
