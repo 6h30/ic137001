@@ -23,7 +23,7 @@
   position: absolute;
   top: -3px;
   left: 0;
-  z-index: -1;
+  /* z-index: -1; */
   border-image: url('https://i.imgur.com/5BBsR.png') 100 5 round;
 }
 
