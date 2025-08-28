@@ -9,46 +9,90 @@ summary: Markup cho phép bạn thêm ghi chú, ký hiệu, hình vẽ nguệch 
 appendix: []
 ---
 
-Markup cho phép bạn thêm ghi chú, ký hiệu, hình vẽ nguệch ngoạc và phác thảo trực tiếp lên các bản xem khác nhau trong Online Viewer. Đây là một cách tuyệt vời để bạn để lại bình luận, ghi chú, hoặc chỉ đơn giản là các tham chiếu khi xem lại một bộ tài liệu.
+**Hướng dẫn sử dụng tính năng Markup trong mô-đun Docs của Autodesk Construction Cloud**
 
-Một điều cần lưu ý là tính năng Markup chỉ có sẵn trong mô-đun **Docs**. Ví dụ, hiện tại tôi đang ở trong **Design Collaboration** và tôi khá thất vọng vì chúng ta không thể thực hiện Markup ở đây. Tôi sẽ chỉ cho bạn thấy một cách nhanh chóng.
+Tính năng **Markup** trong **Autodesk Construction Cloud (ACC)** cho phép người dùng thêm ghi chú, ký hiệu, hình vẽ, hoặc phác thảo trực tiếp lên các bản xem 2D trong **Online Viewer**, hỗ trợ cộng tác và ghi chú hiệu quả trong các dự án BIM. Bài viết này cung cấp hướng dẫn kỹ thuật chi tiết về cách sử dụng Markup trong mô-đun **Docs**, bao gồm cách truy cập, phân loại, và chỉnh sửa các đánh dấu, cùng với sự khác biệt giữa Markup và Issues. Ví dụ sẽ được minh họa qua tài khoản người dùng “Howie” trong dự án **KinetEco**.
 
-Khi ở trong Design Collaboration, tôi có một bản vẽ mặt bằng ở đây. Bạn sẽ thấy tôi chỉ có một loạt công cụ ở phía dưới, không có thanh công cụ nào ở bên phải. Để thực hiện các Markup, bạn cần có thanh công cụ ở phía bên phải đó.
+**Lưu ý**: Tính năng Markup chỉ khả dụng trong mô-đun **Docs**, không hỗ trợ trong **Design Collaboration** do sự khác biệt về giao diện và công cụ.
 
 <TOCInline toc={props.toc} exclude="" />
 
-## Truy cập và phân loại Markups
+## **Truy cập mô-đun Docs và tính năng Markup**
 
-Vì vậy, tôi sẽ chuyển sang mô-đun **Docs** bằng cách sử dụng bộ chọn mô-đun ở đây và chọn Docs. Nếu bạn đã xem bài viết trước, bạn sẽ biết có một chút khác biệt về cách đặt tên giữa mô-đun Docs và Design Collaboration.
+1. **Đăng nhập vào Autodesk Construction Cloud**
+   - Truy cập **https://acc.autodesk.com** và đăng nhập bằng tài khoản Autodesk (ví dụ: tài khoản “Howie”).
+   - Danh sách các dự án được cấp quyền sẽ hiển thị (ví dụ: **KinetEco**).
 
-Trong Docs, bạn sẽ thấy tên các tệp tin. Tôi đang đăng nhập với tư cách là Howie và anh ấy có quyền truy cập vào thư mục **Architecture**. Bạn sẽ thấy một danh sách các tệp tin trong thư mục này. Có một cột **Markup** ngay đây. Bạn sẽ nhận thấy bên cạnh tên tệp "KinetEco Admin Building" có một vài ký hiệu. Thực ra, tất cả các tệp đều có các ký hiệu này.
+![use](https://images.spiderum.com/sp-images/)
 
-Có một ký hiệu gọi là **"Personal Markups"** (Đánh dấu cá nhân) và một ký hiệu khác là **"Published Markups"** (Đánh dấu đã xuất bản). Bạn sẽ thấy biểu tượng Published Markups được làm nổi bật, và khi tôi di chuột qua, nó hiển thị "có ba đánh dấu đã xuất bản." Biểu tượng Personal Markups thì bị mờ đi và nói "không có đánh dấu cá nhân nào."
+2. **Chuyển sang mô-đun Docs**
+   - Sử dụng bộ chọn mô-đun ở đầu giao diện để chuyển từ **Design Collaboration** (hoặc mô-đun khác) sang **Docs**.
+   - Trong **Docs**, cấu trúc thư mục của dự án sẽ hiển thị (ví dụ: thư mục **Architecture** chứa các tệp như “KinetEco Admin Building”).
 
-- **Published Markups:** Những đánh dấu này hiển thị cho bất kỳ ai trong nhóm dự án. Nếu bạn xuất bản một đánh dấu, bạn đang chia sẻ nó với toàn bộ nhóm.
-- **Personal Markups:** Những đánh dấu này chỉ hiển thị cho riêng bạn. Nếu bạn chỉ muốn để lại một ghi chú cho bản thân để sử dụng trong tương lai, bạn có thể tạo một đánh dấu cá nhân và không ai khác sẽ thấy nó.
+![use](https://images.spiderum.com/sp-images/)
 
-## Sử dụng và chỉnh sửa Markups
+3. **Xác định và phân loại Markup**
+   - Trong danh sách tệp, cột **Markup** hiển thị hai loại đánh dấu:
+     - **Personal Markups (Đánh dấu cá nhân)**: Chỉ hiển thị cho người tạo, lý tưởng để ghi chú cá nhân.
+     - **Published Markups (Đánh dấu đã xuất bản)**: Hiển thị cho toàn bộ nhóm dự án, cho phép cộng tác chung.
+   - Ví dụ: Tệp “KinetEco Admin Building” có biểu tượng **Published Markups** nổi bật, cho biết có ba đánh dấu đã xuất bản, trong khi **Personal Markups** bị mờ (không có đánh dấu cá nhân).
 
-Để xem các đánh dấu đã xuất bản này, chỉ cần nhấp vào tệp và nó sẽ đưa tôi đến cửa sổ Viewer. Sau đó, tôi chỉ cần tìm đến bản xem có các đánh dấu này.
+![use](https://images.spiderum.com/sp-images/)
 
-Bạn cần lưu ý rằng Markup chỉ có sẵn cho các bản xem **2D**. Vì vậy, nếu tôi nhấp vào biểu tượng "Sheets and Views" (Các Tờ và Bản xem) ở bên trái, bảng điều khiển sẽ mở rộng. Tôi nhấp vào tùy chọn **2D** và có thể xem tất cả các tờ trong dự án này.
+## **Sử dụng và chỉnh sửa Markup**
 
-Hãy nhấp vào tờ **"A1 - Floor Plans"** và phóng to bản vẽ mặt bằng tầng một. Lúc này, bạn sẽ thấy một thanh công cụ đầy đủ các công cụ Markup. Chúng ta có thể sử dụng các công cụ như văn bản (Text) hoặc bút vẽ (Pen).
+1. **Mở tệp trong Online Viewer**
+   - Nhấp vào tệp (ví dụ: “KinetEco Admin Building”) để mở trong **Online Viewer**.
+   - Chọn tab **Sheets and Views** ở bên trái để mở rộng danh sách các bản xem 2D (ví dụ: **A1 - Floor Plans**).
+   - Nhấp vào bản vẽ (như mặt bằng tầng một) và phóng to để bắt đầu sử dụng công cụ Markup.
 
-Ví dụ, Howie có thể để lại một ghi chú cho chính mình ở khu vực này. Bạn có thể thay đổi kích thước văn bản và di chuyển nó đến bất kỳ vị trí nào bạn muốn.
+![use](https://images.spiderum.com/sp-images/)
 
-Một điểm quan trọng khác là **bất kỳ ai cũng có thể chỉnh sửa các đánh dấu sau khi chúng được xuất bản.** Ví dụ, đánh dấu này được tạo bởi tôi, Paul Aubin, nhưng hiện tại tôi đang đăng nhập với tư cách là Howie và Howie có thể thay đổi nó. Điều này cho thấy một đánh dấu đã xuất bản là "tài sản chung." Bất kỳ ai cũng có thể truy cập, xóa, hoặc thay đổi nó.
+2. **Sử dụng công cụ Markup**
+   - Thanh công cụ Markup xuất hiện ở bên phải giao diện, bao gồm:
+     - **Pen (Bút vẽ)**: Vẽ tự do hoặc phác thảo.
+     - **Text (Văn bản)**: Thêm ghi chú văn bản, với tùy chọn thay đổi kích thước và vị trí.
+     - **Shapes (Hình dạng)**: Vẽ hình chữ nhật, hình tròn, hoặc đám mây chú thích.
+     - **Highlight (Bút dạ)**: Làm nổi bật khu vực cụ thể.
+     - **Color Options**: Tùy chỉnh màu sắc cho bút hoặc văn bản.
+     - **Undo/Redo**: Quản lý thao tác chỉnh sửa.
+   - Ví dụ: Người dùng “Howie” có thể thêm ghi chú văn bản tại khu vực lễ tân và điều chỉnh vị trí để phù hợp.
 
-## Markup và Issues
+![use](https://images.spiderum.com/sp-images/)
 
-Một công cụ khác là **"Issues"** (Vấn đề), nhưng nó không giống với Markup. Chúng ta sẽ nói về Issues trong một bài viết khác.
+3. **Quản lý và chỉnh sửa Markup**
+   - **Published Markups**: Bất kỳ thành viên nào trong nhóm đều có thể chỉnh sửa, xóa, hoặc cập nhật các đánh dấu đã xuất bản. Ví dụ, một Markup do “Paul Aubin” tạo có thể được “Howie” chỉnh sửa, thể hiện tính chất cộng tác của tính năng này.
+   - **Personal Markups**: Chỉ người tạo có thể xem và chỉnh sửa, phù hợp cho ghi chú cá nhân hoặc nhắc nhở.
+   - Để xem các Markup hiện có, điều hướng đến bản xem 2D tương ứng trong **Sheets and Views**.
 
-- **Markup** chỉ là các ghi chú hoặc tin nhắn đơn giản, không phải là lời kêu gọi hành động. Chúng có thể là bất cứ thứ gì, một ghi chú bạn viết ở lề để nhớ sau này.
-- **Issue** là một lời kêu gọi hành động.
+![use](https://images.spiderum.com/sp-images/)
 
-## Markup trên các loại bản xem khác nhau
+## **Markup và Issues: Sự khác biệt**
 
-Markup hoạt động trên mọi loại bản xem 2D, bất kể nội dung của bản xem đó là gì. Ngay cả khi đó là một bản xem 3D được đưa vào một tờ (sheet), bạn vẫn có thể sử dụng các công cụ Markup vì nó được coi là một bản xem 2D trên một tờ đã xuất bản. Đây là cách giải quyết nếu bạn muốn thêm một Markup vào một bản xem 3D mà không thể thực hiện trực tiếp trong mô hình 3D.
+- **Markup**:
+  - Là ghi chú hoặc ký hiệu đơn giản, không yêu cầu hành động cụ thể.
+  - Phù hợp để ghi lại ý tưởng, nhận xét, hoặc tham chiếu trực tiếp trên bản vẽ 2D.
+  - Ví dụ: Ghi chú “Kiểm tra kích thước cửa” trên mặt bằng.
 
-Tóm lại, Markup là một công cụ khá đơn giản và dễ sử dụng. Hãy thử và làm quen với nó.
+- **Issues**:
+  - Là lời kêu gọi hành động, thường liên quan đến việc giải quyết vấn đề hoặc giao nhiệm vụ.
+  - Được quản lý riêng trong mô-đun **Issues** và sẽ được đề cập chi tiết trong các bài viết sau.
+
+## **Markup trên các bản xem 2D**
+
+- **Hỗ trợ mọi bản xem 2D**: Tính năng Markup hoạt động trên tất cả các bản xem 2D, bao gồm mặt bằng, mặt đứng, bảng thống kê, hoặc thậm chí bản xem 3D được xuất bản dưới dạng tờ (sheet).
+- **Giải pháp cho bản xem 3D**: Vì Markup không khả dụng trực tiếp trên mô hình 3D, bạn có thể sử dụng bản xem 3D đã được đưa vào sheet để thêm ghi chú, đảm bảo khả năng tương tác với nội dung 3D.
+
+## **Lưu ý**
+
+- **Hạn chế của Design Collaboration**: Mô-đun này không hỗ trợ thanh công cụ Markup, giới hạn ở các công cụ điều hướng và phân tích mô hình (như chế độ góc nhìn thứ nhất hoặc chia mặt cắt).
+- **Tương thích định dạng**: Markup hoạt động trên các tệp 2D như .rvt (Revit sheets), .dwg, hoặc .pdf, nhưng yêu cầu bản xem được xuất bản dưới dạng 2D.
+- **Hiệu suất**: Đảm bảo kết nối internet ổn định để lưu và đồng bộ các Markup, đặc biệt với **Published Markups** cần chia sẻ với nhóm.
+
+## **thực hành**
+
+- Thử tạo cả **Personal Markups** và **Published Markups** trên các bản vẽ 2D để làm quen với quy trình.
+- Kiểm tra khả năng chỉnh sửa các Markup đã xuất bản bằng cách đăng nhập với các tài khoản khác nhau trong cùng dự án.
+- Sử dụng các công cụ như **Text** và **Pen** để ghi chú chi tiết, kết hợp với các hình dạng để làm nổi bật khu vực quan tâm.
+
+![use](https://images.spiderum.com/sp-images/)
