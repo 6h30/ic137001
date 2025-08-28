@@ -1,0 +1,105 @@
+---
+title: Công cụ chia mặt cắt
+date: 2025-07-28T03:00:19.628Z
+tags: ['manager']
+draft: false
+authors: ['ductruong']
+layout: PostLayout
+summary: Tiếp tục tìm hiểu trình xem trực tuyến trong Design Collaboration.
+appendix: []
+---
+
+**Hướng dẫn sử dụng các tính năng nâng cao của trình xem trực tuyến trong Design Collaboration**
+
+Tiếp tục khám phá **Autodesk Construction Cloud (ACC)**, bài viết này tập trung vào các tính năng nâng cao của trình xem trực tuyến trong mô-đun **Design Collaboration**, đặc biệt là **công cụ chia mặt cắt (sectioning tools)** và **phân tách mô hình (explode model)**. Mặc dù nhiều tính năng này cũng khả dụng trong mô-đun **Docs**, **Design Collaboration** mang lại trải nghiệm vượt trội nhờ khả năng xử lý **mô hình tổng hợp** và hỗ trợ các bộ bản vẽ (sets). Bài viết sẽ cung cấp hướng dẫn kỹ thuật chi tiết, minh họa qua ví dụ từ người dùng “Jayden” trong dự án **KinetEco**.
+
+<TOCInline toc={props.toc} exclude="" />
+
+## **Hiểu về mô hình và bộ bản vẽ (Sets)**
+
+Trong **Design Collaboration**, các mô hình Revit (thường có đuôi .rvt) được tổ chức thành **sets** – tập hợp các tấm bản vẽ (sheets) và góc nhìn (views) được nhóm lại và xuất bản. Ví dụ, một set như **All Sheets** trong dự án **KinetEco** có thể bao gồm bản vẽ mặt bằng, mặt đứng, bảng thống kê, và chi tiết kỹ thuật của tòa nhà hành chính (admin building). Điều này cho phép người dùng chuyển đổi linh hoạt giữa chế độ xem 2D (bản vẽ) và 3D (mô hình tổng hợp).
+
+## **Chuyển đổi giữa bản vẽ 2D và mô hình 3D**
+
+1. **Truy cập mô-đun Design Collaboration**
+   - Đăng nhập vào **https://acc.autodesk.com** (ví dụ: với tài khoản “Jayden”).
+   - Chọn dự án **KinetEco** và chuyển sang mô-đun **Design Collaboration** thông qua bộ chọn mô-đun ở đầu giao diện.
+
+![use](https://images.spiderum.com/sp-images/)
+
+2. **Mở bản vẽ 2D hoặc mô hình 3D**
+   - Trong mô-đun **Docs**, bạn có thể mở từng tệp riêng lẻ (như .rvt). Tuy nhiên, trong **Design Collaboration**, nhấp vào **Project Model** để tải mô hình tổng hợp, bao gồm tất cả các thành phần như khu đất, tòa nhà hành chính, hoặc tháp.
+   - Để xem bản vẽ 2D, chọn một set như **All Sheets**, hiển thị các bản vẽ mặt bằng, mặt đứng, hoặc bảng thống kê.
+
+![use](https://images.spiderum.com/sp-images/)
+
+3. **Chuyển đổi sang chế độ góc nhìn thứ nhất**
+   - Trong bản vẽ 2D (ví dụ: mặt bằng khu vực lễ tân), nhấp vào **ghim (push pin)** để chọn một vị trí cụ thể (như quầy lễ tân).
+   - Xoay **hình nón** để định hướng góc nhìn, sau đó kích hoạt **First Person Mode** để chuyển sang chế độ điều hướng góc nhìn thứ nhất (xem bài viết trước).
+   - Để quay lại, nhấp **Back to Last View** hoặc sử dụng nút **Home** để đặt lại góc nhìn mặc định.
+
+![use](https://images.spiderum.com/sp-images/)
+
+4. **Truy cập mô hình 3D từ bản vẽ 2D**
+   - Từ bản vẽ 2D, nhấp vào **Project Model** để chuyển sang mô hình 3D. Trình xem sẽ ghi nhớ trạng thái trước đó (ví dụ: chế độ góc nhìn thứ nhất) và hiển thị lại thông báo hướng dẫn nếu cần.
+
+![use](https://images.spiderum.com/sp-images/)
+
+## **Sử dụng công cụ chia mặt cắt (Sectioning Tools)**
+
+Công cụ chia mặt cắt cho phép phân tích mô hình 3D bằng cách cắt qua các trục hoặc vùng cụ thể. Các bước triển khai:
+
+1. **Chuyển sang chế độ hình chiếu trục đo**
+   - Thoát chế độ góc nhìn thứ nhất bằng cách nhấp vào công cụ **Orbit (xoay)**.
+   - Sử dụng **View Cube** để điều chỉnh góc nhìn. Nhấp chuột phải vào View Cube và chọn **Orthographic (hình chiếu trục đo)** để xem toàn bộ mô hình ở chế độ không phối cảnh.
+
+![use](https://images.spiderum.com/sp-images/)
+
+2. **Tạo mặt cắt**
+   - Truy cập menu **Sectioning Tools** trong thanh công cụ. Chọn trục cắt (**x**, **y**, hoặc **z**).
+   - Ví dụ: Chọn trục **y** để tạo một mặt phẳng cắt. Một mặt phẳng sẽ xuất hiện, kèm theo **mũi tên** để di chuyển và **đường cong** để xoay mặt phẳng.
+   - Điều chỉnh mặt phẳng để song song với tòa nhà bằng cách kéo đường cong ngang. Di chuyển mặt phẳng để cắt qua các khu vực mong muốn (ví dụ: mặt cắt ngang qua sảnh).
+
+![use](https://images.spiderum.com/sp-images/)
+
+3. **Sử dụng tùy chọn Box**
+   - Chọn tùy chọn **Box** để tạo một mặt cắt 3D, bao quanh một vùng cụ thể của mô hình.
+   - Lưu ý: Tùy chọn này phức tạp hơn và yêu cầu điều chỉnh chính xác các giới hạn vùng cắt. Nếu không cần, quay lại góc nhìn trước bằng nút **Back to Last View**.
+
+![use](https://images.spiderum.com/sp-images/)
+
+## **Sử dụng công cụ phân tách mô hình (Explode Model)**
+
+Công cụ **Explode Model** cho phép tách các thành phần của mô hình để phân tích cấu trúc hoặc trình bày chi tiết. Các bước triển khai:
+
+1. **Kích hoạt Explode Model**
+   - Trong **Project Model**, chọn công cụ **Explode Model** từ thanh công cụ.
+   - Một thanh trượt sẽ xuất hiện, cho phép điều chỉnh mức độ phân tách.
+
+![use](https://images.spiderum.com/sp-images/)
+
+2. **Điều chỉnh mức độ phân tách**
+   - Kéo thanh trượt để tách các thành phần của mô hình (tương tự sơ đồ phân tách trong kỹ thuật hoặc hiệu ứng trong phim khoa học viễn tưởng).
+   - Hiệu ứng ban đầu nhẹ, nhưng tăng mức độ sẽ làm các thành phần tách rời rõ rệt hơn.
+
+![use](https://images.spiderum.com/sp-images/)
+
+3. **Tập trung vào thành phần cụ thể**
+   - Để phân tích chi tiết, tắt các thành phần không cần thiết (ví dụ: ẩn khu đất hoặc tòa nhà hành chính để tập trung vào tháp).
+   - Áp dụng **Explode Model** trên thành phần đã chọn (như tháp) để nghiên cứu cấu trúc hoặc cách lắp ráp.
+
+![use](https://images.spiderum.com/sp-images/)
+
+## **Lợi ích và ứng dụng**
+
+- **Chuyển đổi linh hoạt**: Khả năng chuyển đổi giữa bản vẽ 2D và mô hình 3D trong **Design Collaboration** giúp phân tích dự án toàn diện.
+- **Phân tích chi tiết**: Công cụ chia mặt cắt và phân tách mô hình hỗ trợ kiểm tra cấu trúc, xác định lỗi thiết kế, hoặc trình bày ý tưởng với các bên liên quan.
+- **Trải nghiệm trực quan**: Kết hợp chế độ góc nhìn thứ nhất, công cụ chia mặt cắt, và phân tách mô hình tạo ra trải nghiệm nhập vai, lý tưởng cho cộng tác đa ngành.
+
+## **thực hành**
+
+- Thử nghiệm các công cụ **Sectioning Tools** và **Explode Model** trên mô hình tổng hợp hoặc các set trong **Design Collaboration** để làm quen với cách điều khiển.
+- Tắt các thành phần không cần thiết để tối ưu hóa hiệu suất và tập trung vào khu vực quan tâm.
+- Kết hợp các công cụ như **Pan**, **Fit to View**, và **View Cube** để điều chỉnh góc nhìn một cách hiệu quả.
+
+![use](https://images.spiderum.com/sp-images/)

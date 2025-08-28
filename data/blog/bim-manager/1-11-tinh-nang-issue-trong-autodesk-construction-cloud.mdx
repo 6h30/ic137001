@@ -9,40 +9,129 @@ summary: Nếu bạn phát hiện ra một điều gì đó cần xử lý trong
 appendix: []
 ---
 
-Tính năng **Issues** (Vấn đề) trong Autodesk Construction Cloud có thể được hiểu là những ghi chú đánh dấu cần phải có hành động giải quyết. Nếu bạn phát hiện ra một điều gì đó cần xử lý trong mô hình khi xem trên trình duyệt đám mây, bạn có thể tạo một "issue". Bằng cách này, bạn sẽ gắn một dấu ghim (push pin) vào vị trí đó, điền chi tiết và chỉ định cho một người, một công ty hoặc một vai trò cụ thể chịu trách nhiệm. Bạn cũng có thể đặt ngày hết hạn để đảm bảo công việc được hoàn thành đúng hạn.
+**Hướng dẫn sử dụng tính năng Issues trong Autodesk Construction Cloud**
+
+Tính năng **Issues** trong **Autodesk Construction Cloud (ACC)** là công cụ mạnh mẽ để ghi nhận và quản lý các vấn đề cần hành động giải quyết trong các dự án BIM. Không giống như **Markup** (chỉ là ghi chú đơn giản), **Issues** được thiết kế để gắn kết với một vị trí cụ thể trong mô hình, chỉ định trách nhiệm, và theo dõi tiến độ giải quyết. Bài viết này cung cấp hướng dẫn kỹ thuật chi tiết về cách tạo, theo dõi, và quản lý Issues trong ACC, minh họa qua ví dụ từ người dùng “Jayden” trong dự án **KinetEco**.
 
 <TOCInline toc={props.toc} exclude="" />
 
-## **Cách người dùng theo dõi và xử lý các vấn đề được giao**
+## **Tổng quan về tính năng Issues**
 
-Có một vài cách để người nhận biết rằng có vấn đề được giao cho họ.
+**Issues** cho phép người dùng đánh dấu một vấn đề cần xử lý trong mô hình trên trình duyệt đám mây, gắn **dấu ghim (push pin)** tại vị trí cụ thể, điền chi tiết, chỉ định người hoặc vai trò chịu trách nhiệm, và đặt thời hạn hoàn thành. Tính năng này hỗ trợ quản lý dự án hiệu quả, đảm bảo các vấn đề được giải quyết đúng hạn và minh bạch.
 
-1.  **Tab "Issues" trong Docs Module:**
-    - Trong mô-đun **Docs**, bạn chỉ cần chọn tab **Issues**.
-    - Bạn sẽ thấy danh sách đầy đủ các vấn đề đang tồn đọng, bao gồm tên, ID, trạng thái, loại vấn đề và người được giao.
-    - Jayden có thể nhanh chóng lướt qua danh sách này để xem những vấn đề nào được giao cho cô ấy.
-    - Bạn có thể nhấp vào liên kết mô hình để xem vấn đề trong ngữ cảnh.
+**Yêu cầu để sử dụng Issues**:
 
-2.  **Mô-đun Insight (Dashboard):**
-    - Truy cập mô-đun **Insight** để đến trang tổng quan (dashboard).
-    - Nếu chưa tùy chỉnh, trang tổng quan sẽ có một thẻ (card) hiển thị các vấn đề nổi bật. Thẻ này mặc định hiển thị "Vấn đề của tôi" (My Issues) nhưng cũng có thể được chuyển sang "Vấn đề của công ty" (Company Issues) hoặc "Vấn đề của dự án" (Project Issues).
+- **Tài khoản Autodesk**: Đã kích hoạt và liên kết với ACC.
+- **Quyền truy cập mô-đun Docs**: Cần quyền **truy cập xem (view access)** để theo dõi Issues; quyền chỉnh sửa để tạo và cập nhật Issues.
+- **Giấy phép BIM Collaborate Pro**: Đảm bảo truy cập đầy đủ các tính năng cộng tác.
+- **Trình duyệt web tương thích**: Chrome, Firefox, hoặc Edge với kết nối internet ổn định.
 
-3.  **Thông báo qua Email:**
-    - Khi một vấn đề được giao, người nhận sẽ nhận được một email thông báo.
-    - Email này chứa chi tiết về vấn đề và một nút **"View issue"** (Xem vấn đề).
-    - Nhấp vào nút này sẽ đưa bạn trực tiếp đến trang chi tiết của vấn đề đó trong mô-đun **Docs**.
+## **Cách theo dõi và xử lý Issues**
 
-## **Cách tương tác và cập nhật vấn đề**
+Người dùng được giao Issues có thể theo dõi và quản lý chúng qua các phương pháp sau:
 
-- **Xem chi tiết:** Tại trang chi tiết vấn đề, bạn có thể xem trạng thái, loại và mô tả.
-- **Mở mô hình:** Bạn có thể nhấp vào liên kết để mở trình xem mô hình và xem vị trí của dấu ghim vấn đề.
-- **Thêm bình luận:** Ngay trong trình xem mô hình, bạn có thể thêm bình luận để hỏi thêm thông tin hoặc cung cấp phản hồi.
-- **Thay đổi trạng thái:** Bạn có thể thay đổi trạng thái của vấn đề (ví dụ: từ "Open" sang "In Review" hoặc "Pending"). Việc này sẽ tự động thay đổi màu sắc của dấu ghim và dòng vấn đề trong danh sách để dễ dàng theo dõi.
+1. **Tab Issues trong mô-đun Docs**
+   - Truy cập mô-đun **Docs** tại **https://acc.autodesk.com**.
+   - Chọn tab **Issues** để xem danh sách tất cả các vấn đề trong dự án, hiển thị các thông tin như:
+     - **ID**: Mã định danh duy nhất của Issue.
+     - **Tên**: Tiêu đề ngắn gọn của vấn đề.
+     - **Trạng thái**: Ví dụ, “Open,” “In Review,” hoặc “Closed.”
+     - **Loại vấn đề**: Ví dụ, “Building Code,” “Design Error,” hoặc “Construction Clash.”
+     - **Người được giao**: Tên hoặc vai trò chịu trách nhiệm.
+   - Người dùng (như “Jayden”) có thể lọc danh sách để xem các Issues được giao cho mình và nhấp vào liên kết mô hình để xem vị trí vấn đề trong **Online Viewer**.
 
-## **Cách tạo một vấn đề mới**
+![use](https://images.spiderum.com/sp-images/)
 
-1.  **Mở mô hình:** Trở lại tab **Files** và mở một mô hình, có thể là dạng 2D hoặc 3D.
-2.  **Chọn Issues:** Trong trình xem, chọn tính năng **Issues**.
-3.  **Tạo vấn đề:** Chọn loại vấn đề từ danh sách có sẵn (ví dụ: Building Code), sau đó đặt dấu ghim lên mô hình.
-4.  **Điền thông tin:** Điền tiêu đề, mô tả và chỉ định người chịu trách nhiệm. Bạn cũng có thể đặt ngày hết hạn và đính kèm tài liệu liên quan nếu cần.
-5.  **Lưu:** Sau khi hoàn tất, đóng cửa sổ vấn đề. Lần đăng nhập tiếp theo, người được giao sẽ nhận được thông báo và có thể bắt đầu xử lý.
+2. **Mô-đun Insight (Dashboard)**
+   - Truy cập mô-đun **Insight** để vào trang tổng quan dự án.
+   - Một thẻ (card) mặc định hiển thị **My Issues** (Vấn đề của tôi), liệt kê các Issues được giao cho người dùng hiện tại.
+   - Có thể chuyển đổi để xem **Company Issues** (Vấn đề của công ty) hoặc **Project Issues** (Vấn đề của dự án) thông qua tùy chọn trên thẻ.
+   - Tùy chỉnh dashboard để ưu tiên hiển thị các Issues quan trọng nếu cần.
+
+![use](https://images.spiderum.com/sp-images/)
+
+3. **Thông báo qua Email**
+   - Khi một Issue được giao, người nhận sẽ nhận được email thông báo chứa:
+     - Chi tiết vấn đề (tiêu đề, mô tả, thời hạn).
+     - Nút **View Issue** dẫn trực tiếp đến trang chi tiết Issue trong mô-đun **Docs**.
+   - Đảm bảo kiểm tra thư mục spam/thư rác nếu email không xuất hiện trong hộp thư đến.
+
+![use](https://images.spiderum.com/sp-images/)
+
+## **Tương tác và cập nhật Issues**
+
+1. **Xem chi tiết Issue**
+   - Trong tab **Issues** hoặc từ liên kết email, nhấp vào Issue để mở trang chi tiết.
+   - Trang chi tiết hiển thị:
+     - **Trạng thái**: Ví dụ, “Open,” “In Review,” hoặc “Pending.”
+     - **Loại vấn đề**: Phân loại vấn đề (như “Building Code”).
+     - **Mô tả**: Chi tiết về vấn đề và yêu cầu hành động.
+
+![use](https://images.spiderum.com/sp-images/)
+
+2. **Mở mô hình trong Online Viewer**
+   - Nhấp vào liên kết mô hình trong trang chi tiết để mở **Online Viewer**, hiển thị vị trí dấu ghim của Issue trên mô hình 2D hoặc 3D.
+
+![use](https://images.spiderum.com/sp-images/)
+
+3. **Thêm bình luận**
+   - Trong **Online Viewer**, sử dụng khung bình luận để:
+     - Hỏi thêm thông tin từ người tạo Issue.
+     - Cung cấp phản hồi hoặc cập nhật tiến độ.
+   - Bình luận được lưu và hiển thị trong lịch sử Issue, hỗ trợ giao tiếp nhóm.
+
+![use](https://images.spiderum.com/sp-images/)
+
+4. **Cập nhật trạng thái**
+   - Thay đổi trạng thái Issue (ví dụ: từ “Open” sang “In Review” hoặc “Closed”) trực tiếp trong trang chi tiết hoặc **Online Viewer**.
+   - Thay đổi trạng thái sẽ cập nhật màu sắc của dấu ghim và dòng Issue trong danh sách, giúp dễ dàng theo dõi tiến độ.
+
+![use](https://images.spiderum.com/sp-images/)
+
+## **Quy trình tạo một Issue mới**
+
+1. **Mở mô hình trong mô-đun Docs**
+   - Truy cập tab **Files** trong mô-đun **Docs** và chọn một tệp mô hình (2D hoặc 3D, ví dụ: “KinetEco Admin Building”).
+   - Mở mô hình trong **Online Viewer**.
+
+![use](https://images.spiderum.com/sp-images/)
+
+2. **Kích hoạt tính năng Issues**
+   - Trong **Online Viewer**, nhấp vào biểu tượng **Issues** trên thanh công cụ.
+
+![use](https://images.spiderum.com/sp-images/)
+
+3. **Tạo Issue**
+   - Chọn **loại vấn đề** từ danh sách thả xuống (ví dụ: “Building Code,” “Design Error”).
+   - Nhấp vào vị trí cụ thể trên mô hình để đặt **dấu ghim (push pin)**.
+   - Điền thông tin chi tiết:
+     - **Tiêu đề**: Mô tả ngắn gọn về vấn đề (ví dụ: “Kiểm tra khoảng cách cửa”).
+     - **Mô tả**: Chi tiết vấn đề và yêu cầu hành động.
+     - **Người được giao**: Chỉ định một cá nhân, vai trò, hoặc công ty chịu trách nhiệm.
+     - **Ngày hết hạn**: Đặt thời hạn hoàn thành (tùy chọn).
+     - **Tài liệu đính kèm**: Thêm hình ảnh, PDF, hoặc tài liệu liên quan nếu cần.
+
+![use](https://images.spiderum.com/sp-images/)
+
+4. **Lưu Issue**
+   - Nhấp **Save** để lưu Issue.
+   - Issue sẽ xuất hiện trong tab **Issues**, và người được giao sẽ nhận được thông báo qua email và dashboard.
+
+![use](https://images.spiderum.com/sp-images/)
+
+## **Lưu ý**
+
+- **Hỗ trợ mô hình 2D và 3D**: Issues có thể được tạo trên cả bản xem 2D (sheets) và mô hình 3D trong **Online Viewer**.
+- **Quyền truy cập**: Chỉ người dùng có quyền chỉnh sửa trong mô-đun **Docs** mới có thể tạo hoặc chỉnh sửa Issues. Người dùng với quyền xem chỉ có thể đọc và bình luận.
+- **Đồng bộ hóa**: Đảm bảo kết nối internet ổn định để lưu và đồng bộ Issues, đặc biệt khi làm việc với nhóm phân tán.
+- **Sự khác biệt với Markup**:
+  - **Markup**: Ghi chú đơn giản, không yêu cầu hành động, hỗ trợ cả **Personal** và **Published**.
+  - **Issues**: Lời kêu gọi hành động, gắn với vị trí cụ thể và theo dõi trạng thái.
+
+### **thực hành**
+
+- Thử tạo một Issue trên cả bản xem 2D và 3D để làm quen với quy trình đặt dấu ghim và điền thông tin.
+- Sử dụng tab **Issues** hoặc mô-đun **Insight** để theo dõi danh sách các vấn đề được giao và cập nhật trạng thái thường xuyên.
+- Kiểm tra email thông báo để đảm bảo không bỏ sót các Issues mới được giao.
+
+![use](https://images.spiderum.com/sp-images/)
