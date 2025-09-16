@@ -202,7 +202,7 @@ export default function ListLayoutWithTags({ posts, title }: ListLayoutProps) {
               {/* Thời gian Section */}
               <div className="col-span-2 flex flex-col">
                 <button
-                  className="text-filterTextActive flex cursor-pointer appearance-none flex-row gap-2 border-none bg-transparent pb-2"
+                  className="text-filterTextActive flex cursor-pointer appearance-none flex-row items-center gap-2 border-none bg-transparent pb-2"
                   onClick={toggleCollapseYear}
                 >
                   {/* Chevron Icon */}
@@ -289,7 +289,7 @@ export default function ListLayoutWithTags({ posts, title }: ListLayoutProps) {
               {/* Chủ đề Section */}
               <div className="col-span-2 flex flex-col">
                 <button
-                  className="text-filterTextActive flex cursor-pointer appearance-none flex-row gap-2 border-none bg-transparent pb-2"
+                  className="text-filterTextActive flex cursor-pointer appearance-none flex-row items-center gap-2 border-none bg-transparent pb-2"
                   onClick={toggleCollapseCategory}
                 >
                   {/* Chevron Icon for Chủ đề */}
@@ -487,7 +487,7 @@ export default function ListLayoutWithTags({ posts, title }: ListLayoutProps) {
                           </dd>
                         </dl>
                         <div className="space-y-5 xl:col-span-3">
-                          <div className="space-y-6">
+                          <div className="">
                             <div>
                               <h2 className="text-2xl leading-8 font-bold tracking-tight">
                                 <Link
