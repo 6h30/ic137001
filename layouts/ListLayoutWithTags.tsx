@@ -202,24 +202,25 @@ export default function ListLayoutWithTags({ posts, title }: ListLayoutProps) {
               {/* Thời gian Section */}
               <div className="col-span-2 flex flex-col">
                 <button
-                  className="text-filterTextActive flex cursor-pointer appearance-none flex-row gap-2 border-none bg-transparent pb-2"
+                  className="text-filterTextActive flex cursor-pointer appearance-none flex-row items-center gap-2 border-none bg-transparent pb-2"
                   onClick={toggleCollapseYear}
                 >
                   {/* Chevron Icon */}
                   <svg
-                    className={`h-6 w-6 text-current transition-transform duration-200 ${isYearCollapsed ? 'rotate-0' : 'rotate-180'}`}
-                    viewBox="0 0 32 32"
+                    className={`h-1.5 w-2.5 text-current transition-transform duration-200 ${isYearCollapsed ? 'rotate-0' : 'rotate-180'}`}
+                    width="10"
+                    height="7"
+                    viewBox="0 0 10 7"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
                       fillRule="evenodd"
                       clipRule="evenodd"
-                      d="m16 28l-7-7l1.4-1.4l5.6 5.6l5.6-5.6L23 21z"
+                      d="M9.83728 0.885375C9.62032 0.668417 9.26857 0.668417 9.05161 0.885375L5 4.93698L0.948392 0.885374C0.731435 0.668416 0.379676 0.668416 0.162719 0.885374C-0.0542402 1.10233 -0.0542403 1.45409 0.162719 1.67105L4.60716 6.11549C4.82412 6.33245 5.17588 6.33245 5.39284 6.11549L9.83728 1.67105C10.0542 1.45409 10.0542 1.10233 9.83728 0.885375Z"
                       fill="currentColor"
                     ></path>
                   </svg>
-
                   {/* Folder Icon */}
                   <svg
                     className="h-5 w-5 text-current"
@@ -288,20 +289,22 @@ export default function ListLayoutWithTags({ posts, title }: ListLayoutProps) {
               {/* Chủ đề Section */}
               <div className="col-span-2 flex flex-col">
                 <button
-                  className="text-filterTextActive flex cursor-pointer appearance-none flex-row gap-2 border-none bg-transparent pb-2"
+                  className="text-filterTextActive flex cursor-pointer appearance-none flex-row items-center gap-2 border-none bg-transparent pb-2"
                   onClick={toggleCollapseCategory}
                 >
                   {/* Chevron Icon for Chủ đề */}
                   <svg
-                    className={`h-6 w-6 text-current transition-transform duration-200 ${isCategoryCollapsed ? 'rotate-0' : 'rotate-180'}`}
-                    viewBox="0 0 32 32"
+                    className={`h-1.5 w-2.5 text-current transition-transform duration-200 ${isCategoryCollapsed ? 'rotate-0' : 'rotate-180'}`}
+                    width="10"
+                    height="7"
+                    viewBox="0 0 10 7"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
                       fillRule="evenodd"
                       clipRule="evenodd"
-                      d="m16 28l-7-7l1.4-1.4l5.6 5.6l5.6-5.6L23 21z"
+                      d="M9.83728 0.885375C9.62032 0.668417 9.26857 0.668417 9.05161 0.885375L5 4.93698L0.948392 0.885374C0.731435 0.668416 0.379676 0.668416 0.162719 0.885374C-0.0542402 1.10233 -0.0542403 1.45409 0.162719 1.67105L4.60716 6.11549C4.82412 6.33245 5.17588 6.33245 5.39284 6.11549L9.83728 1.67105C10.0542 1.45409 10.0542 1.10233 9.83728 0.885375Z"
                       fill="currentColor"
                     ></path>
                   </svg>
@@ -484,7 +487,7 @@ export default function ListLayoutWithTags({ posts, title }: ListLayoutProps) {
                           </dd>
                         </dl>
                         <div className="space-y-5 xl:col-span-3">
-                          <div className="space-y-6">
+                          <div className="">
                             <div>
                               <h2 className="text-2xl leading-8 font-bold tracking-tight">
                                 <Link
