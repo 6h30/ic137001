@@ -7,7 +7,7 @@ import Link from './Link'
 import MobileNav from './MobileNav'
 import ThemeSwitch from './ThemeSwitch'
 import SearchButton from './SearchButton'
-import { AdUnit } from './AdUnit'
+// import { AdUnit } from './AdUnit'
 
 const Header = () => {
   let headerClass = 'flex flex-col'
@@ -52,9 +52,9 @@ const Header = () => {
           </div>
         </div>
       </header>
-      <div className="mt-4 flex w-full text-center">
+      {/* <div className="mt-4 flex w-full text-center border">
         <AdUnit slot="7863436668" format="auto" className="mx-auto block max-w-[728px]" />
-      </div>
+      </div> */}
     </>
   )
 }
