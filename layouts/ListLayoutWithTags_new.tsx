@@ -13,7 +13,6 @@ import tagData from 'app/tag-data.json'
 import NewsletterForm from 'pliny/ui/NewsletterForm'
 import CustomNewsletterForm from '@/components/CustomNewsletterForm'
 import LogoBimleak from '@/components/drawingBimleak'
-import SeachArticle from '@/components/SearchArticle'
 
 interface PaginationProps {
   totalPages: number
@@ -182,7 +181,7 @@ export default function ListLayoutWithTags({ posts, title }: ListLayoutProps) {
           {siteMetadata.description}
         </p> */}
       </div>
-      <SeachArticle />
+
       <section className="relative mt-1 grid grid-cols-12 gap-y-7 xl:col-span-12">
         {/* left */}
         <div className="relative col-span-full grid xl:col-span-4">
@@ -447,7 +446,7 @@ export default function ListLayoutWithTags({ posts, title }: ListLayoutProps) {
             {/* header */}
             <div className="subgrid align-center grid grid-cols-4 self-start border-b-[0.5px] border-b-current pb-1.5">
               <div className="flex hidden items-center gap-1 text-sm text-current uppercase xl:block">
-                <span>/ </span>Ngày
+                <span>/</span>Ngày
               </div>
 
               <div className="col-span-full flex items-center gap-1 text-sm text-current uppercase xl:col-start-2">
