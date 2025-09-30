@@ -1,6 +1,6 @@
 const headerNavLinks = [
-  { href: '/', title: 'Home' },
-  { href: '/blog', title: 'Blog' },
+  { href: '/', title: 'Trang chủ' },
+  { href: '/store', title: 'Sản phẩm' },
   { href: '/games', title: 'Game' },
   { href: '/projects', title: 'Dự án' },
   { href: '/about', title: 'Giới thiệu' },

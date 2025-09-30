@@ -68,7 +68,7 @@ export default function PostLayout({
                   </dd>
                 </div> */}
               </dl>
-              <div>
+              <div style={{ fontFamily: 'var(--font-roboto-flex)' }}>
                 <PageTitle>{title}</PageTitle>
               </div>
             </div>
@@ -109,7 +109,10 @@ export default function PostLayout({
                   </button>
 
                   {/* Collapsible Content */}
-                  <div className="col-span-full grid self-start pb-4">
+                  <div
+                    className="col-span-full grid self-start pb-4"
+                    style={{ fontFamily: 'var(--font-roboto-flex)' }}
+                  >
                     <div className={`${isMetaArticleCollapsed ? 'hidden' : ''}`}>
                       {/* tên bài viết */}
                       <div className="col-span-4 grid grid-cols-4 self-start border-b-2 border-dotted pb-2">
@@ -275,7 +278,12 @@ export default function PostLayout({
                   </div>
                   {/* danh sách bài viết */}
                   <ul className="divide-y divide-gray-200 dark:divide-gray-700">
-                    <div className="prose dark:prose-invert pt-5 pb-8">{children}</div>
+                    <div
+                      className="prose dark:prose-invert pt-5 pb-8"
+                      style={{ fontFamily: 'var(--font-roboto-flex)' }}
+                    >
+                      {children}
+                    </div>
                     {siteMetadata.comments && (
                       <div
                         className="pt-6 pb-6 text-center text-gray-700 dark:text-gray-300"
@@ -299,7 +307,12 @@ export default function PostLayout({
               </div>
               {/* danh sách bài viết */}
               <ul className="divide-y divide-gray-200 dark:divide-gray-700">
-                <div className="prose dark:prose-invert max-w-none pt-5 pb-8">{children}</div>
+                <div
+                  className="prose dark:prose-invert max-w-none pt-5 pb-8"
+                  style={{ fontFamily: 'var(--font-roboto-flex)' }}
+                >
+                  {children}
+                </div>
                 {siteMetadata.comments && (
                   <div
                     className="pt-6 pb-6 text-center text-gray-700 dark:text-gray-300"
@@ -341,7 +354,10 @@ export default function PostLayout({
                 </button>
 
                 {/* Collapsible Content */}
-                <div className="col-span-full grid self-start pb-4">
+                <div
+                  className="col-span-full grid self-start pb-4"
+                  style={{ fontFamily: 'var(--font-roboto-flex)' }}
+                >
                   <div className={`${isMetaArticleCollapsed ? 'hidden' : ''}`}>
                     {/* tên bài viết */}
                     <div className="col-span-4 grid grid-cols-4 self-start border-b-2 border-dotted pb-2">
