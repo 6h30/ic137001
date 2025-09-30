@@ -2,7 +2,7 @@ import 'css/tailwind.css'
 import 'pliny/search/algolia.css'
 import 'remark-github-blockquote-alert/alert.css'
 
-import { Anaheim, VT323, Inclusive_Sans, Space_Grotesk, Doto } from 'next/font/google'
+import { Anaheim, VT323, Inclusive_Sans, Space_Grotesk, Doto, Anek_Latin } from 'next/font/google'
 
 import { Analytics, AnalyticsConfig } from 'pliny/analytics'
 import { SearchProvider, SearchConfig } from 'pliny/search'
@@ -51,6 +51,12 @@ const space_grotesk = Space_Grotesk({
   variable: '--font-space-grotesk',
 })
 
+const roboto_flex = Anek_Latin({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-roboto-flex',
+})
+
 export const metadata: Metadata = {
   metadataBase: new URL(siteMetadata.siteUrl),
   title: {
@@ -97,7 +103,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang={siteMetadata.language}
-      className={`${anaheim.variable} ${vt323.variable} ${inclusive_sans.variable} ${space_grotesk.variable} ${doto.variable} scroll-smooth`}
+      className={`${anaheim.variable} ${vt323.variable} ${inclusive_sans.variable} ${space_grotesk.variable} ${doto.variable} ${roboto_flex.variable} scroll-smooth`}
       suppressHydrationWarning
     >
       <link

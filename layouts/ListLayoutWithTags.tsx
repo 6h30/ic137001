@@ -490,7 +490,10 @@ export default function ListLayoutWithTags({ posts, title }: ListLayoutProps) {
                         <div className="space-y-5 xl:col-span-3">
                           <div className="">
                             <div>
-                              <h2 className="text-2xl leading-8 font-bold tracking-tight">
+                              <h2
+                                className="text-2xl leading-8 font-semibold tracking-normal"
+                                style={{ fontFamily: 'var(--font-roboto-flex)' }}
+                              >
                                 <Link
                                   href={`/blog/${post.slug}`}
                                   className="text-gray-900 dark:text-gray-100"
@@ -507,7 +510,10 @@ export default function ListLayoutWithTags({ posts, title }: ListLayoutProps) {
                                 ))}
                               </div>
                             </div>
-                            <div className="prose max-w-none text-gray-500 dark:text-gray-400">
+                            <div
+                              className="prose max-w-none tracking-wide text-gray-500 dark:text-gray-400"
+                              style={{ fontFamily: 'var(--font-roboto-flex)' }}
+                            >
                               {post.summary}
                             </div>
                           </div>

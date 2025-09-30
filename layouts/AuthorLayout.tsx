@@ -19,8 +19,8 @@ export default function AuthorLayout({ children, content }: Props) {
             className="text-3xl leading-9 font-extrabold tracking-tight text-gray-900 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14 dark:text-gray-100"
             style={{ fontFamily: 'var(--font-doto)' }}
           >
-            Tôi là <span style={{ fontFamily: 'var(--font-space-grotesk)' }}>[..]</span> và Blog này{' '}
-            <span style={{ fontFamily: 'var(--font-space-grotesk)' }}>[..]</span>
+            Tôi là <span style={{ fontFamily: 'var(--font-space-grotesk)' }}>[..]</span> và trang
+            này <span style={{ fontFamily: 'var(--font-space-grotesk)' }}>[..]</span>
           </h1>
         </div>
         <div className="items-start space-y-2 xl:grid xl:grid-cols-3 xl:space-y-0 xl:gap-x-8">
