@@ -132,7 +132,7 @@
     & :where(code):not(pre code) {
       color: var(--color-indigo-500);
     }
-    max-width: 80ch;
+    max-width: 70ch;
   }
 
   .prose-invert {
