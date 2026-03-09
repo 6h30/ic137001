@@ -133,7 +133,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fff" />
       <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000" />
       <meta name="google-adsense-account" content="ca-pub-1341731351914043"></meta>
-      <meta name="monetag" content="ec8a0f8dadcc5b350c87d0f882db0f81"></meta>
+      {/* <meta name="monetag" content="ec8a0f8dadcc5b350c87d0f882db0f81"></meta> */}
       <script
         src="https://fpyf8.com/88/tag.min.js"
         data-zone="164798"
